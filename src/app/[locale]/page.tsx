@@ -10,6 +10,6 @@ export default async function Page(nextParams: {
   } = nextParams;
 
   return (
-    <div>pending</div>
+    <Home data={undefined}/>
   );
 }
