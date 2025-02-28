@@ -8,7 +8,7 @@ export const Navbar = () => {
   const pathname = usePathname();
   const menuItems = ["Brands", "Nosotros", "Proyectos", "Contacto"];
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  
+
   const handleItemClick = (item: string) => {
     if (!selectedItems.includes(item)) {
       setSelectedItems([...selectedItems, item]);
@@ -35,7 +35,7 @@ export const Navbar = () => {
       <div className="absolute z-[1000] left-0 h-full">
         <div className="bg-[#3F4751] h-full flex flex-col justify-start items-start py-10 space-y-4">
           {selectedItems.map((item, index) => {
-            const itemRoute = getRoute(item);  // Usamos la función getRoute
+            const itemRoute = getRoute(item);
             return (
               <div key={index} className="w-[30px] text-base">
                 <Link
@@ -60,7 +60,7 @@ export const Navbar = () => {
               return null;
             }
 
-            const itemRoute = getRoute(item);  // Usamos la función getRoute
+            const itemRoute = getRoute(item); // Usamos la función getRoute
             const isActive =
               pathname === itemRoute || selectedItems.includes(item);
             return (
