@@ -1,66 +1,44 @@
 "use client";
 
-import React, { useState } from "react";
 import { Link } from "@/navigation";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
-export const Navbar = () => {
+export default function ScrollPages({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const menuItems = ["Brands", "Nosotros", "Proyectos", "Contacto"];
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  
   const handleItemClick = (item: string) => {
     if (!selectedItems.includes(item)) {
       setSelectedItems([...selectedItems, item]);
     }
   };
 
-  const getRoute = (item: string) => {
-    switch (item.toLowerCase()) {
-      case "brands":
-        return "/brands";
-      case "nosotros":
-        return "/about-us";
-      case "proyectos":
-        return "/projects";
-      case "contacto":
-        return "/contact";
-      default:
-        return "/";
-    }
-  };
-
   return (
     <div className="w-full">
-      <div className="absolute z-[1000] left-0 h-full">
-        <div className="bg-[#3F4751] h-full flex flex-col justify-start items-start py-10 space-y-4">
-          {selectedItems.map((item, index) => {
-            const itemRoute = getRoute(item);  // Usamos la función getRoute
-            return (
-              <div key={index} className="w-[30px] text-base">
-                <Link
-                  href={itemRoute}
-                  className="lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-white pt-[48px] h-full font-medium rotate-180"
-                  style={{
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                  }}
-                >
-                  {item}
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="absolute z-[1000] right-0 full">
+      {/* Contenido de la página */}
+      <motion.div
+        initial={{ x: "100%" }} // Comienza desde la derecha
+        animate={{ x: 0 }} // Se mueve a la posición original
+        exit={{ x: "100%" }} // Vuelve a salir hacia la derecha
+        transition={{ type: "spring", stiffness: 300, damping: 30 }} // Ajusta la transición
+      >
+        {children}
+      </motion.div>
+
+      {/* Menú lateral */}
+      <div className="absolute z-[1000] right-0 h-[100vh]">
         <div className="bg-[#E0E0E0] h-full flex justify-center items-end">
           {menuItems.map((item, index) => {
             if (selectedItems.includes(item)) {
               return null;
             }
-
-            const itemRoute = getRoute(item);  // Usamos la función getRoute
+            const itemRoute = `/${item.toLowerCase()}`;
             const isActive =
               pathname === itemRoute || selectedItems.includes(item);
             return (
@@ -88,6 +66,4 @@ export const Navbar = () => {
       </div>
     </div>
   );
-};
-
-export default Navbar;
+}

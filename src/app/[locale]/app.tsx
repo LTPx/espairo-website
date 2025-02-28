@@ -1,4 +1,5 @@
 import { getWordPressPage } from "../_services/api";
+import ScrollPages from "../components/ScrollPages";
 
 interface Props {
   children: any;
@@ -9,7 +10,9 @@ async function App(props: Props) {
   const { children, locale } = props;
 
   return (
-    <div>{children}</div>
+    // <ScrollPages>
+      <div className="bg-body">{children}</div>
+    // </ScrollPages>
   );
 }
 

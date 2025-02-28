@@ -9,3 +9,37 @@
 .aspect-1-1 {
   aspect-ratio: 1 / 1;
 }
+
+/* Efecto de deslizamiento */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Clase para el efecto de transición al entrar */
+.slide-in-right {
+  animation: slide-in-right 0.5s ease-out forwards;
+}
+
+/* Clase para el efecto de transición al salir */
+.slide-out-left {
+  animation: slide-out-left 0.5s ease-in forwards;
+}
+
+p {
+  font-size: 18px;
+  line-height: 24px;
+}
