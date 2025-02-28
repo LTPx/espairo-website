@@ -7,15 +7,29 @@ async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
   } = nextParams;
 
   return (
-    <div className="page-Contact grid lg:grid-cols-2">
-      <div>
+    <div className="h-screen flex">
+      <div className="w-1/2 h-full">
         <img
-          src="https://s3-alpha-sig.figma.com/img/b80f/1e5b/aa913f7312897ba8af0c8bc0605f0cbc?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=VqSRQOJRAEl0MKNOyjwahVqHvF6v3FBGqfTFOX99d1S84MsVO42PcVRumA9bQflSZYGvd0z2EZuozunBVvLly8Hv-ve7QAV4XmrwZ8icKam6dYqQEMwR1T6poSjQspBm88Hl66HnmFk2eBQHmsAT~IXkIt~N7QYB~CHvhBis-wwKmWUg4w81owdpNSLYmO2nfV~nDKMEo6-dH7HqfwBk6C-CLs016wGHz2QmC1z3RONa0nShnNoLYe-XV4VXiItL1A-BB9RXtf~rTXfOZUjm3s6z1CJuXQmRBBPpZV8fArzcFFpLhxngR-wcvkgAwK976s0jdJ2VIZXrvbgxBhQoqQ__" // Reemplaza con tu imagen
+          src="https://s3-alpha-sig.figma.com/img/83ce/e865/25adddc29e66c77a252b62ab250ebcb0?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=SObWrqvt46RPJabop42Khp-~fX3aFlmp2wbGuMV6hWMevrDnj4piovyV2HfoN7UVzhfJPruJrNnxig5aDdahKbzBYQCCHYayGZWjfdy5TA-t3lXiXI93-TGEoT7cJQMO0JIMCNXzo8a~EX4ASTBfOR4WzKrjBAbBvmLuxbG3mYYtWfqXsDVgFktwfpQCt3rQMu7QwI5tZtQ2sA27luSFRXnX3DjcyJc7RbYX659RZ5kyXlL6twbPdvnW7yxA-5DeTyUAvjPiTw0H~9-kgz0GoNTlbo1sNnUj1TmVR4aLBvOjVHi3bwvYrrebNFyM6wUeDTas95Vu01wVbcIRUOZvsw__"
           alt="Espai Rö"
-          className="h-[100vh] w-full"
+          className="w-full h-full object-cover"
         />
       </div>
-      <div>Content</div>
+      <div className="w-1/2 h-full bg-[#3F4751] text-white flex flex-col justify-between p-12">
+        <h1 className="font-bold">Showroom y estudio de arquitectura.</h1>
+
+        <section className="flex flex-col gap-12">
+          <div>
+            <label className="text-[18px] leading-[24px]">Contacto</label>{" "}
+          </div>
+          <div>
+            <label className="text-[18px] leading-[24px]">Horario</label>
+          </div>
+          <div>
+            <label className="text-[18px] leading-[24px]">¡Síguenos!</label>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
