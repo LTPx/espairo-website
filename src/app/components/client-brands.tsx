@@ -19,7 +19,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
         {categories.map((category, index) => (
           <button
             key={index}
-            className="uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out"
+            className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out"
           >
             {category}
           </button>
@@ -30,7 +30,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
         {brandNames.map((brand, index) => (
           <h2
             key={index}
-            className={`cursor-pointer text-[#3F4751] text-[50px] leading-[58px] tracking-[-0.05em] transition-all duration-300 ${
+            className={`font-regular cursor-pointer text-[#3F4751] text-[50px] leading-[58px] tracking-[-0.05em] transition-all duration-300 ${
               hoveredBrand && hoveredBrand !== brand
                 ? "blur-sm opacity-50"
                 : "opacity-100"

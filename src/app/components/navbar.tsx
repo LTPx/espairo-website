@@ -59,8 +59,7 @@ export const Navbar = () => {
             if (selectedItems.includes(item)) {
               return null;
             }
-
-            const itemRoute = getRoute(item); // Usamos la función getRoute
+            const itemRoute = getRoute(item);
             const isActive =
               pathname === itemRoute || selectedItems.includes(item);
             return (

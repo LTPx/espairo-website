@@ -16,7 +16,7 @@ async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
         />
       </div>
       <div className="w-1/2 h-full bg-[#3F4751] text-white flex flex-col justify-between p-12">
-        <h1 className="font-bold">Showroom y estudio de arquitectura.</h1>
+        <h1>Showroom y estudio de arquitectura.</h1>
 
         <section className="flex flex-col gap-12">
           <div>

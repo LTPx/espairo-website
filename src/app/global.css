@@ -1,13 +1,15 @@
-.aspect-16-9 {
-  aspect-ratio: 16 / 9;
+@font-face {
+  font-family: "Bold";
+  src: url('/fonts/PPObjectSans-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
 }
 
-.aspect-4-3 {
-  aspect-ratio: 4 / 3;
-}
-
-.aspect-1-1 {
-  aspect-ratio: 1 / 1;
+@font-face {
+  font-family: "Regular";
+  src: url('/fonts/PPObjectSans-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @keyframes slide-in-right {
@@ -43,9 +45,17 @@ body {
 p {
   font-size: 18px;
   line-height: 24px;
+  font-family: "Regular";
+  letter-spacing: -0.04em;
 }
 
 h1 {
   font-size: 50px;
   line-height: 55px;
+  letter-spacing: -0.05em;
 }
+
+button {
+  font-family: "Regular";
+}
+
