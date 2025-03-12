@@ -21,3 +21,9 @@ export interface GalleryProjectWp {
   layout: string;
 }
 
+export interface HomePageWp {
+  cover_home: MediaFileWp;
+  title: string;
+  description: string;
+}
+

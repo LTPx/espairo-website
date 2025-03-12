@@ -1,5 +1,18 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "footer": {
+    "information": "Interested in building with us? Contact us and we will provide you with personalized advice.",
+    "office": "Llucmajor Office:",
+    "home": "Home",
+    "projects": "Projects",
+    "about-us": "About us",
+    "blog": "News",
+    "contact": "Contact",
+    "cookies-policy": "Cookies policy",
+    "privacy-policy": "Privacy policy",
+    "legal-notice": "Legal notice",
+    "accessibility-statement": "Accessibility statement"
   }
 }

@@ -1,5 +1,18 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "footer": {
+    "information": "¿Interesado en construir con nosotros? Contáctanos y te brindaremos una asesoría personalizada.",
+    "office": "Oficina de Llucmajor:",
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "about-us": "Nosotros",
+    "blog": "Noticias",
+    "contact": "Contacto",  
+    "cookies-policy": "Política de cookies",
+    "privacy-policy": "Política de privacidad",
+    "legal-notice": "Aviso legal",
+    "accessibility-statement": "Declaración de accesibilidad"
   }
 }
