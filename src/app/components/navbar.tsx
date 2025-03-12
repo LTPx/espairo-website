@@ -31,7 +31,7 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="lg:block hidden w-full">
       <div className="absolute z-[1000] left-0 h-full">
         <div className="bg-[#3F4751] h-full flex flex-col justify-start items-start py-10 space-y-4">
           {selectedItems.map((item, index) => {

@@ -4,7 +4,8 @@ import { Metadata } from "next";
 import App from "./app";
 import "tailwindcss/tailwind.css";
 import "../global.css";
-import Navbar from "../components/navbar";
+import Footer from "../components/footer";
+import MenuOptions from "../components/menuOptions";
 
 export async function generateMetadata({
   params: { locale },
@@ -37,8 +38,13 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Navbar/>
+          <MenuOptions
+            params={{
+              locale: locale,
+            }}
+          />
           <App locale={locale}>{children}</App>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

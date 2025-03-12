@@ -1,41 +1,15 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 
-interface LinksFooter {
-  title: string;
-  url: string;
-}
-
-interface FooterProps {
-  // links: LinksFooter[];
-}
-
-export function Footer(props: FooterProps) {
-  // const { links } = props;
-  const currentYear = new Date().getFullYear();
+export function Footer() {
   const t = useTranslations();
-  const [showContact, setShowContact] = useState(false);
-
-  const handleContactClick = () => {
-    setShowContact((prev) => !prev);
-  };
-
-  const linksFooter = [
-    { title: `${t("footer.home")}`, url: "/" },
-    { title: `${t("footer.projects")}`, url: "/projects" },
-    { title: `${t("footer.about-us")}`, url: `/about-us` },
-    { title: `${t("footer.blog")}`, url: "/news" },
-  ];
-
   const languages = ["/es", "/en", "/de"];
 
   return (
     <>
-      <footer className="lg:bg-body pt-[20px] pb-[40px] px-[30px]">
+      <footer className="lg:block hidden lg:bg-body pt-[20px] pb-[40px] px-[30px]">
         <div className="flex justify-between">
           <div className="flex flex-col gap-[60px]">
             <div className="flex gap-[40px]">

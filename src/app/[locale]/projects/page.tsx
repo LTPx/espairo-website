@@ -11,6 +11,7 @@ async function Projects(nextParams: {
   const {
     params: { locale },
   } = nextParams;
+  const t = await getTranslations();
 
   const fakeProjects = [
     {
@@ -121,11 +122,15 @@ async function Projects(nextParams: {
       gallery_project: [],
     },
   ];
-  
 
   return (
     <div className="page-Projects">
-      <Cover img="https://s3-alpha-sig.figma.com/img/3fe2/8288/2e7648fd53535d81b0304c6665647d1e?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J4MFh5L4L58vbqHTmVeptFdZs7zQoUBIXl1-S6wnZoAjIMv-LINJoYVvlfE-3DUsIvJbxhCXMx9Cx9gzKoAQ2Cj2oyp5~g4~--RrEn6kwVpFWBBmHY8PPjiXgkZGcM9LQBY7MpKCIaLhGQhXBDEfq4us9o~4NHpGq5VT95zor0OdBuXQY7X1N7XsjMtVvErdNd9T9kbUqf8BdhX3RsDgwM9atHNErafpyyHyItr389ZIYeTMBXVRn4J--nyNMnkCyMzfFmm1VNp9WCIgmN0eiB117iQvPrWEA88dcRe9d7M-g~0mKlpxmpZ8V8k6RTTw9i4rgB9SQsLRHeJoxWDIng__" />
+      <div className="container lg:hidden bg-[#3F4751] flex items-center">
+        <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
+          {`${t("header.projects")}`}
+        </span>
+      </div>
+      <Cover img="https://s3-alpha-sig.figma.com/img/3fe2/8288/2e7648fd53535d81b0304c6665647d1e?Expires=1742774400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=ZvCoChx6errNMFwIqjknHsGkbC5QNLQpRAApPoqZUcE3mj0k1VvNfMfhyb6Ph9JG-~QeGYfUw83kcm8z27ws0mQy3Cj1B6C4AYfdiyOldMYxZk4gXfNkyBDNAn-NpKj7MRW2DSsDXopqhszGuzx5818lpHeOVI27CGG~eRr8X~D5ejXOmCe0bgL2CUUc0IdqWY2057iKeeDdNXgLtQGCIkJpwg0i~IyfJecN013Hhr9ogMCmSp0qYCEU4AYFRwGvoUc0PP4cripfuxF9dBpyFaxcF93Io~21ZA6btxn~AT0sqiDQjjSUZtELoHwSrHoDsXHIF9XQul4ueSjhWyT8mQ__" />
       <div>
         <ProjectsInformation project={fakeProjects} />
       </div>

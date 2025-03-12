@@ -57,7 +57,7 @@ async function Brands({
   return (
     <div className="page-Brands h-full">
       <div className="flex flex-col gap-[20px] lg:grid lg:grid-cols-2 lg:gap-x-[15px]">
-        <div className="lg:sticky lg:top-[0px] lg:left-0 w-full lg:h-[calc(100vh-90px)]">
+        <div className="hidden lg:sticky lg:top-[0px] lg:left-0 w-full lg:h-[calc(100vh-90px)]">
           <img
             src="https://s3-alpha-sig.figma.com/img/b80f/1e5b/aa913f7312897ba8af0c8bc0605f0cbc?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=VqSRQOJRAEl0MKNOyjwahVqHvF6v3FBGqfTFOX99d1S84MsVO42PcVRumA9bQflSZYGvd0z2EZuozunBVvLly8Hv-ve7QAV4XmrwZ8icKam6dYqQEMwR1T6poSjQspBm88Hl66HnmFk2eBQHmsAT~IXkIt~N7QYB~CHvhBis-wwKmWUg4w81owdpNSLYmO2nfV~nDKMEo6-dH7HqfwBk6C-CLs016wGHz2QmC1z3RONa0nShnNoLYe-XV4VXiItL1A-BB9RXtf~rTXfOZUjm3s6z1CJuXQmRBBPpZV8fArzcFFpLhxngR-wcvkgAwK976s0jdJ2VIZXrvbgxBhQoqQ__"
             alt="Espai Rö"

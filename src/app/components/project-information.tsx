@@ -22,12 +22,12 @@ export function ProjectsInformation({ project }: ProjectsInformationProps) {
                 <Gallery gallery={gallery_project} />
               </section>
             )}
-            <section className="pt-[30px] lg:pt-[50px] flex flex-col gap-[20px] lg:gap-[15px] lg:grid lg:grid-cols-2">
-              <h1 className="font-regular leading-[55px]">
+            <section className="container pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px] lg:grid lg:grid-cols-2">
+              <h2 className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]">
                 {title}
-              </h1>
+              </h2>
               <div
-                className="pl-[8px] lg:pr-[119px]"
+                className="lg:pr-[119px]"
                 dangerouslySetInnerHTML={{ __html: description }}
               />
             </section>

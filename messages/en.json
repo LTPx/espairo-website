@@ -14,5 +14,12 @@
     "privacy-policy": "Privacy policy",
     "legal-notice": "Legal notice",
     "accessibility-statement": "Accessibility statement"
+  },
+  "header": {
+    "projects": "Projects",
+    "about-us": "About us",
+    "brands": "Brands",
+    "contact": "Contact",
+    "gallery": "Gallery"
   }
 }

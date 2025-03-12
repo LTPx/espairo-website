@@ -1,8 +1,10 @@
-'use client';
+"use client";
+
+import { useTranslations } from "next-intl";
 
 export interface MediaFileWp {
   url: string;
-  type: 'video' | 'image';
+  type: "video" | "image";
 }
 
 interface Props {
@@ -13,24 +15,20 @@ interface Props {
 }
 
 export function Cover(props: Props) {
-  const {
-    children,
-    className,
-    media,
-    img
-  } = props;
+  const { children, className, media, img } = props;
+  const t = useTranslations();
 
   return (
     <div className={`cover-video-container`}>
       {img && (
         <img
-        src={img}
-        className={`${className} w-full h-[550px] lg:h-[100vh] object-cover`}
-      />
+          src={img}
+          className={`${className} w-full h-[731px] lg:h-[100vh] object-cover`}
+        />
       )}
-      {media?.type === 'video' && (
+      {media?.type === "video" && (
         <video
-          className={`${className} w-full h-[550px] lg:h-[95vh] object-cover`}
+          className={`${className} w-full h-[731px] lg:h-[95vh] object-cover`}
           autoPlay={true}
           loop={true}
           muted
@@ -40,17 +38,17 @@ export function Cover(props: Props) {
           <source src={media.url} type="video/mp4" />
         </video>
       )}
-      {media?.type === 'image' && (
+      {media?.type === "image" && (
         <img
           src={media.url}
-          className={`${className} w-full h-[550px] lg:h-[95vh] object-cover`}
+          className={`${className} w-full h-[731px] lg:h-[95vh] object-cover`}
         />
       )}
       <div
-        className={`absolute lg:h-full inset-0 md:h-[550px] ${className}`}
+        className={`hidden lg:absolute lg:h-full inset-0 h-[731px] ${className}`}
         style={{
           backgroundImage:
-            'linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.25))',
+            "linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.25))",
           zIndex: 1,
         }}
       />

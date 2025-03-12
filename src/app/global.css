@@ -30,6 +30,11 @@
   }
 }
 
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .slide-in-right {
   animation: slide-in-right 0.5s ease-out forwards;
 }
@@ -59,3 +64,28 @@ button {
   font-family: "Regular";
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.05em;
+  }
+
+  .container {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .p {
+    font-size: 16px;     
+    line-height: 22px !important;  
+    font-family: "Regular";   
+    letter-spacing: -0.05em; 
+    margin-bottom: 2px; 
+  }
+}

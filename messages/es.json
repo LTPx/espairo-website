@@ -2,6 +2,13 @@
   "HomePage": {
     "title": "Hello world!"
   },
+  "header": {
+    "projects": "Proyectos",
+    "about-us": "Nosotros",
+    "brands": "Brands",
+    "contact": "Contacto",
+    "gallery": "Galería"
+  },
   "footer": {
     "information": "¿Interesado en construir con nosotros? Contáctanos y te brindaremos una asesoría personalizada.",
     "office": "Oficina de Llucmajor:",
