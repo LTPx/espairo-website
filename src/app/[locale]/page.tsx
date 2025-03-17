@@ -1,14 +1,20 @@
 import { Suspense } from "react";
 import Home from "./home";
-import { getFrontendPageBySlug, getWordPressCustomPage } from "../_services/api";
+import {
+  getWordPressCustomPage,
+} from "../_services/api";
 
-export default async function Page() {
-  // const data = await getWordPressCustomPage("home-test");
 
-//   const { acf } = data;
-//   const { home_information } = acf;
-// console.log('information:',home_information.cover_home.url)
-  return (
-    <Home data={undefined}/>
-  );
+export default async function Page(nextParams: {
+  params: { locale: "es" | "de" | "en" };
+}) {
+  const {
+    params: { locale },
+  } = nextParams;
+
+  const data = await getWordPressCustomPage(locale, "home");
+
+  const { acf } = data;
+  const { home_information } = acf;
+  return <Home home_information={home_information} />;
 }

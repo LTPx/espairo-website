@@ -19,64 +19,37 @@ export async function getWordPressPage(
 
 export async function getFrontendPageBySlug(
   slug: string
-): Promise<WordPressFrontendPage | null> {
-  const url = `http://www.staging.espairo.com.mialias.net/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard`;
-  console.log('url: ', url);
-
-  try {
-    const pageData = await fetch(url, {
-      next: {
-        revalidate: 0,
-      },
-    });
-
-    // Verifica si la respuesta es exitosa
-    if (!pageData.ok) {
-      console.error('Error en la respuesta de la API', pageData.status);
-      return null;
-    }
-
-    // Hacer log del contenido de la respuesta antes de intentar convertirla
-    const pageText = await pageData.text();
-    console.log('Contenido de la respuesta: ', pageText);
-
-    const pageJson = JSON.parse(pageText);  // Asegurándonos de analizar el texto de la respuesta
-
-    // Verifica si la respuesta tiene datos antes de acceder
-    if (Array.isArray(pageJson) && pageJson.length > 0) {
-      console.log('Página encontrada:', pageJson[0]);
-      return pageJson[0];
-    } else {
-      console.log('No se encontró ninguna página con ese slug');
-      return null;
-    }
-  } catch (error) {
-    console.error('Error al hacer la solicitud:', error);
-    return null;
-  }
+): Promise<WordPressFrontendPage> {
+  const url = `https://staging.espairo.com/wp-json/wp/v2/pages?slug=${slug}&acf_format=standard`;
+  console.log("url: ", url);
+  const pageData = await fetch(url, {
+    next: {
+      revalidate: 0,
+    },
+  });
+  const pageJson = await pageData.json();
+  return pageJson[0];
 }
-
 
 export async function getWordPressCustomPage(
+  locale: "en" | "es" | "de",
   slug: string
 ): Promise<WordPressFrontendPage> {
-  const WORDPRESS_API_URL = "http://www.staging.espairo.com.mialias.net/wp-json";
-  const url = `${WORDPRESS_API_URL}/custom/v1/page_by_slug?slug=${slug}`;
-  
+  const parentPages = {
+    es: "spanish-pages",
+    de: "german-pages",
+    en: "english-pages",
+  };
+  const parentPage = parentPages[locale];
+  const WORDPRESS_API_URL = "https://staging.espairo.com/wp-json";
+  const url = `${WORDPRESS_API_URL}/custom/v1/page_by_slug?slug=${slug}&parent_slug=${parentPage}&lang=${locale}`;
   console.log("url custom page: ", url);
-  
-  const response = await fetch(url);
-
-  // Verificar si la respuesta es OK (status 200)
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Error en la respuesta del servidor:', errorText);
-    throw new Error(`Error en la API: ${response.status} - ${response.statusText}`);
-  }
-
+  const response = await fetch(url, {
+    next: {
+      revalidate: 0,
+    },
+  });
   const page = await response.json();
+  if (!response.ok) throw new Error(page.message);
   return page;
 }
-
-
-

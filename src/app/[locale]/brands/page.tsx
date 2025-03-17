@@ -1,3 +1,4 @@
+import { getWordPressCustomPage } from "@/app/_services/api";
 import ClientBrands from "@/app/components/client-brands";
 
 async function Brands({
@@ -53,15 +54,19 @@ async function Brands({
     "Grifería",
     "Exterior",
   ];
+  
+  const data = await getWordPressCustomPage(locale, "brands");
+  const { acf } = data;
+  const { brands_information } = acf;
 
   return (
     <div className="page-Brands h-full">
       <div className="flex flex-col gap-[20px] lg:grid lg:grid-cols-2 lg:gap-x-[15px]">
         <div className="hidden lg:block lg:sticky lg:top-[0px] lg:left-0 w-full lg:h-[calc(100vh-90px)]">
           <img
-            src="https://s3-alpha-sig.figma.com/img/b80f/1e5b/aa913f7312897ba8af0c8bc0605f0cbc?Expires=1742774400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=DedwGdKyq~szDhl6NOHb6KrJ~z~jo4MryHJtKQfEhtoebgwENkhmM-kmDJYwvk3QcLUWAIdXclijXE9pk4ogy8xrPIP2ppcWGGwBzL5LjdcyswqVbua771FmZMGdvXWa-zOTznu9nMOKPbgwVKGdXBU30lA4wdLyzaMdwHDHAZEPQaKKZ33nVf9~nUS4zE15U7GecAWiNP0fFk0~~FURaFyfOoWmcNUGBGuMlq6Eu973rW6gS1IjSoZINusZDL5nrVJWKjOzXRLUoh80nLSp8HELGurWwozo6IdJckkE2PvuRRAwkVbGVZRFfo~xVCxZjBHuHRKkspRF3flqIqsqHQ__"
-            alt="Espai Rö"
-            className="h-[100vh] w-full"
+            src={brands_information.cover_page.url}
+            alt={'alt-projects'}
+            className="h-[100vh] w-full object-cover"
           />
         </div>
         <div className="lg:h-full lg:overflow-auto">

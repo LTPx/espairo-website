@@ -1,4 +1,5 @@
 import { IndividualProjectWp } from "@/app/_interfaces/wordpress-components";
+import { getWordPressCustomPage } from "@/app/_services/api";
 import Cover from "@/app/components/cover";
 import Gallery from "@/app/components/gallery";
 import ProjectsInformation from "@/app/components/project-information";
@@ -12,7 +13,10 @@ async function Projects(nextParams: {
     params: { locale },
   } = nextParams;
   const t = await getTranslations();
-
+  const data = await getWordPressCustomPage(locale, "projects");
+  const { acf } = data;
+  const { projects_information } = acf;
+  
   const fakeProjects = [
     {
       title: "Proyecto Alpha",
@@ -130,9 +134,9 @@ async function Projects(nextParams: {
           {`${t("header.projects")}`}
         </span>
       </div>
-      <Cover img="https://s3-alpha-sig.figma.com/img/3fe2/8288/2e7648fd53535d81b0304c6665647d1e?Expires=1742774400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=ZvCoChx6errNMFwIqjknHsGkbC5QNLQpRAApPoqZUcE3mj0k1VvNfMfhyb6Ph9JG-~QeGYfUw83kcm8z27ws0mQy3Cj1B6C4AYfdiyOldMYxZk4gXfNkyBDNAn-NpKj7MRW2DSsDXopqhszGuzx5818lpHeOVI27CGG~eRr8X~D5ejXOmCe0bgL2CUUc0IdqWY2057iKeeDdNXgLtQGCIkJpwg0i~IyfJecN013Hhr9ogMCmSp0qYCEU4AYFRwGvoUc0PP4cripfuxF9dBpyFaxcF93Io~21ZA6btxn~AT0sqiDQjjSUZtELoHwSrHoDsXHIF9XQul4ueSjhWyT8mQ__" />
+      <Cover media={projects_information.cover_page} />
+        <ProjectsInformation project={projects_information.projects} />
       <div>
-        <ProjectsInformation project={fakeProjects} />
       </div>
     </div>
   );

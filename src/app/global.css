@@ -68,6 +68,12 @@ button {
   display: none !important;
 }
 
+.container {
+  padding-left: 0px;
+  padding-right: 0px;
+  max-width: 100%;
+}
+
 
 @media (max-width: 768px) {
   h1 {

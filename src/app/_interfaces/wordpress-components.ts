@@ -22,8 +22,55 @@ export interface GalleryProjectWp {
 }
 
 export interface HomePageWp {
-  cover_home: MediaFileWp;
+  cover_page: MediaFileWp;
   title: string;
   description: string;
 }
 
+export interface ContactPageWp {
+  cover_page: MediaFileWp;
+  title: string;
+  description: string;
+}
+
+export interface BrandsPageWp {
+  cover_page: MediaFileWp;
+  brandUrl: string[];
+}
+
+export interface ProjectsPageWp {
+  cover_page: MediaFileWp;
+  projects: ProjectsInformationWp[];
+}
+
+export interface ProjectsInformationWp {
+  gallery_project: GalleryProjectWp[];
+  title: string;
+  description: string;
+}
+
+export interface AboutUsPageWp {
+  cover_page: MediaFileWp;
+  first_information_section: AboutUsCardsWp;
+  first_image: string;
+  authors_section: AuthorsSectionWp;
+  second_image: string;
+  second_information_section: AboutUsCardsWp;
+  last_image: string;
+}
+
+export interface AboutUsCardsWp {
+  image: string;
+  title: string;
+  description: string;
+}
+
+export interface AuthorsSectionWp {
+  image: ImageAcf;
+  authors: AuthorWp[];
+}
+
+export interface AuthorWp {
+  author_name: string;
+  author_description: string;
+}

@@ -11,20 +11,25 @@ interface AboutUsCardProps {
   description?: string;
   className?: string;
   url?: string;
+  reverseLayout?: boolean;
 }
 
 function AboutUsCard(props: AboutUsCardProps) {
-  const { imageHover, image, title, className, date, description, url } = props;
+  const { imageHover, image, title, className, date, description, url, reverseLayout } = props;
   const t = useTranslations();
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row gap-[40px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full">
+    <div
+      className={`flex flex-col-reverse lg:flex-row gap-[40px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full ${
+        reverseLayout ? "flex-row-reverse" : ""
+      }`}
+    >
       <img
         src={image}
         alt="base image"
-        className={`h-[550px] lg:h-[901px] w-[689] object-cover`}
+        className="h-[550px] lg:h-[901px] w-[689px] object-cover"
       />
-      <div className="lg:pl-[30px] lg:pr-[89px] flex flex-col lg:justify-between">
+      <div className="lg:pr-[89px] flex flex-col lg:justify-between">
         {title && (
           <h1 className="hidden lg:block font-regular text-[40px] leading-[44px] lg:text-[40px] lg:leading-[44px] tracking-[-0.05em]">
             {title}

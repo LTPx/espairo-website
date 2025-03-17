@@ -1,26 +1,28 @@
 import React from "react";
+import { HomePageWp } from "../_interfaces/wordpress-components";
 
 interface Props {
-  data: any;
+  home_information: HomePageWp;
 }
 
 function Home(props: Props) {
-  const { data } = props;
+  const { home_information } = props;
   return (
     <div className="relative flex min-h-screen bg-gray-100">
       <div className="flex-1 flex items-center justify-center">
         <div className="relative h-[100vh] w-full">
           <img
-            src="https://s3-alpha-sig.figma.com/img/b80f/1e5b/aa913f7312897ba8af0c8bc0605f0cbc?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=VqSRQOJRAEl0MKNOyjwahVqHvF6v3FBGqfTFOX99d1S84MsVO42PcVRumA9bQflSZYGvd0z2EZuozunBVvLly8Hv-ve7QAV4XmrwZ8icKam6dYqQEMwR1T6poSjQspBm88Hl66HnmFk2eBQHmsAT~IXkIt~N7QYB~CHvhBis-wwKmWUg4w81owdpNSLYmO2nfV~nDKMEo6-dH7HqfwBk6C-CLs016wGHz2QmC1z3RONa0nShnNoLYe-XV4VXiItL1A-BB9RXtf~rTXfOZUjm3s6z1CJuXQmRBBPpZV8fArzcFFpLhxngR-wcvkgAwK976s0jdJ2VIZXrvbgxBhQoqQ__" // Reemplaza con tu imagen
+            src={home_information.cover_page.url}
             alt="Espai Rö"
             className="h-full w-full"
           />
-          <h1 className="absolute top-6 left-6 text-white text-2xl font-semibold">
-            Espai Rö
+          <h1 className="absolute top-[50px] left-[50px] text-white text-[30px] leading-[30px] font-regular tracking-[-0.05em]">
+            {home_information.title}
           </h1>
-          <p className="absolute bottom-6 left-6 text-white text-sm">
-            Showroom & fine craftsmanship products.
-          </p>
+          <div
+            className="fonte-regular absolute bottom-[50px] left-[50px] text-white text-[18px] leading-[22px]"
+            dangerouslySetInnerHTML={{ __html: home_information.description }}
+          />
         </div>
       </div>
     </div>
