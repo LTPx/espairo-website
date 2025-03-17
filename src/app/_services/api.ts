@@ -53,3 +53,22 @@ export async function getWordPressCustomPage(
   if (!response.ok) throw new Error(page.message);
   return page;
 }
+
+export async function getCategories(locale: "en" | "es" | "de") {
+  const WORDPRESS_API_URL = "https://staging.espairo.com/wp-json";
+  const url = `${WORDPRESS_API_URL}/wp/v2/categories?lang=${locale}`;
+
+  console.log("Fetching categories from: ", url);
+
+  const response = await fetch(url, {
+    next: {
+      revalidate: 0,
+    },
+  });
+
+  const categories = await response.json();
+
+  if (!response.ok) throw new Error(categories.message);
+
+  return categories;
+}

@@ -35,7 +35,21 @@ export interface ContactPageWp {
 
 export interface BrandsPageWp {
   cover_page: MediaFileWp;
-  brandUrl: string[];
+  brand: BrandsWp[];
+}
+
+export interface BrandsWp {
+  image: string;
+  title: string;
+  description: string;
+  url_brand: string;
+  category_brand: CategoryBrandWp;
+}
+
+export interface CategoryBrandWp {
+  term_id: number;
+  name: string;
+  slug: string;
 }
 
 export interface ProjectsPageWp {
