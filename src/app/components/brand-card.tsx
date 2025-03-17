@@ -13,6 +13,9 @@ interface BrandCardProps {
   url?: string;
   urlBrand?: string;
   category?: string;
+  index?: number;
+  totalBrands?: number;
+  onNext?: () => void;
 }
 
 function BrandCard(props: BrandCardProps) {
@@ -25,9 +28,13 @@ function BrandCard(props: BrandCardProps) {
     date,
     description,
     url,
-    category
+    category,
+    index,
+    totalBrands,
+    onNext,
   } = props;
   const t = useTranslations();
+  const hasNext = index !== undefined && totalBrands && index < totalBrands - 1;
 
   return (
     <div className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full">
@@ -49,13 +56,13 @@ function BrandCard(props: BrandCardProps) {
       </Link>
       <div className="pl-[30px] pr-[75px] py-[50px] flex flex-col lg:justify-between">
         <div>
-          {category && 
-          <Link className="inline-block pb-[40px]" href={url || ""}>
-            <button className="bg-[#3F4751] text-white uppercase inline-block hover:bg-black hover:text-white flex items-center justify-center font-mediumFont text-[12px] leading-[20px] cursor-pointer border border-black h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
-              {category}
-            </button>
-          </Link>
-          }
+          {category && (
+            <Link className="inline-block pb-[40px]" href={url || ""}>
+              <button className="bg-[#3F4751] text-white uppercase inline-block hover:bg-black hover:text-white flex items-center justify-center font-mediumFont text-[12px] leading-[20px] cursor-pointer border border-black h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+                {category}
+              </button>
+            </Link>
+          )}
           <div className="flex flex-col pb-[22px]">
             <Link href={url || ""}>
               <h1 className="font-mediumFont text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
@@ -81,14 +88,19 @@ function BrandCard(props: BrandCardProps) {
           </div>
         </div>
         <div className="flex justify-between">
-          <Link href={urlBrand || ""} target='_blank'>
+          <Link href={urlBrand || ""} target="_blank">
             <span className="text-[14px] leading-[14px] tracking-[-0.04em] underline">
               Página web
             </span>
           </Link>
-          <span className="text-[14px] leading-[14px] tracking-[-0.04em] underline">
-            Siguiente
-          </span>
+          {hasNext && (
+            <span
+              className="cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
+              onClick={onNext}
+            >
+              Siguiente
+            </span>
+          )}
         </div>
       </div>
     </div>

@@ -74,6 +74,9 @@ button {
   max-width: 100%;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
 
 @media (max-width: 768px) {
   h1 {

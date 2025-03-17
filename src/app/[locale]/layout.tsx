@@ -44,7 +44,7 @@ export default async function LocaleLayout({
             }}
           />
           <App locale={locale}>{children}</App>
-          <Footer />
+          {/* <Footer /> */}
         </NextIntlClientProvider>
       </body>
     </html>

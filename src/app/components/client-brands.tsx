@@ -6,18 +6,25 @@ import { BrandsWp } from "../_interfaces/wordpress-components";
 interface ClientBrandsProps {
   brands: BrandsWp[];
   categories: { term_id: number; name: string }[];
+  onBrandClick: (brandTitle: string) => void;
 }
 
-const ClientBrands: React.FC<ClientBrandsProps> = ({ brands, categories }) => {
+const ClientBrands: React.FC<ClientBrandsProps> = ({
+  brands,
+  categories,
+  onBrandClick,
+}) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const filteredBrands =
-  selectedCategory === 1 
-    ? brands 
-    : selectedCategory
-    ? brands.filter((brand) => brand.category_brand.term_id === selectedCategory)
-    : brands;
 
+  const filteredBrands =
+    selectedCategory === 1
+      ? brands
+      : selectedCategory
+      ? brands.filter(
+          (brand) => brand.category_brand.term_id === selectedCategory
+        )
+      : brands;
 
   return (
     <div className="px-[30px] py-[50px]">
@@ -56,6 +63,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({ brands, categories }) => {
             }`}
             onMouseEnter={() => setHoveredBrand(brand.title)}
             onMouseLeave={() => setHoveredBrand(null)}
+            onClick={() => onBrandClick(brand.title)}
           >
             {brand.title}
           </h2>

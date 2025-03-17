@@ -37,7 +37,7 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
           className="h-[800px] object-cover w-full"
         />
       </section>
-      <section className="grid grid-cols-2">
+      <section className="grid grid-cols-1 gap-[40px] lg:gap-[0px] lg:grid-cols-2 pt-[40px] lg:pt-[40px]">
         {aboutUs_information.authors_section.authors.map((author, index) => (
           <AuthorCard
             key={index}
@@ -52,12 +52,16 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
           className="h-[800px] object-cover w-full"
         />
       </section>
-      <AboutUsCard
-        image={aboutUs_information.second_information_section.image}
-        title={aboutUs_information.second_information_section.title}
-        description={aboutUs_information.second_information_section.description}
-      />
-      <section className="pt-[70px]">
+      <section className="pt-[65px]">
+        <AboutUsCard
+          image={aboutUs_information.second_information_section.image}
+          title={aboutUs_information.second_information_section.title}
+          description={
+            aboutUs_information.second_information_section.description
+          }
+        />
+      </section>
+      <section className="pt-[65px]">
         <img
           src={aboutUs_information.last_image}
           className="h-[800px] object-cover w-full"
