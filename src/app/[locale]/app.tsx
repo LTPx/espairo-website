@@ -13,9 +13,12 @@ interface Props {
 async function App(props: Props) {
   const { children, locale } = props;
   return (
-    <NavbarSecond>
+    <AnimatePages>
       {children}
-    </NavbarSecond>
+    </AnimatePages>
+  //   <NavbarSecond>
+  //     {children}
+  //   </NavbarSecond>
   )
   
 }

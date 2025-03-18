@@ -30,6 +30,7 @@ export function ProjectsInformation({ project }: ProjectsInformationProps) {
                 className=""
                 dangerouslySetInnerHTML={{ __html: description }}
               />
+              {/* <p>Test</p> */}
             </section>
           </div>
         );

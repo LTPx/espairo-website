@@ -2,23 +2,31 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import React, { Suspense } from "react";
-import Home from "../[locale]/home";
-import { getWordPressCustomPage } from "../_services/api";
-import Contact from "../[locale]/contact/page";
-import Projects from "../[locale]/projects/page";
-import Brands from "../[locale]/brands/page";
+import React, { useRef, useEffect, useState } from "react";
 
-async function AnimatePages({ children }: { children: React.ReactNode }) {
+function AnimatePages({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const data = await getWordPressCustomPage('es', "home");
-
-  const { acf } = data;
-  const { home_information } = acf;
   
+  // Crear una referencia para el contenedor de los hijos
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [childPositions, setChildPositions] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Verifica si el contenedor y sus hijos existen
+    if (containerRef.current) {
+      const childrenArray = Array.from(containerRef.current.children);
+      const positions = childrenArray.map((child) => {
+        const rect = (child as HTMLElement).getBoundingClientRect();
+        return { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
+      });
+      setChildPositions(positions);
+    }
+  }, [children]); // Dependencia para cuando los niños cambian
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
+        ref={containerRef} // Asigna la referencia aquí
         key={pathname}
         initial={{ x: "100%" }}
         animate={{ x: 0 }}
@@ -26,6 +34,9 @@ async function AnimatePages({ children }: { children: React.ReactNode }) {
         transition={{ type: "tween", duration: 0.5 }}
       >
         {children}
+        <div>
+          <pre>{JSON.stringify(childPositions, null, 2)}</pre>
+        </div>
       </motion.div>
     </AnimatePresence>
   );

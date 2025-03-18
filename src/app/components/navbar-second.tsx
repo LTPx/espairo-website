@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Link } from "@/navigation";
 import { usePathname } from "next/navigation";
+import AnimatePages from "./animate-pages";
 
 export default function NavbarSecond({
   children,
@@ -42,8 +43,10 @@ export default function NavbarSecond({
 
   return (
     <div className="flex h-screen">
-      <div className="flex-1" style={{ paddingRight: `${menuWidth}px` }}>
-        {children}
+      <div style={{ paddingRight: `${menuWidth}px` }}>
+        {/* <AnimatePages>
+            {children}
+        </AnimatePages> */}
       </div>
       <div className="fixed right-0 z-[1000] h-screen">
         <div className="h-full bg-[#E0E0E0] flex">

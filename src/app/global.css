@@ -52,6 +52,23 @@ body {
   height: 100%;
 } */
 
+/* Clases para la animación */
+.link-transition {
+  transition: transform 0.5s ease; /* Controla la velocidad y el tipo de transición */
+}
+
+.link-transition.clicked {
+  transform: translateX(-100vw); /* Desplaza el enlace a la izquierda fuera de la pantalla */
+}
+
+/* Esta parte es opcional, para asegurarse de que se ve bien en dispositivos móviles */
+@media screen and (max-width: 768px) {
+  .link-transition {
+    font-size: 16px; /* Ajusta el tamaño de la fuente para pantallas más pequeñas si es necesario */
+  }
+}
+
+
 .page-container {
   position: relative;
   width: 100vw;

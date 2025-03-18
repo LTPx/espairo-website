@@ -1,19 +1,17 @@
-import { BrandsWp } from "@/app/_interfaces/wordpress-components";
+import { BrandsPageWp, BrandsWp } from "@/app/_interfaces/wordpress-components";
 import { getCategories, getWordPressCustomPage } from "@/app/_services/api";
 import BrandCard from "@/app/components/brand-card";
 import BrandsPage from "@/app/components/brands-page";
 import ClientBrands from "@/app/components/client-brands";
 
-async function Brands({
-  params: { locale },
-}: {
-  params: { locale: "es" | "de" | "en" };
-}) {
-  const data = await getWordPressCustomPage(locale, "brands");
-  const { acf } = data;
-  const { brands_information } = acf;
+interface Props {
+  brands_information: BrandsPageWp;
+  allCategories: any;
+}
+function Brands(props: Props) {
+  const { brands_information, allCategories } = props;
   const brands: BrandsWp[] = brands_information.brand;
-  const allCategories = await getCategories(locale);
+  // const allCategories = await getCategories(locale);
 
   const categories = Array.from(
     new Map(
