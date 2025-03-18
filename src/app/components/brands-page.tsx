@@ -33,12 +33,12 @@ function BrandsPage(props: BrandsPageProps) {
     }
   };
 
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
+//   useEffect(() => {
+//     document.body.classList.add("no-scroll");
+//     return () => {
+//       document.body.classList.remove("no-scroll");
+//     };
+//   }, []);
 
   useEffect(() => {
     if (brands.length > 0 && brandRefs.current[brands[currentIndex].title]) {

@@ -45,7 +45,33 @@ body {
 
 body {
   background-color: #E0E0E0;
+  /* height: 100%; */
 }
+
+/* html, body, #__next {
+  height: 100%;
+} */
+
+.page-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.page-container > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.page-container > .active {
+  transform: translateX(-100%);
+}
+
 
 p {
   font-size: 18px;

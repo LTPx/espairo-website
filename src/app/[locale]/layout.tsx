@@ -36,13 +36,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body>
+      <body >
         <NextIntlClientProvider messages={messages}>
-          <MenuOptions
+          {/* <MenuOptions
             params={{
               locale: locale,
             }}
-          />
+          /> */}
           <App locale={locale}>{children}</App>
           {/* <Footer /> */}
         </NextIntlClientProvider>
