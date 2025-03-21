@@ -1,22 +1,21 @@
+import { ContactPageWp } from "@/app/_interfaces/wordpress-components";
 import { getWordPressCustomPage } from "@/app/_services/api";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
-  const {
-    params: { locale },
-  } = nextParams;
-  const t = await getTranslations();
-  const data = await getWordPressCustomPage(locale, "contact");
-  const { acf } = data;
-  const { contact_information } = acf;
+interface Props { 
+  contact_information: ContactPageWp;
+}
 
+ function Contact({ contact_information }: Props) {
+
+  // const t = await getTranslations();
   return (
-    <div className="lg:h-screen lg:flex">
+    <div className="lg:h-screen lg:flex lg:pl-[120px]">
       <div className="container lg:hidden bg-[#3F4751] flex items-center">
         <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
-          {`${t("header.contact")}`}
+          {/* {`${t("header.contact")}`} */}
         </span>
       </div>
       <div className="lg:w-1/2 h-full">

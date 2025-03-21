@@ -3,13 +3,15 @@ import { getCategories, getWordPressCustomPage } from "@/app/_services/api";
 import BrandCard from "@/app/components/brand-card";
 import BrandsPage from "@/app/components/brands-page";
 import ClientBrands from "@/app/components/client-brands";
+import Link from "next/link";
 
 interface Props {
   brands_information: BrandsPageWp;
   allCategories: any;
+  navOptions?: { label: string; section: string; route: string }[];
 }
 function Brands(props: Props) {
-  const { brands_information, allCategories } = props;
+  const { brands_information, allCategories, navOptions } = props;
   const brands: BrandsWp[] = brands_information.brand;
   // const allCategories = await getCategories(locale);
 
@@ -37,11 +39,13 @@ function Brands(props: Props) {
     .sort((a: any, b: any) => a.term_id - b.term_id);
 
   return (
-    <BrandsPage
-      brands_information={brands_information}
-      mergedCategories={mergedCategories}
-      brands={brands}
-    />
+    <>
+      <BrandsPage
+        brands_information={brands_information}
+        mergedCategories={mergedCategories}
+        brands={brands}
+      />
+    </>
   );
 }
 

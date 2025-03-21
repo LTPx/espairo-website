@@ -1,75 +1,79 @@
 "use client";
 
-import React, { useState } from "react";
-import { Link } from "@/navigation";
+import React from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import AnimatePages from "./animate-pages";
 
-export default function NavbarSecond({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+interface NavbarSecondProps {
+  navOptions: { label: string; route: string; section: string }[];
+}
+
+export default function NavbarSecond({ navOptions }: NavbarSecondProps) {
   const pathname = usePathname();
-  const menuItems = ["Brands", "Nosotros", "Proyectos", "Contacto"];
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
-  const handleItemClick = (item: string) => {
-    if (!selectedItems.includes(item)) {
-      setSelectedItems([...selectedItems, item]);
-    }
-  };
-
-  const getRoute = (item: string) => {
-    switch (item.toLowerCase()) {
-      case "brands":
-        return "/brands";
-      case "nosotros":
-        return "/about-us";
-      case "proyectos":
-        return "/projects";
-      case "contacto":
-        return "/contact";
-      default:
-        return "/";
-    }
-  };
-
-  const visibleMenuItems = menuItems.filter(
-    (item) => pathname !== getRoute(item) && !selectedItems.includes(item)
+  const currentIndex = navOptions.findIndex((option) =>
+    pathname.includes(option.section)
   );
+  const sectionsInPath =
+    currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
 
-  const menuWidth = visibleMenuItems.length * 30;
+  // Filtrar opciones para la derecha (solo las que aún no están en la izquierda)
+  const remainingOptions = navOptions.slice(currentIndex + 1);
 
   return (
-    <div className="flex h-screen">
-      <div style={{ paddingRight: `${menuWidth}px` }}>
-        {/* <AnimatePages>
-            {children}
-        </AnimatePages> */}
-      </div>
-      <div className="fixed right-0 z-[1000] h-screen">
-        <div className="h-full bg-[#E0E0E0] flex">
-          {visibleMenuItems.map((item, index) => (
-            <div
-              key={index}
-              className="h-full w-[30px] border-l border-[#3F4751] text-center"
+    <>
+      {/* Opciones a la izquierda */}
+      <div className="fixed left-0 z-[100000] h-screen flex">
+        {sectionsInPath.map((option) => (
+          <div
+            key={option.section}
+            className={`h-full w-[30px] border-r border-[#3F4751] text-center ${
+              pathname.includes(option.section) ? "bg-[#3F4751]" : "bg-[#E0E0E0]"
+            }`}
+          >
+            <Link
+              href={option.route}
+              className={`h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] font-medium rotate-180 transition duration-300 ${
+                pathname.includes(option.section)
+                  ? "text-white hover:text-gray-300"
+                  : "text-gray-600 hover:text-black"
+              }`}
+              style={{
+                writingMode: "vertical-rl",
+                textOrientation: "mixed",
+              }}
             >
-              <Link
-                href={getRoute(item)}
-                className="h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] text-gray-600 hover:text-black transition duration-300 font-medium rotate-180"
-                style={{
-                  writingMode: "vertical-rl",
-                  textOrientation: "mixed",
-                }}
-                onClick={() => handleItemClick(item)}
-              >
-                {item}
-              </Link>
-            </div>
-          ))}
-        </div>
+              {option.label}
+            </Link>
+          </div>
+        ))}
       </div>
-    </div>
+
+      {/* Opciones a la derecha (solo las que aún no aparecen en la izquierda) */}
+      <div className="fixed right-0 z-[1000] h-screen">
+  <div className="h-full bg-[#E0E0E0] flex">
+    {remainingOptions.map((option, index) => (
+      <div
+        key={option.section}
+        className={`h-full w-[30px] text-center ${
+          remainingOptions.length === 1 ? "" : "border-l border-[#3F4751]"
+        }`}
+      >
+        <Link
+          href={option.route}
+          className="h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] text-gray-600 hover:text-black transition duration-300 font-medium rotate-180"
+          style={{
+            writingMode: "vertical-rl",
+            textOrientation: "mixed",
+          }}
+        >
+          {option.label}
+        </Link>
+      </div>
+    ))}
+  </div>
+</div>
+
+    </>
   );
 }

@@ -5,6 +5,7 @@ import AuthorCard from "@/app/components/author-card";
 import Cover from "@/app/components/cover";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 
 interface Props {
   aboutUs_information: AboutUsPageWp;
@@ -14,7 +15,7 @@ interface Props {
   const { aboutUs_information } = props;
   // const t = await getTranslations();
   return (
-    <div className="page-AboutUs">
+    <div className="page-AboutUs lg:pl-[60px] lg:pr-[60px]">
       <div className="container lg:hidden bg-[#3F4751] flex items-center">
         <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
           {/* {`${t("header.about-us")}`} */}
