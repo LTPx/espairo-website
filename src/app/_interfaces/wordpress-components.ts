@@ -35,6 +35,7 @@ export interface ContactPageWp {
 
 export interface BrandsPageWp {
   cover_page: MediaFileWp;
+  description: string;
   brand: BrandsWp[];
 }
 

@@ -67,6 +67,7 @@ function BrandsPage(props: BrandsPageProps) {
           </div>
           <div className="lg:h-[calc(100vh-20px)] lg:overflow-auto">
             <ClientBrands
+              description={brands_information.description}
               brands={brands}
               categories={mergedCategories}
               onBrandClick={scrollToBrand}

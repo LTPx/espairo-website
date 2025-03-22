@@ -114,7 +114,7 @@ function CallAllPages(props: PageProps) {
         }}
       >
         <div className="w-full flex-shrink-0" ref={homeRef}>
-          <Home home_information={home} navOptions={navOptions} />
+          <Home home_information={home}/>
         </div>
         <div className="w-full flex-shrink-0" ref={brandsRef}>
           <Brands brands_information={brands} allCategories={categories} />

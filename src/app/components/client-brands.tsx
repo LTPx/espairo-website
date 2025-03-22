@@ -5,6 +5,7 @@ import { BrandsWp } from "../_interfaces/wordpress-components";
 
 interface ClientBrandsProps {
   brands: BrandsWp[];
+  description?: string;
   categories: { term_id: number; name: string }[];
   onBrandClick: (brandTitle: string) => void;
 }
@@ -13,6 +14,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
   brands,
   categories,
   onBrandClick,
+  description,
 }) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -51,8 +53,15 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
           ))}
         </div>
       </div>
-
-      <div className="flex flex-col">
+      {description && (
+        <div
+          className="lg:pr-[140px]"
+          dangerouslySetInnerHTML={{
+            __html: description,
+          }}
+        />
+      )}
+      <div className="flex flex-col lg:pt-[35px]">
         {filteredBrands.map((brand, index) => (
           <h2
             key={index}
