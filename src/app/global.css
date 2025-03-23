@@ -149,3 +149,27 @@ button {
     letter-spacing: -0.04em;
   }
 }
+
+.custom-title-authors {
+  p {
+    font-size: 40px;
+    line-height: 46px;
+    letter-spacing: -0.05em;
+  }
+}
+
+.title-card {
+  p {
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -0.05em;
+  }
+}
+
+.author-name {
+  p {
+    font-size: 40px;
+    line-height: 43px;
+    letter-spacing: -0.05em;
+  }
+}

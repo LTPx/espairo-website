@@ -20,37 +20,41 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   const filteredBrands =
-    selectedCategory === 1
-      ? brands
-      : selectedCategory
-      ? brands.filter(
-          (brand) => brand.category_brand.term_id === selectedCategory
-        )
-      : brands;
+  selectedCategory === 1
+    ? []
+    : selectedCategory
+    ? brands.filter((brand) => brand.category_brand.term_id === selectedCategory)
+    : brands;
+  // const filteredBrands =
+  // selectedCategory !== null
+  //   ? brands.filter(
+  //       (brand) => brand.category_brand.term_id === selectedCategory
+  //     )
+  //   : brands;
 
   return (
     <div className="px-[30px] py-[50px]">
       <div className="w-full overflow-hidden">
         <div className="filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[35px] lg:pr-[225px] overflow-x-scroll no-scrollbar">
-          {categories.map((category, index) => (
-            <button
-              key={category.term_id}
-              onClick={() =>
-                setSelectedCategory(
-                  selectedCategory === category.term_id
-                    ? null
-                    : category.term_id
-                )
-              }
-              className={`font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
-                selectedCategory === category.term_id
-                  ? "bg-[#3F4751] text-white"
-                  : "hover:bg-[#3F4751] hover:text-white"
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
+        {categories
+    .filter((category) => category.term_id !== 1) // Excluir categoría con term_id 1
+    .map((category) => (
+      <button
+        key={category.term_id}
+        onClick={() =>
+          setSelectedCategory(
+            selectedCategory === category.term_id ? null : category.term_id
+          )
+        }
+        className={`font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+          selectedCategory === category.term_id
+            ? "bg-[#3F4751] text-white"
+            : "hover:bg-[#3F4751] hover:text-white"
+        }`}
+      >
+        {category.name}
+      </button>
+    ))}
         </div>
       </div>
       {description && (

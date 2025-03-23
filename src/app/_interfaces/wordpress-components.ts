@@ -71,6 +71,8 @@ export interface AboutUsPageWp {
   authors_section: AuthorsSectionWp;
   second_image: string;
   second_information_section: AboutUsCardsWp;
+  third_image: string;
+  last_information_section: AboutUsCardsWp;
   last_image: string;
 }
 
@@ -82,6 +84,7 @@ export interface AboutUsCardsWp {
 
 export interface AuthorsSectionWp {
   image: ImageAcf;
+  title_section: string;
   authors: AuthorWp[];
 }
 
