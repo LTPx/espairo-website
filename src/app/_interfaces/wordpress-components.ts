@@ -29,14 +29,21 @@ export interface HomePageWp {
 
 export interface ContactPageWp {
   cover_page: MediaFileWp;
+  sub_title: string;
   title: string;
   description: string;
 }
 
 export interface BrandsPageWp {
   cover_page: MediaFileWp;
+  cover_categories: CoverCategoriesWp[];
   description: string;
   brand: BrandsWp[];
+}
+
+export interface CoverCategoriesWp {
+  image_cover: string;
+  category: number;
 }
 
 export interface BrandsWp {

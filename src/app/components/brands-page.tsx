@@ -57,23 +57,11 @@ function BrandsPage(props: BrandsPageProps) {
   return (
     <div className="page-Brands lg:pl-[30px] lg:pr-[90px] relative h-screen">
       <div className="relative h-full">
-        <div className=" flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-[100vh] lg:overflow-auto">
-          <div className="hidden lg:block lg:sticky lg:top-[0px] lg:left-0 w-full lg:h-[calc(100vh)]">
-            <img
-              src={brands_information.cover_page.url}
-              alt={"alt-projects"}
-              className="h-[100vh] w-full object-cover"
-            />
-          </div>
-          <div className="lg:h-[calc(100vh-20px)] lg:overflow-auto">
-            <ClientBrands
-              description={brands_information.description}
-              brands={brands}
-              categories={mergedCategories}
-              onBrandClick={scrollToBrand}
-            />
-          </div>
-        </div>
+        <ClientBrands
+          brands_information={brands_information}
+          categories={mergedCategories}
+          onBrandClick={scrollToBrand}
+        />
         {brands_information.brand.map((brand, index) => (
           <div
             key={index}
@@ -93,22 +81,6 @@ function BrandsPage(props: BrandsPageProps) {
           </div>
         ))}
       </div>
-      {/* <div className="fixed left-[150%] z-[1000000] h-screen">
-        <div className="h-full bg-[#E0E0E0] flex">
-          <div className="h-full w-[30px] border-l border-[#3F4751] text-center">
-            <Link
-              href={""}
-              className="h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] text-gray-600 hover:text-black transition duration-300 font-medium rotate-180"
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-              }}
-            >
-              Brand
-            </Link>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

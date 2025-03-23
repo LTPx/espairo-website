@@ -22,7 +22,7 @@ export function ProjectsInformation({ project }: ProjectsInformationProps) {
                 <Gallery gallery={gallery_project} />
               </section>
             )}
-            <section className="container lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
+            <section className="px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
               <h2 className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]">
                 {title}
               </h2>
