@@ -51,8 +51,9 @@ async function Brands(nextParams: {
     <>
       <BrandsPage
         brands_information={brands_information}
-        mergedCategories={mergedCategories}
-        brands={brands}
+        allCategories={allCategories}
+        // mergedCategories={mergedCategories}
+        // brands={brands}
       />
     </>
   );
