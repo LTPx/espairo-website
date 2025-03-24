@@ -111,7 +111,7 @@ function BrandsPage(props: BrandsPageProps) {
           brands_information={brands_information}
           categories={mergedCategories}
           onBrandClick={onBrandClick}
-          onCategorySelect={setSelectedCategory} // Pasamos el setter
+          onCategorySelect={setSelectedCategory}
         />
       </div>
       {filteredBrands.map((brand, index) => (

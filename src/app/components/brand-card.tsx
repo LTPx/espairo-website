@@ -47,7 +47,7 @@ function BrandCard(props: BrandCardProps) {
 
   return (
     <div className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full">
-      <Link href={url || ""} className={`group relative ${className}`}>
+      <div className={`group relative ${className}`}>
         {visibleImages.map((imageSrc, index) => (
           <img
             key={index}
@@ -57,16 +57,21 @@ function BrandCard(props: BrandCardProps) {
             loading="lazy"
           />
         ))}
-      </Link>
+      </div>
       <div className="pl-[30px] pr-[75px] py-[50px] flex flex-col lg:justify-between">
         <div>
           {category && (
-            <Link className="inline-block pb-[40px]" href={url || ""}>
+            <Link href={''} className="flex gap-[10px] pb-[40px]">
               <button
                 onClick={onCategoryClick}
-                className="bg-[#3F4751] text-white uppercase inline-block hover:bg-black hover:text-white flex items-center justify-center font-mediumFont text-[12px] leading-[20px] cursor-pointer border border-black h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out"
+                className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-mediumFont text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
               >
                 {category}
+                <img
+                  src={"/images/close-t.svg"}
+                  className="h-[6px] w-[6px] ml-[10px]"
+                  loading="lazy"
+                />
               </button>
             </Link>
           )}

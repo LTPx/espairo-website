@@ -30,8 +30,8 @@ export function CoverHome(props: Props) {
           <img
             src={
               isDescriptionVisible
-                ? "/images/arrow-down.png"
-                : "/images/arrow-top.png"
+                ? "/images/arrow-down-home.svg"
+                : "/images/arrow-up.svg"
             }
             alt="Toggle Description"
             className="h-[26px] w-[26px] cursor-pointer"

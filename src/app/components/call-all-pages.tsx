@@ -126,7 +126,6 @@ function CallAllPages(props: PageProps) {
         </div>
         <div className="w-full flex-shrink-0" ref={brandsRef}>
           <BrandsPageContent brands_information={brands} allCategories={categories}/>
-          {/* <Brands brands_information={brands} allCategories={categories} /> */}
         </div>
         <div className="w-full h-auto flex-shrink-0" ref={aboutUsRef}>
           <AboutUsPage aboutUs_information={aboutUs_information} />

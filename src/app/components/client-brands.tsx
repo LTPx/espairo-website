@@ -56,7 +56,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                       const newCategory =
                         selectedCategory === category.term_id ? null : category.term_id;
                       setSelectedCategory(newCategory);
-                      onCategorySelect(newCategory); // 🔥 Enviar categoría seleccionada
+                      onCategorySelect(newCategory);
                     }}
                     className={`font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                       selectedCategory === category.term_id
