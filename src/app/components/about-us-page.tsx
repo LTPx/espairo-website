@@ -6,17 +6,17 @@ import Cover from "@/app/components/cover";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import AboutUsSecondCard from "./aboutUs-second-card";
 
 interface Props {
   aboutUs_information: AboutUsPageWp;
 }
 
- function AboutUsPage( props: Props) {
-  
+function AboutUsPage(props: Props) {
   const { aboutUs_information } = props;
   // const t = await getTranslations();
   return (
-    <div className="page-AboutUs lg:pl-[60px] lg:pr-[60px]">
+    <div className="page-AboutUs relative lg:pl-[60px] lg:pr-[60px]">
       <div className="container lg:hidden bg-[#3F4751] flex items-center">
         <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
           {/* {`${t("header.about-us")}`} */}
@@ -38,7 +38,13 @@ interface Props {
           className="h-[800px] object-cover w-full"
         />
       </section>
-      <section className="grid grid-cols-1 gap-[40px] lg:gap-[0px] lg:grid-cols-2 pt-[40px] lg:pt-[40px]">
+      <div
+        className="custom-title-authors lg:pt-[50px] font-regular lg:pr-[53px] lg:pl-[30px]"
+        dangerouslySetInnerHTML={{
+          __html: aboutUs_information.authors_section.title_section,
+        }}
+      />
+      <section className="pl-[30px] pr-[30px] grid grid-cols-1 gap-[40px] lg:gap-[50px] lg:grid-cols-2 pt-[40px] lg:pt-[140px]">
         {aboutUs_information.authors_section.authors.map((author, index) => (
           <AuthorCard
             key={index}
@@ -54,7 +60,7 @@ interface Props {
         />
       </section>
       <section className="pt-[65px]">
-        <AboutUsCard
+        <AboutUsSecondCard
           image={aboutUs_information.second_information_section.image}
           title={aboutUs_information.second_information_section.title}
           description={
@@ -62,7 +68,21 @@ interface Props {
           }
         />
       </section>
-      <section className="pt-[65px]">
+      <section className="pt-[70px]">
+        <img
+          src={aboutUs_information.third_image}
+          className="h-[800px] object-cover w-full"
+        />
+      </section>
+      <section className="pt-[40px] lg:pt-[70px]">
+        <AboutUsSecondCard
+          image={aboutUs_information.last_information_section.image}
+          title={aboutUs_information.last_information_section.title}
+          description={aboutUs_information.last_information_section.description}
+          reverseLayout={true}
+        />
+      </section>
+      <section className="pt-[65px] mb-[250px]">
         <img
           src={aboutUs_information.last_image}
           className="h-[800px] object-cover w-full"
