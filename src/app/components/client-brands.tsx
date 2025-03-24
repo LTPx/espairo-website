@@ -41,10 +41,10 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
           className="h-[100vh] w-full object-cover"
         />
       </div>
-      <div className="lg:h-[calc(100vh-20px)] lg:overflow-auto no-scrollbar">
+      <div className="lg:h-[calc(100vh)] lg:overflow-auto no-scrollbar">
         <div className="px-[30px] py-[50px]">
-          <div className="w-full overflow-hidden">
-            <div className="filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[35px] lg:pr-[180px] overflow-x-scroll no-scrollbar">
+          <div className="w-full sticky top-[50px] z-[100000]">
+            <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[35px] lg:pr-[180px] overflow-x-scroll no-scrollbar">
               {categories
                 .filter((category) => category.term_id !== 1)
                 .map((category) => (
@@ -68,7 +68,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                 ))}
             </div>
           </div>
-          {brands_information.description && (
+          {selectedCategory === null && brands_information.description && (
             <div
               className="lg:pr-[140px]"
               dangerouslySetInnerHTML={{

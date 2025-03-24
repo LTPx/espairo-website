@@ -47,7 +47,7 @@ export default function NavbarSecond({ navOptions }: NavbarSecondProps) {
           >
             <Link
               href={option.route}
-              className={`h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] font-medium rotate-180 transition duration-300 ${
+              className={`font-regular h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] font-medium rotate-180 transition duration-300 ${
                 pathname.includes(option.section)
                   ? "text-white hover:text-gray-300"
                   : "text-gray-600 hover:text-black"
@@ -73,7 +73,7 @@ export default function NavbarSecond({ navOptions }: NavbarSecondProps) {
             >
               <Link
                 href={option.route}
-                className="h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] text-gray-600 hover:text-black transition duration-300 font-medium rotate-180"
+                className="font-regular h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] text-gray-600 hover:text-black transition duration-300 font-medium rotate-180"
                 style={{
                   writingMode: "vertical-rl",
                   textOrientation: "mixed",
