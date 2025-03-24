@@ -83,7 +83,7 @@ export default async function LocaleLayout({
             contact_information={contact_information}
           />
           {/* <App locale={locale}><CallAllPages/></App> */}
-          {/* <Footer /> */}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

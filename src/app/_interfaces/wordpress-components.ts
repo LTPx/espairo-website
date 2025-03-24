@@ -48,11 +48,17 @@ export interface CoverCategoriesWp {
 
 export interface BrandsWp {
   image: string;
+  images_brand: BranImagesWp[];
   title: string;
   description: string;
   url_brand: string;
   category_brand: CategoryBrandWp;
 }
+
+export interface BranImagesWp {
+  image: string;
+}
+
 
 export interface CategoryBrandWp {
   term_id: number;

@@ -13,7 +13,6 @@ interface Props {
 function Brands(props: Props) {
   const { brands_information, allCategories, navOptions } = props;
   const brands: BrandsWp[] = brands_information.brand;
-  // const allCategories = await getCategories(locale);
 
   const categories = Array.from(
     new Map(

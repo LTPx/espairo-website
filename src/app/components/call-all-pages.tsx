@@ -26,6 +26,8 @@ interface PageProps {
   contact_information: ContactPageWp;
 }
 
+type Section = "home" | "brands" | "aboutUs" | "projects" | "contact";
+
 function CallAllPages(props: PageProps) {
   const {
     home,
@@ -46,8 +48,18 @@ function CallAllPages(props: PageProps) {
     return "home";
   };
 
-  const [activeSection, setActiveSection] = useState(getSectionFromPath(pathname));
-  const [sectionHeight, setSectionHeight] = useState<number | undefined>(undefined);
+  const [activeSection, setActiveSection] = useState<Section>(
+    getSectionFromPath(pathname)
+  );
+  const [sectionHeights, setSectionHeights] = useState<Record<Section, number>>(
+    {
+      home: 0,
+      brands: 0,
+      aboutUs: 0,
+      projects: 0,
+      contact: 0,
+    }
+  );
 
   const homeRef = useRef<HTMLDivElement>(null);
   const brandsRef = useRef<HTMLDivElement>(null);
@@ -55,29 +67,24 @@ function CallAllPages(props: PageProps) {
   const projectsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
 
-  
-  const getHeightForSection = () => {
-    switch (activeSection) {
-      case "home":
-        return homeRef.current?.scrollHeight;
-      case "brands":
-        return brandsRef.current?.scrollHeight;
-      case "aboutUs":
-        return aboutUsRef.current?.scrollHeight;
-      case "projects":
-        return projectsRef.current?.scrollHeight;
-      case "contact":
-        return contactRef.current?.scrollHeight;
-      default:
-        return undefined;
-    }
+  const getAllHeights = () => {
+    setSectionHeights({
+      home: homeRef.current?.scrollHeight || 0,
+      brands: brandsRef.current?.scrollHeight || 0,
+      aboutUs: aboutUsRef.current?.scrollHeight || 0,
+      projects: projectsRef.current?.scrollHeight || 0,
+      contact: contactRef.current?.scrollHeight || 0,
+    });
   };
 
   useEffect(() => {
-    const height = getHeightForSection();
-    setSectionHeight(height);
-  }, [activeSection]); 
-  
+    getAllHeights();
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeSection]);
+
   useEffect(() => {
     setActiveSection(getSectionFromPath(pathname));
   }, [pathname]);
@@ -109,12 +116,13 @@ function CallAllPages(props: PageProps) {
         }}
         transition={{ type: "tween", duration: 0.5 }}
         style={{
-          
-          height: sectionHeight ? `${sectionHeight}px` : "100vh",
+          height: sectionHeights[activeSection]
+            ? `${sectionHeights[activeSection]}px`
+            : "100vh",
         }}
       >
         <div className="w-full flex-shrink-0" ref={homeRef}>
-          <Home home_information={home}/>
+          <Home home_information={home} />
         </div>
         <div className="w-full flex-shrink-0" ref={brandsRef}>
           <Brands brands_information={brands} allCategories={categories} />

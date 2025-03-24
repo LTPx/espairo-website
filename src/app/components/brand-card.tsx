@@ -1,11 +1,12 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { BranImagesWp } from "../_interfaces/wordpress-components";
 
 interface BrandCardProps {
-  imageHover?: string;
-  image?: string;
+  images: BranImagesWp[];
   title?: string;
   date?: string;
   description?: string;
@@ -16,13 +17,13 @@ interface BrandCardProps {
   index?: number;
   totalBrands?: number;
   onNext?: () => void;
+  onPrevious?: () => void;
+  onCategoryClick?: () => void;
 }
 
 function BrandCard(props: BrandCardProps) {
   const {
     urlBrand,
-    imageHover,
-    image,
     title,
     className,
     date,
@@ -32,33 +33,39 @@ function BrandCard(props: BrandCardProps) {
     index,
     totalBrands,
     onNext,
+    images,
+    onPrevious,
+    onCategoryClick,
   } = props;
+
   const t = useTranslations();
   const hasNext = index !== undefined && totalBrands && index < totalBrands - 1;
+  const hasPrevious = index !== undefined && index > 0; // Lógica para saber si hay un elemento anterior
+  const [visibleImages, setVisibleImages] = useState<string[]>([
+    images[0].image || "",
+  ]);
 
   return (
     <div className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full">
       <Link href={url || ""} className={`group relative ${className}`}>
-        <img
-          src={image}
-          alt="base image"
-          className={`lg:absolute top-0 left-0 h-[500px] lg:h-full w-full object-cover transition-opacity duration-500 ease-in-out transform ${
-            imageHover ? "opacity-100 group-hover:opacity-0" : ""
-          }`}
-        />
-        {imageHover && (
+        {visibleImages.map((imageSrc, index) => (
           <img
-            src={imageHover}
-            alt="hover image"
-            className="absolute top-0 left-0 h-[500px] lg:h-full w-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            key={index}
+            src={imageSrc}
+            alt={`brand-image-${index}`}
+            className={`lg:absolute top-0 left-0 h-[500px] lg:h-full w-full object-cover transition-opacity duration-500 ease-in-out transform lazy-load`}
+            loading="lazy"
           />
-        )}
+        ))}
       </Link>
       <div className="pl-[30px] pr-[75px] py-[50px] flex flex-col lg:justify-between">
         <div>
           {category && (
             <Link className="inline-block pb-[40px]" href={url || ""}>
-              <button className="bg-[#3F4751] text-white uppercase inline-block hover:bg-black hover:text-white flex items-center justify-center font-mediumFont text-[12px] leading-[20px] cursor-pointer border border-black h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+              <button
+                onClick={onCategoryClick}
+                className="bg-[#3F4751] text-white uppercase inline-block hover:bg-black hover:text-white flex items-center justify-center font-mediumFont text-[12px] leading-[20px] cursor-pointer border border-black h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out"
+              >
                 {category}
               </button>
             </Link>
@@ -93,14 +100,24 @@ function BrandCard(props: BrandCardProps) {
               Página web
             </span>
           </Link>
-          {hasNext && (
-            <span
-              className="cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
-              onClick={onNext}
-            >
-              Siguiente
-            </span>
-          )}
+          <div className="flex gap-[10px]">
+            {hasPrevious && (
+              <span
+                className="cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
+                onClick={onPrevious}
+              >
+                Anterior
+              </span>
+            )}
+            {hasNext && (
+              <span
+                className="cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
+                onClick={onNext}
+              >
+                Siguiente
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>

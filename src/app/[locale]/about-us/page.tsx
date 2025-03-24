@@ -1,16 +1,15 @@
 import { AboutUsPageWp } from "@/app/_interfaces/wordpress-components";
-import { getWordPressCustomPage } from "@/app/_services/api";
 import AboutUsCard from "@/app/components/aboutUs-card";
 import AboutUsSecondCard from "@/app/components/aboutUs-second-card";
 import AuthorCard from "@/app/components/author-card";
 import Cover from "@/app/components/cover";
-import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+// import { Metadata } from "next";
+// import { getTranslations } from "next-intl/server";
+// import Link from "next/link";
 
 interface Props {
   aboutUs_information: AboutUsPageWp;
-}
+} 
 
 function AboutUs(props: Props) {
   const { aboutUs_information } = props;

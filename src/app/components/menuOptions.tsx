@@ -29,7 +29,7 @@ function MenuOptions(nextParams: { params: { locale: "en" | "es" | "de" } }) {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="lg:hidden block">
         <MenuMobile locale={locale} languages={languages} links={menuLinks} />
       </div>

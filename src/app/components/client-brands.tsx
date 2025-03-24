@@ -5,7 +5,7 @@ import { BrandsPageWp } from "../_interfaces/wordpress-components";
 
 interface ClientBrandsProps {
   categories: { term_id: number; name: string }[];
-  onBrandClick: (brandTitle: string) => void;
+  onBrandClick: (index: number) => void;
   brands_information: BrandsPageWp;
 }
 
@@ -16,7 +16,6 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
 }) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  console.log("Cover Categories:", brands_information.cover_categories);
 
   const filteredBrands =
     selectedCategory === 1
@@ -35,14 +34,14 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
 
   return (
     <div className="flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-[100vh] lg:overflow-auto">
-      <div className="hidden lg:block lg:sticky lg:top-[0px] lg:left-0 w-full lg:h-[calc(100vh)]">
+      <div className=" lg:h-[calc(100vh)]">
         <img
           src={selectedCover}
           alt="alt-projects"
           className="h-[100vh] w-full object-cover"
         />
       </div>
-      <div className="lg:h-[calc(100vh-20px)] lg:overflow-auto">
+      <div className="lg:h-[calc(100vh-20px)] lg:overflow-auto no-scrollbar">
         <div className="px-[30px] py-[50px]">
           <div className="w-full overflow-hidden">
             <div className="filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[35px] lg:pr-[180px] overflow-x-scroll no-scrollbar">
@@ -88,7 +87,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                 }`}
                 onMouseEnter={() => setHoveredBrand(brand.title)}
                 onMouseLeave={() => setHoveredBrand(null)}
-                onClick={() => onBrandClick(brand.title)}
+                onClick={() => onBrandClick(index)}
               >
                 {brand.title}
               </h2>
