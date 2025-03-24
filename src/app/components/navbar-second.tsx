@@ -6,9 +6,15 @@ import { usePathname } from "next/navigation";
 
 interface NavbarSecondProps {
   navOptions: { label: string; route: string; section: string }[];
+  selectedBrandTitle?: string | null;
+  setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>; // Agregar función para resetear el título
 }
 
-export default function NavbarSecond({ navOptions }: NavbarSecondProps) {
+export default function NavbarSecond({
+  navOptions,
+  selectedBrandTitle,
+  setSelectedBrandTitle
+}: NavbarSecondProps) {
   const pathname = usePathname();
 
   const currentIndex = navOptions.findIndex((option) =>
@@ -19,15 +25,27 @@ export default function NavbarSecond({ navOptions }: NavbarSecondProps) {
   const remainingOptions = navOptions.slice(currentIndex + 1);
 
   const leftPosition =
-    pathname === "/" ? "50px" :
-    pathname.includes("brands") ? "60px" :
-    pathname.includes("about-us") ? "90px" :
-    pathname.includes("projects") ? "120px" :
-    pathname.includes("contact") ? "150px" : "50px";
+    pathname === "/"
+      ? "50px"
+      : pathname.includes("brands")
+      ? "60px"
+      : pathname.includes("about-us")
+      ? "90px"
+      : pathname.includes("projects")
+      ? "120px"
+      : pathname.includes("contact")
+      ? "150px"
+      : "50px";
 
+    const handleLinkClick = (section: string) => {
+      // Si no estamos en la página de brands, reiniciamos el título
+      if (!section.includes("brands")) {
+        setSelectedBrandTitle(null); // Reseteamos el título
+      }
+    };
   return (
     <>
-      <Link href={'/'}>
+      <Link href={"/"}>
         <h1
           className="fixed top-[50px] text-white text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
           style={{ left: leftPosition }}
@@ -56,8 +74,12 @@ export default function NavbarSecond({ navOptions }: NavbarSecondProps) {
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
               }}
+              onClick={() => handleLinkClick(option.section)}
             >
               {option.label}
+              {pathname.includes("brands") &&
+                selectedBrandTitle &&
+                ` - ${selectedBrandTitle}`}
             </Link>
           </div>
         ))}

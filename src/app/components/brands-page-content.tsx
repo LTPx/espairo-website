@@ -15,12 +15,12 @@ function BrandsPageContent(props: Props) {
 
   return (
     <>
-      <BrandsPage
+      {/* <BrandsPage
         brands_information={brands_information}
         allCategories={allCategories}
         // mergedCategories={mergedCategories}
         // brands={brands}
-      />
+      /> */}
     </>
   );
 }

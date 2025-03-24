@@ -10,10 +10,11 @@ import React from "react";
 interface BrandsPageProps {
   brands_information: BrandsPageWp;
   allCategories: any;
+  setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 function BrandsPage(props: BrandsPageProps) {
-  const { brands_information, allCategories } = props;
+  const { brands_information, allCategories, setSelectedBrandTitle } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null); // Estado de la categoría seleccionada
   const pathname = usePathname();
@@ -73,7 +74,8 @@ function BrandsPage(props: BrandsPageProps) {
 
   const onBrandClick = (selectedBrand: BrandsWp) => {
     console.log("Selected Brand:", selectedBrand.title);
-
+    setSelectedBrandTitle(selectedBrand.title); 
+    
     const realIndex = filteredBrands.findIndex((b) => {
       console.log("Brand in iteration:", b.title);
       return b.title === selectedBrand.title;
@@ -94,6 +96,7 @@ function BrandsPage(props: BrandsPageProps) {
     if (currentIndex < filteredBrands.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
+      setSelectedBrandTitle(filteredBrands[nextIndex].title); 
     }
   };
 
@@ -101,6 +104,7 @@ function BrandsPage(props: BrandsPageProps) {
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
       setCurrentIndex(prevIndex);
+      setSelectedBrandTitle(filteredBrands[prevIndex].title); 
     }
   };
 

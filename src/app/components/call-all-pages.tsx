@@ -16,6 +16,7 @@ import ProjectsPage from "./projects-page";
 import AboutUsPage from "./about-us-page";
 import BrandsPageContent from "./brands-page-content";
 import ContactPage from "./contact-page";
+import BrandsPage from "./brands-page";
 
 interface PageProps {
   home: HomePageWp;
@@ -39,6 +40,7 @@ function CallAllPages(props: PageProps) {
   } = props;
   const router = useRouter();
   const pathname = usePathname();
+  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(null);
 
   const getSectionFromPath = (path: string) => {
     if (path.includes("/brands")) return "brands";
@@ -89,6 +91,13 @@ function CallAllPages(props: PageProps) {
     setActiveSection(getSectionFromPath(pathname));
   }, [pathname]);
 
+  useEffect(() => {
+    if (activeSection === "brands") {
+      setSelectedBrandTitle(null);
+    }
+  }, [activeSection]);
+
+
   const navOptions = [
     { label: "Brands", section: "brands", route: "/es/brands" },
     { label: "Nosotros", section: "about-us", route: "/es/about-us" },
@@ -98,7 +107,7 @@ function CallAllPages(props: PageProps) {
 
   return (
     <div className="h-full relative overflow-hidden">
-      <NavbarSecond navOptions={navOptions} />
+      <NavbarSecond setSelectedBrandTitle={setSelectedBrandTitle} navOptions={navOptions} selectedBrandTitle={selectedBrandTitle}  />
       <motion.div
         className="flex w-full"
         initial={{ x: 0 }}
@@ -125,7 +134,7 @@ function CallAllPages(props: PageProps) {
           <Home home_information={home} />
         </div>
         <div className="w-full flex-shrink-0" ref={brandsRef}>
-          <BrandsPageContent brands_information={brands} allCategories={categories}/>
+          <BrandsPage brands_information={brands} allCategories={categories} setSelectedBrandTitle={setSelectedBrandTitle}/>
         </div>
         <div className="w-full h-auto flex-shrink-0" ref={aboutUsRef}>
           <AboutUsPage aboutUs_information={aboutUs_information} />
