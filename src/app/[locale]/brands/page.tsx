@@ -4,6 +4,7 @@ import BrandCard from "@/app/components/brand-card";
 import BrandsPage from "@/app/components/brands-page";
 import ClientBrands from "@/app/components/client-brands";
 import Link from "next/link";
+import { SetStateAction } from "react";
 
 // interface Props {
 //   brands_information: BrandsPageWp;
@@ -51,8 +52,9 @@ async function Brands(nextParams: {
     <>
       <BrandsPage
         brands_information={brands_information}
-        allCategories={allCategories}
-        // mergedCategories={mergedCategories}
+        allCategories={allCategories} setSelectedBrandTitle={function (value: SetStateAction<string | null>): void {
+          throw new Error("Function not implemented.");
+        } }        // mergedCategories={mergedCategories}
         // brands={brands}
       />
     </>

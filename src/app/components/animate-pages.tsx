@@ -30,7 +30,7 @@ function AnimatePages({ children }: { children: React.ReactNode }) {
 
   return (
     <div>
-      <NavbarSecond navOptions={navOptions} />
+      {/* <NavbarSecond navOptions={navOptions} /> */}
       {/* <AnimatePresence mode="wait"> */}
         <motion.div
           // ref={containerRef} // Asigna la referencia aquí
