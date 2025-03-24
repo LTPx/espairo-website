@@ -1,18 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { BrandsPageWp } from "../_interfaces/wordpress-components";
+import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 
 interface ClientBrandsProps {
   categories: { term_id: number; name: string }[];
-  onBrandClick: (index: number) => void;
+  onBrandClick: (selectedBrand: BrandsWp) => void;
   brands_information: BrandsPageWp;
+  onCategorySelect: (category: number | null) => void;
 }
 
 const ClientBrands: React.FC<ClientBrandsProps> = ({
   categories,
   onBrandClick,
   brands_information,
+  onCategorySelect
 }) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -51,11 +53,10 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                   <button
                     key={category.term_id}
                     onClick={() => {
-                      setSelectedCategory(
-                        selectedCategory === category.term_id
-                          ? null
-                          : category.term_id
-                      );
+                      const newCategory =
+                        selectedCategory === category.term_id ? null : category.term_id;
+                      setSelectedCategory(newCategory);
+                      onCategorySelect(newCategory); // 🔥 Enviar categoría seleccionada
                     }}
                     className={`font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                       selectedCategory === category.term_id
@@ -87,7 +88,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                 }`}
                 onMouseEnter={() => setHoveredBrand(brand.title)}
                 onMouseLeave={() => setHoveredBrand(null)}
-                onClick={() => onBrandClick(index)}
+                onClick={() => onBrandClick(brand)}
               >
                 {brand.title}
               </h2>

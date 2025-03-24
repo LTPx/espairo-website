@@ -9,20 +9,51 @@ import React from "react";
 
 interface BrandsPageProps {
   brands_information: BrandsPageWp;
-  mergedCategories: any;
-  brands: BrandsWp[];
+  allCategories: any;
 }
 
 function BrandsPage(props: BrandsPageProps) {
-  const { brands_information, mergedCategories, brands } = props;
+  const { brands_information, allCategories } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null); // Estado de la categoría seleccionada
   const pathname = usePathname();
 
+  const brands: BrandsWp[] = brands_information.brand;
+
+  const categories = Array.from(
+    new Map(
+      brands_information.brand.map((brand) => [
+        brand.category_brand.term_id,
+        {
+          term_id: brand.category_brand.term_id,
+          name: brand.category_brand.name,
+        },
+      ])
+    ).values()
+  );
+
+  const mergedCategories = allCategories
+    .map((cat: any) => {
+      const existingCategory = categories.find((c) => c.term_id === cat.id);
+      return {
+        term_id: cat.id,
+        name: cat.name,
+        existsInBrands: !!existingCategory,
+      };
+    })
+    .sort((a: any, b: any) => a.term_id - b.term_id);
+
+  const filteredBrands = selectedCategory
+    ? brands.filter(
+        (brand) => brand.category_brand.term_id === selectedCategory
+      )
+    : brands;
+
   const calculateScrollPosition = (index: number) => {
-    return index * window.innerHeight;
+    return index === 0 ? 0 : index * window.innerHeight;
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (pathname === "/es/brands") {
       document.body.classList.add("no-scroll");
       return () => {
@@ -32,17 +63,27 @@ function BrandsPage(props: BrandsPageProps) {
   }, [pathname]);
 
   const scrollToBrand = (index: number) => {
-    console.log('index-r',index)
-    const scrollPosition = calculateScrollPosition(index);
+    console.log("index-r", index);
+    const scrollPosition = calculateScrollPosition(index + 1);
     window.scrollTo({
       top: scrollPosition,
       behavior: "smooth",
     });
   };
 
-  const onBrandClick = (index: number) => {
-    setCurrentIndex(index + 1);
-    console.log('index-c',index)
+  const onBrandClick = (selectedBrand: BrandsWp) => {
+    console.log("Selected Brand:", selectedBrand.title);
+
+    const realIndex = filteredBrands.findIndex((b) => {
+      console.log("Brand in iteration:", b.title);
+      return b.title === selectedBrand.title;
+    });
+    console.log("Real Index:", realIndex);
+
+    if (realIndex !== -1) {
+      setCurrentIndex(realIndex);
+      scrollToBrand(realIndex);
+    }
   };
 
   useEffect(() => {
@@ -50,7 +91,7 @@ function BrandsPage(props: BrandsPageProps) {
   }, [currentIndex]);
 
   const goToNextBrand = () => {
-    if (currentIndex < brands.length) {
+    if (currentIndex < filteredBrands.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
     }
@@ -70,9 +111,10 @@ function BrandsPage(props: BrandsPageProps) {
           brands_information={brands_information}
           categories={mergedCategories}
           onBrandClick={onBrandClick}
+          onCategorySelect={setSelectedCategory} // Pasamos el setter
         />
       </div>
-      {brands_information.brand.map((brand, index) => (
+      {filteredBrands.map((brand, index) => (
         <div key={index} className="brand-slug-page h-[100vh]">
           <BrandCard
             images={brand.images_brand}
@@ -81,7 +123,7 @@ function BrandsPage(props: BrandsPageProps) {
             urlBrand={brand.url_brand}
             category={brand.category_brand.name}
             index={index}
-            totalBrands={brands_information.brand.length}
+            totalBrands={filteredBrands.length}
             onNext={goToNextBrand}
             onPrevious={goToPreviousBrand}
           />

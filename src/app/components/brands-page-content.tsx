@@ -8,42 +8,18 @@ import Link from "next/link";
 interface Props {
   brands_information: BrandsPageWp;
   allCategories: any;
-  navOptions?: { label: string; section: string; route: string }[];
 }
 
 function BrandsPageContent(props: Props) {
-  const { brands_information, allCategories, navOptions } = props;
-  const brands: BrandsWp[] = brands_information.brand;
-
-  const categories = Array.from(
-    new Map(
-      brands_information.brand.map((brand) => [
-        brand.category_brand.term_id,
-        {
-          term_id: brand.category_brand.term_id,
-          name: brand.category_brand.name,
-        },
-      ])
-    ).values()
-  );
-
-  const mergedCategories = allCategories
-    .map((cat: any) => {
-      const existingCategory = categories.find((c) => c.term_id === cat.id);
-      return {
-        term_id: cat.id,
-        name: cat.name,
-        existsInBrands: !!existingCategory,
-      };
-    })
-    .sort((a: any, b: any) => a.term_id - b.term_id);
+  const { brands_information, allCategories } = props;
 
   return (
     <>
       <BrandsPage
         brands_information={brands_information}
-        mergedCategories={mergedCategories}
-        brands={brands}
+        allCategories={allCategories}
+        // mergedCategories={mergedCategories}
+        // brands={brands}
       />
     </>
   );
