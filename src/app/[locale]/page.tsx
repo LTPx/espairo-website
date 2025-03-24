@@ -12,15 +12,9 @@ export default async function Page(nextParams: {
     params: { locale },
   } = nextParams;
 
-  // const data = await getWordPressCustomPage(locale, "home");
+  const data = await getWordPressCustomPage(locale, "home");
 
-  // const { acf } = data;
-  // const { home_information } = acf;
-  // return <Home home_information={home_information} />;
-  return (
-    <div>
-      pending
-    </div>
-  );
-
+  const { acf } = data;
+  const { home_information } = acf;
+  return <Home home_information={home_information} />;
 }

@@ -5,23 +5,14 @@ import BrandsPage from "@/app/components/brands-page";
 import ClientBrands from "@/app/components/client-brands";
 import Link from "next/link";
 
-// interface Props {
-//   brands_information: BrandsPageWp;
-//   allCategories: any;
-//   navOptions?: { label: string; section: string; route: string }[];
-// }
+interface Props {
+  brands_information: BrandsPageWp;
+  allCategories: any;
+  navOptions?: { label: string; section: string; route: string }[];
+}
 
-async function Brands(nextParams: {
-  params: { locale: "es" | "de" | "en" };
-}) {
-  const {
-    params: { locale },
-  } = nextParams;
-  const data = await getWordPressCustomPage(locale, "brands");
-  const allCategories = await getCategories(locale);
-  const { acf } = data;
-  const { brands_information } = acf;
-
+function BrandsPageContent(props: Props) {
+  const { brands_information, allCategories, navOptions } = props;
   const brands: BrandsWp[] = brands_information.brand;
 
   const categories = Array.from(
@@ -58,4 +49,4 @@ async function Brands(nextParams: {
   );
 }
 
-export default Brands;
+export default BrandsPageContent;

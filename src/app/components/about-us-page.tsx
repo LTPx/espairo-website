@@ -7,18 +7,13 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-async function AboutUs(nextParams: {
-  params: { locale: "es" | "de" | "en" };
-}) {
-  const {
-    params: { locale },
-  } = nextParams;
+interface Props {
+  aboutUs_information: AboutUsPageWp;
+}
 
-  const data = await getWordPressCustomPage(locale, "about-us");
-  const { acf } = data;
-  const { aboutUs_information } = acf;
+ function AboutUsPage( props: Props) {
   
-  // const { aboutUs_information } = props;
+  const { aboutUs_information } = props;
   // const t = await getTranslations();
   return (
     <div className="page-AboutUs lg:pl-[60px] lg:pr-[60px]">
@@ -77,4 +72,4 @@ async function AboutUs(nextParams: {
   );
 }
 
-export default AboutUs;
+export default AboutUsPage;

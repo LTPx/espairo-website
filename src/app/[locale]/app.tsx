@@ -1,7 +1,4 @@
-import { getWordPressPage } from "../_services/api";
-import Navbar from "../components/navbar";
-import NavbarSecond from "../components/navbar-second";
-import ScrollPages from "../components/ScrollPages";
+import AnimatePages from "../components/animate-pages";
 
 interface Props {
   children: any;
@@ -10,15 +7,12 @@ interface Props {
 
 async function App(props: Props) {
   const { children, locale } = props;
+
   return (
-    // <AnimatePages>
-      {children}
-    // </AnimatePages>
-  //   <NavbarSecond>
-  //     {children}
-  //   </NavbarSecond>
-  )
-  
+    <AnimatePages>
+        <div className="bg-body">{children}</div>
+    </AnimatePages>
+  );
 }
 
 export default App;

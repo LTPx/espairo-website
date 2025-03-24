@@ -4,7 +4,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Home from "../[locale]/home";
-import Projects from "../[locale]/projects/page";
 import {
   AboutUsPageWp,
   BrandsPageWp,
@@ -12,10 +11,11 @@ import {
   HomePageWp,
   ProjectsPageWp,
 } from "../_interfaces/wordpress-components";
-import Brands from "../[locale]/brands/page";
-import AboutUs from "../[locale]/about-us/page";
 import NavbarSecond from "./navbar-second";
-import Contact from "../[locale]/contact/page";
+import ProjectsPage from "./projects-page";
+import AboutUsPage from "./about-us-page";
+import BrandsPageContent from "./brands-page-content";
+import ContactPage from "./contact-page";
 
 interface PageProps {
   home: HomePageWp;
@@ -125,16 +125,17 @@ function CallAllPages(props: PageProps) {
           <Home home_information={home} />
         </div>
         <div className="w-full flex-shrink-0" ref={brandsRef}>
-          <Brands brands_information={brands} allCategories={categories} />
+          <BrandsPageContent brands_information={brands} allCategories={categories}/>
+          {/* <Brands brands_information={brands} allCategories={categories} /> */}
         </div>
         <div className="w-full h-auto flex-shrink-0" ref={aboutUsRef}>
-          <AboutUs aboutUs_information={aboutUs_information} />
+          <AboutUsPage aboutUs_information={aboutUs_information} />
         </div>
         <div className="w-full h-auto flex-shrink-0" ref={projectsRef}>
-          <Projects projects_information={projects} />
+          <ProjectsPage projects_information={projects} />
         </div>
         <div className="w-full h-auto flex-shrink-0" ref={contactRef}>
-          <Contact contact_information={contact_information} />
+          <ContactPage contact_information={contact_information} />
         </div>
       </motion.div>
     </div>

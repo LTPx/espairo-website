@@ -4,13 +4,11 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
-  const {
-    params: { locale },
-  } = nextParams;
-  const data = await getWordPressCustomPage(locale, "contact");
-  const { acf } = data;
-  const { contact_information } = acf;
+interface Props {
+  contact_information: ContactPageWp;
+}
+
+function ContactPage({ contact_information }: Props) {
   // const t = await getTranslations();
   return (
     <div className="lg:h-screen lg:flex lg:pl-[120px]">
@@ -50,4 +48,4 @@ async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
   );
 }
 
-export default Contact;
+export default ContactPage;

@@ -37,11 +37,11 @@ export default async function LocaleLayout({
 }) {
   const messages = await getMessages();
   const timeZone =
-  locale === "es"
-    ? "Europe/Madrid"
-    : locale === "de"
-    ? "Europe/Berlin"
-    : "America/New_York";
+    locale === "es"
+      ? "Europe/Madrid"
+      : locale === "de"
+      ? "Europe/Berlin"
+      : "America/New_York";
   const ProjectsData = await getWordPressCustomPage(locale, "projects");
   const { acf: acfProjects } = ProjectsData;
 
@@ -73,7 +73,7 @@ export default async function LocaleLayout({
               locale: locale,
             }}
           /> */}
-                  {/* <NavbarSecond/> */}
+          {/* <NavbarSecond/> */}
           <CallAllPages
             home={home_information}
             projects={projects_information}

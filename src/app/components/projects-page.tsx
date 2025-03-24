@@ -9,21 +9,11 @@ import ProjectsInformation from "@/app/components/project-information";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-// interface Props {
-//   projects_information: ProjectsPageWp;
-// }
+interface Props { 
+  projects_information: ProjectsPageWp;
+}
 
-//  function Projects({ projects_information }: Props) {
-async function Projects(nextParams: {
-  params: { locale: "es" | "de" | "en" };
-}) {
-  const {
-    params: { locale },
-  } = nextParams;
-  const data = await getWordPressCustomPage(locale, "projects");
-  const { acf } = data;
-  const { projects_information } = acf;
-
+ function ProjectsPage({ projects_information }: Props) {
   // const t = await getTranslations();
   return (
     <div className="pl-[90px] pr-[30px] w-full page-Projects">
@@ -39,4 +29,4 @@ async function Projects(nextParams: {
   );
 }
 
-export default Projects;
+export default ProjectsPage;
