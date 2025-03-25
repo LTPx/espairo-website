@@ -20,9 +20,9 @@ export function Footer() {
   return (
     <>
       <footer
-        className={`lg:block hidden lg:bg-body pt-[250px] pb-[40px] ${footerPadding}`}
+        className={`lg:block hidden lg:bg-body pt-[250px] pb-[30px] ${footerPadding}`}
       >
-        <div className="flex justify-between ">
+        <div className="flex justify-between items-end">
           <div className="flex flex-col">
             <label className="text-[14px] leading-[18px] tracking-[-0.04em]">
               Espai Rö
@@ -46,7 +46,7 @@ export function Footer() {
               </p>
             </Link>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col items-end">
             <Link
               href={`mailto:info@espairo.com`}
               className="text-[14px] leading-[18px] tracking-[-0.04em]"
@@ -54,7 +54,7 @@ export function Footer() {
               info@espairo.com
             </Link>
             <Link
-              href={"https://www.instagram.com/"}
+              href={"https://www.instagram.com/espai_ro/"}
               target="_blank"
               className="text-[14px] leading-[18px] tracking-[-0.04em]"
             >

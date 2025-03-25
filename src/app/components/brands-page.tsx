@@ -73,13 +73,15 @@ function BrandsPage(props: BrandsPageProps) {
   };
 
   const onBrandClick = (selectedBrand: BrandsWp) => {
+    console.log("Selected Category:", selectedCategory);
     console.log("Selected Brand:", selectedBrand.title);
     setSelectedBrandTitle(selectedBrand.title); 
-    
+    console.log(filteredBrands)
     const realIndex = filteredBrands.findIndex((b) => {
       console.log("Brand in iteration:", b.title);
+      console.log("Selected Brand Title:", selectedBrand.title); 
       return b.title === selectedBrand.title;
-    });
+    });    
     console.log("Real Index:", realIndex);
 
     if (realIndex !== -1) {

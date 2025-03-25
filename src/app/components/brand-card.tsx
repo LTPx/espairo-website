@@ -58,10 +58,10 @@ function BrandCard(props: BrandCardProps) {
           />
         ))}
       </div>
-      <div className="pl-[30px] py-[50px] flex flex-col lg:justify-between">
+      <div className="pl-[30px] py-[30px] flex flex-col lg:justify-between">
         <div>
           {category && (
-            <Link href={""} className="flex gap-[10px] pb-[40px]">
+            <Link href={""} className="flex gap-[10px] pb-[50px]">
               <button
                 onClick={onCategoryClick}
                 className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
@@ -101,14 +101,14 @@ function BrandCard(props: BrandCardProps) {
         </div>
         <div className="flex justify-between">
           <Link href={urlBrand || ""} target="_blank">
-            <span className="font-regular text-[14px] leading-[14px] tracking-[-0.04em] underline">
+            <span className="flex items-end font-regular text-[14px] leading-[14px] tracking-[-0.04em] underline">
               Página web
             </span>
           </Link>
           <div className="flex gap-[10px] lg:pr-[30px]">
             {hasPrevious && (
               <span
-                className="font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
+                className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onPrevious}
               >
                 Anterior
@@ -116,7 +116,7 @@ function BrandCard(props: BrandCardProps) {
             )}
             {hasNext && (
               <span
-                className="font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
+                className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onNext}
               >
                 Siguiente

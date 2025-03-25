@@ -20,8 +20,8 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   const filteredBrands =
-    selectedCategory === 1
-      ? []
+    selectedCategory === null
+      ? brands_information.brand
       : selectedCategory
       ? brands_information.brand.filter(
           (brand) => brand.category_brand.term_id === selectedCategory
@@ -44,9 +44,22 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
         />
       </div>
       <div className="lg:h-[calc(100vh)] lg:overflow-auto no-scrollbar">
-        <div className="px-[30px] py-[50px]">
-          <div className="w-full sticky top-[50px] z-[100000]">
-            <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[35px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
+        <div className="px-[30px] py-[30px]">
+          <div className="w-full sticky top-[30px] z-[100000] bg-opacity-60 backdrop-blur-sm">
+            <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[30px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
+              <button
+                onClick={() => {
+                  setSelectedCategory(null);
+                  onCategorySelect(null);
+                }}
+                className={`font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                  selectedCategory === null
+                    ? "bg-[#3F4751] text-white"
+                    : "hover:bg-[#3F4751] hover:text-white"
+                }`}
+              >
+                Todos
+              </button>
               {categories
                 .filter((category) => category.term_id !== 1)
                 .map((category) => (
@@ -71,15 +84,16 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                 ))}
             </div>
           </div>
-          {selectedCategory === null && brands_information.description && (
-            <div
-              className="lg:pr-[40px] xl:pr-[143px]"
-              dangerouslySetInnerHTML={{
-                __html: brands_information.description,
-              }}
-            />
-          )}
-          <div className="flex flex-col lg:pt-[35px]">
+          {(selectedCategory === 1 || selectedCategory === null) &&
+            brands_information.description && (
+              <div
+                className="lg:pr-[40px] xl:pr-[143px] pb-[30px]"
+                dangerouslySetInnerHTML={{
+                  __html: brands_information.description,
+                }}
+              />
+            )}
+          <div className="flex flex-col">
             {filteredBrands.map((brand, index) => (
               <h2
                 key={index}

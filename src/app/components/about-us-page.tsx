@@ -23,7 +23,7 @@ function AboutUsPage(props: Props) {
         </span>
       </div>
       <Cover media={aboutUs_information.cover_page} />
-      <section className="pt-[40px] lg:pt-[70px]">
+      <section className="pt-[40px] lg:pt-[100px]">
         <AboutUsCard
           image={aboutUs_information.first_information_section.image}
           title={aboutUs_information.first_information_section.title}
@@ -32,7 +32,7 @@ function AboutUsPage(props: Props) {
           }
         />
       </section>
-      <section className="pt-[70px]">
+      <section className="pt-[100px]">
         <img
           src={aboutUs_information.first_image}
           className="h-[800px] object-cover w-full"
@@ -53,13 +53,13 @@ function AboutUsPage(props: Props) {
           />
         ))}
       </section>
-      <section className="pt-[70px]">
+      <section className="pt-[80px]">
         <img
           src={aboutUs_information.second_image}
           className="h-[800px] object-cover w-full"
         />
       </section>
-      <section className="pt-[65px]">
+      <section className="pt-[80px]">
         <AboutUsSecondCard
           image={aboutUs_information.second_information_section.image}
           title={aboutUs_information.second_information_section.title}
@@ -68,13 +68,13 @@ function AboutUsPage(props: Props) {
           }
         />
       </section>
-      <section className="pt-[70px]">
+      <section className="pt-[100px]">
         <img
           src={aboutUs_information.third_image}
           className="h-[800px] object-cover w-full"
         />
       </section>
-      <section className="pt-[40px] lg:pt-[70px]">
+      <section className="pt-[40px] lg:pt-[100px]">
         <AboutUsSecondCard
           image={aboutUs_information.last_information_section.image}
           title={aboutUs_information.last_information_section.title}
@@ -82,7 +82,7 @@ function AboutUsPage(props: Props) {
           reverseLayout={true}
         />
       </section>
-      <section className="pt-[65px] mb-[250px]">
+      <section className="pt-[100px] mb-[250px]">
         <img
           src={aboutUs_information.last_image}
           className="h-[800px] object-cover w-full"
