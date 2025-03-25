@@ -24,7 +24,7 @@ function ContactPage({ contact_information }: Props) {
           className="w-full h-[426px] lg:h-full object-cover"
         />
       </div>
-      <div className="lg:pl-[30px] lg:py-[45px] pt-[30px] lg:w-1/2 h-full lg:bg-[#3F4751] lg:text-white flex flex-col lg:gap-[0px] justify-between">
+      <div className="text-white lg:pl-[30px] lg:py-[45px] pt-[30px] lg:w-1/2 h-full lg:bg-[#3F4751] lg:text-white flex flex-col lg:gap-[0px] justify-between">
         <div className="flex flex-col gap-[40px]">
           <div
             className="custom-subTitle-contact"
@@ -37,7 +37,7 @@ function ContactPage({ contact_information }: Props) {
         </div>
         <section className="flex flex-col gap-[22px] lg:gap-12">
           <div
-            className=""
+            className="custom-content-contact text-white"
             dangerouslySetInnerHTML={{
               __html: contact_information.description,
             }}

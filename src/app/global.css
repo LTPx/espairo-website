@@ -45,6 +45,7 @@ body {
 
 body {
   background-color: #E0E0E0;
+  color: #3F4751;
   /* height: 100%; */
 }
 
@@ -95,13 +96,36 @@ p {
   line-height: 24px;
   font-family: "Regular";
   letter-spacing: -0.04em;
+  color: #3F4751;
+}
+
+button {
+  color: #3F4751;
 }
 
 h1 {
   font-size: 50px;
   line-height: 55px;
   letter-spacing: -0.05em;
+  color: #3F4751;
 }
+
+h2 {
+  color: #3F4751;
+}
+
+h3 {
+  color: #3F4751;
+}
+
+a {
+  color: #3F4751;
+}
+
+span {
+  color: #3F4751;
+}
+
 
 button {
   font-family: "Regular";
@@ -147,6 +171,7 @@ button {
     font-size: 16px;
     line-height: 20px;
     letter-spacing: -0.04em;
+    color: white;
   }
 }
 
@@ -179,6 +204,10 @@ button {
     font-size: 40px;
     line-height: 44px;
     letter-spacing: -0.05em;
+    color: white;
+  }
+  div {
+    color: white !important;
   }
 }
 
@@ -187,6 +216,26 @@ button {
     font-size: 18px;
     line-height: 22px;
     letter-spacing: -0.04em;
+    color: white;
+  }
+  a {
+    color: white !important;
+  }
+}
+
+.custom-content-contact {
+  p {
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    color: white;
+  }
+  a {
+    color: white;
+  }
+
+  span {
+    color: white;
   }
 }
 

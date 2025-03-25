@@ -13,7 +13,7 @@ interface NavbarSecondProps {
 export default function NavbarSecond({
   navOptions,
   selectedBrandTitle,
-  setSelectedBrandTitle
+  setSelectedBrandTitle,
 }: NavbarSecondProps) {
   const pathname = usePathname();
 
@@ -26,7 +26,7 @@ export default function NavbarSecond({
 
   const leftPosition =
     pathname === "/"
-      ? "50px"
+      ? "30px"
       : pathname.includes("brands")
       ? "60px"
       : pathname.includes("about-us")
@@ -35,19 +35,18 @@ export default function NavbarSecond({
       ? "120px"
       : pathname.includes("contact")
       ? "150px"
-      : "50px";
+      : "30px";
 
-    const handleLinkClick = (section: string) => {
-      // Si no estamos en la página de brands, reiniciamos el título
-      if (!section.includes("brands")) {
-        setSelectedBrandTitle(null); // Reseteamos el título
-      }
-    };
+  const handleLinkClick = (section: string) => {
+    if (!section.includes("brands")) {
+      setSelectedBrandTitle(null);
+    }
+  };
   return (
     <>
       <Link href={"/"}>
         <h1
-          className="fixed top-[50px] text-white text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
+          className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
           style={{ left: leftPosition }}
         >
           Espai Rö
@@ -57,7 +56,7 @@ export default function NavbarSecond({
         {sectionsInPath.map((option) => (
           <div
             key={option.section}
-            className={`h-full w-[30px] border-r border-[#3F4751] text-center ${
+            className={`transition duration-300 hover:bg-[#3F4751] h-full w-[30px] border-r border-[#3F4751] flex items-center  ${
               pathname.includes(option.section)
                 ? "bg-[#3F4751]"
                 : "bg-[#E0E0E0]"
@@ -65,11 +64,11 @@ export default function NavbarSecond({
           >
             <Link
               href={option.route}
-              className={`font-regular h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] font-medium rotate-180 transition duration-300 ${
+              className={`pt-[30px] font-regular w-full h-full flex items-center  lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] rotate-180 transition duration-300 ${
                 pathname.includes(option.section)
-                  ? "text-white hover:text-gray-300"
-                  : "text-gray-600 hover:text-black"
-              }`}
+                  ? "text-white"
+                  : "text-[#3F4751]"
+              } hover:text-white`}
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
@@ -85,17 +84,16 @@ export default function NavbarSecond({
         ))}
       </div>
       <div className="fixed right-0 z-[1000] h-screen">
-        <div className="h-full bg-[#E0E0E0] flex">
-          {remainingOptions.map((option, index) => (
+        <div className="h-full hover:text-white bg-[#E0E0E0] flex">
+          {remainingOptions.map((option) => (
             <div
               key={option.section}
-              className={`h-full w-[30px] text-center ${
-                remainingOptions.length === 1 ? "" : "border-l border-[#3F4751]"
-              }`}
+              className={`h-full w-[30px] flex items-center text-center ${ "border-l border-[#3F4751]"
+              } transition duration-300 hover:bg-[#3F4751]`}
             >
               <Link
                 href={option.route}
-                className="font-regular h-full lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] text-gray-600 hover:text-black transition duration-300 font-medium rotate-180"
+                className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
                 style={{
                   writingMode: "vertical-rl",
                   textOrientation: "mixed",

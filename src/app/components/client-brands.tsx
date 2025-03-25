@@ -14,7 +14,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
   categories,
   onBrandClick,
   brands_information,
-  onCategorySelect
+  onCategorySelect,
 }) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -46,7 +46,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
       <div className="lg:h-[calc(100vh)] lg:overflow-auto no-scrollbar">
         <div className="px-[30px] py-[50px]">
           <div className="w-full sticky top-[50px] z-[100000]">
-            <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[35px] lg:pr-[180px] overflow-x-scroll no-scrollbar">
+            <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[35px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
               {categories
                 .filter((category) => category.term_id !== 1)
                 .map((category) => (
@@ -54,7 +54,9 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                     key={category.term_id}
                     onClick={() => {
                       const newCategory =
-                        selectedCategory === category.term_id ? null : category.term_id;
+                        selectedCategory === category.term_id
+                          ? null
+                          : category.term_id;
                       setSelectedCategory(newCategory);
                       onCategorySelect(newCategory);
                     }}
@@ -71,7 +73,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
           </div>
           {selectedCategory === null && brands_information.description && (
             <div
-              className="lg:pr-[140px]"
+              className="lg:pr-[40px] xl:pr-[143px]"
               dangerouslySetInnerHTML={{
                 __html: brands_information.description,
               }}

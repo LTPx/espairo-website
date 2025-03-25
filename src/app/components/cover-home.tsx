@@ -24,9 +24,9 @@ export function CoverHome(props: Props) {
         <img
           src={home_information.cover_page.url}
           alt="Espai Rö"
-          className="h-full w-full"
+          className="h-full w-full object-cover"
         />
-        <div className="font-regular absolute bottom-[50px] left-[50px] text-white text-[18px] leading-[22px]">
+        <div className="font-regular absolute bottom-[30px] left-[30px] text-white text-[18px] leading-[22px]">
           <img
             src={
               isDescriptionVisible
@@ -38,7 +38,7 @@ export function CoverHome(props: Props) {
             onClick={toggleDescription}
           />
           <div className="pt-[15px]">
-            <p className="text-[18px} leading-[22px] tracking-[-0.04em]">
+            <p className="text-white text-[18px} leading-[22px] tracking-[-0.04em]">
               Showroom & fine
               <br />
               craftsmanship products.

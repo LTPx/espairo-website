@@ -40,7 +40,7 @@ function BrandCard(props: BrandCardProps) {
 
   const t = useTranslations();
   const hasNext = index !== undefined && totalBrands && index < totalBrands - 1;
-  const hasPrevious = index !== undefined && index > 0; // Lógica para saber si hay un elemento anterior
+  const hasPrevious = index !== undefined && index > 0;
   const [visibleImages, setVisibleImages] = useState<string[]>([
     images[0].image || "",
   ]);
@@ -58,13 +58,13 @@ function BrandCard(props: BrandCardProps) {
           />
         ))}
       </div>
-      <div className="pl-[30px] pr-[75px] py-[50px] flex flex-col lg:justify-between">
+      <div className="pl-[30px] py-[50px] flex flex-col lg:justify-between">
         <div>
           {category && (
-            <Link href={''} className="flex gap-[10px] pb-[40px]">
+            <Link href={""} className="flex gap-[10px] pb-[40px]">
               <button
                 onClick={onCategoryClick}
-                className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-mediumFont text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
+                className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
               >
                 {category}
                 <img
@@ -77,14 +77,14 @@ function BrandCard(props: BrandCardProps) {
           )}
           <div className="flex flex-col pb-[22px]">
             <Link href={url || ""}>
-              <h1 className="font-mediumFont text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
+              <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
                 {title}
                 <br />
                 <span className="opacity-30">{date}</span>
               </h1>
             </Link>
           </div>
-          <div className="hidden lg:flex flex-col gap-[46px]">
+          <div className="hidden lg:flex flex-col gap-[46px] pr-[75px]">
             {description && (
               <div
                 dangerouslySetInnerHTML={{
@@ -92,8 +92,8 @@ function BrandCard(props: BrandCardProps) {
                 }}
               />
             )}
-            <Link className="inline-block" href={url || ""}>
-              <button className="uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-mediumFont text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+            <Link className="inline-block" href={`mailto:info@espairo.com`}>
+              <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
                 SOLICITA INFORMACIÓN
               </button>
             </Link>
@@ -101,14 +101,14 @@ function BrandCard(props: BrandCardProps) {
         </div>
         <div className="flex justify-between">
           <Link href={urlBrand || ""} target="_blank">
-            <span className="text-[14px] leading-[14px] tracking-[-0.04em] underline">
+            <span className="font-regular text-[14px] leading-[14px] tracking-[-0.04em] underline">
               Página web
             </span>
           </Link>
-          <div className="flex gap-[10px]">
+          <div className="flex gap-[10px] lg:pr-[30px]">
             {hasPrevious && (
               <span
-                className="cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
+                className="font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onPrevious}
               >
                 Anterior
@@ -116,7 +116,7 @@ function BrandCard(props: BrandCardProps) {
             )}
             {hasNext && (
               <span
-                className="cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
+                className="font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onNext}
               >
                 Siguiente
