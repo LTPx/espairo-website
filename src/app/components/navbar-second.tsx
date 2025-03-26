@@ -83,9 +83,12 @@ export default function NavbarSecond({
               onClick={() => handleLinkClick(option.section)}
             >
               {option.label}
-              {pathname.includes("brands") &&
-                selectedBrandTitle &&
-                ` - ${selectedBrandTitle}`}
+              {pathname.includes("brands") && selectedBrandTitle && (
+                <>
+                  <span className="my-[7px] text-white">|</span>
+                  <span className="text-white">{selectedBrandTitle}</span>
+                </>
+              )}
             </Link>
           </div>
         ))}
@@ -95,8 +98,7 @@ export default function NavbarSecond({
           {remainingOptions.map((option) => (
             <div
               key={option.section}
-              className={`h-full w-[30px] flex items-center text-center ${ "border-l border-[#3F4751]"
-              } transition duration-300 hover:bg-[#3F4751]`}
+              className={`h-full w-[30px] flex items-center text-center ${"border-l border-[#3F4751]"} transition duration-300 hover:bg-[#3F4751]`}
             >
               <Link
                 href={option.route}
