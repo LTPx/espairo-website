@@ -86,19 +86,21 @@ function BrandCard(props: BrandCardProps) {
             />
           ))}
         </div>
-        <div className="absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2 flex gap-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              className={`w-[6px] h-[6px] rounded-full transition-all duration-300 ${
-                i === currentImageIndex
-                  ? "bg-[#E0E0E0]"
-                  : "border border-[#E0E0E0] bg-transparent"
-              }`}
-              onClick={() => setCurrentImageIndex(i)}
-            />
-          ))}
-        </div>
+        {images.length > 1 && (
+          <div className="absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2 flex gap-2">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                className={`w-[6px] h-[6px] rounded-full transition-all duration-300 ${
+                  i === currentImageIndex
+                    ? "bg-[#E0E0E0]"
+                    : "border border-[#E0E0E0] bg-transparent"
+                }`}
+                onClick={() => setCurrentImageIndex(i)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="pl-[30px] py-[30px] flex flex-col lg:justify-between">

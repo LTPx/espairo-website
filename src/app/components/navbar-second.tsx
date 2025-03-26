@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -38,10 +38,17 @@ export default function NavbarSecond({
       : "30px";
 
   const handleLinkClick = (section: string) => {
-    if (!section.includes("brands")) {
+    if (!section.includes("/es/brands")) {
       setSelectedBrandTitle(null);
     }
   };
+
+  useEffect(() => {
+    if (!pathname.includes("brands")) {
+      setSelectedBrandTitle(null);
+    }
+  }, [pathname, setSelectedBrandTitle]);
+
   return (
     <>
       <Link href={"/"}>

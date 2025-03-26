@@ -132,6 +132,9 @@ function BrandsPage(props: BrandsPageProps) {
             totalBrands={filteredBrands.length}
             onNext={goToNextBrand}
             onPrevious={goToPreviousBrand}
+            onCategoryClick={() => {
+              setSelectedBrandTitle(null);
+            }}
           />
         </div>
       ))}
