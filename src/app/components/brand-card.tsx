@@ -135,6 +135,11 @@ function BrandCard(props: BrandCardProps) {
                 }}
               />
             )}
+                    <Link className="inline-block" href={`mailto:info@espairo.com`}>
+          <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+            SOLICITA INFORMACIÓN
+          </button>
+        </Link>
           </div>
         </div>
         <div className="flex justify-between">

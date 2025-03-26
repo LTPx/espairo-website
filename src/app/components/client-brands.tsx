@@ -97,7 +97,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
             {filteredBrands.map((brand, index) => (
               <h2
                 key={index}
-                className={`font-regular cursor-pointer text-[#3F4751] text-[40px] leading-[48px] lg:text-[50px] lg:leading-[58px] tracking-[-0.05em] transition-all duration-300 ${
+                className={`font-regular cursor-pointer text-[#3F4751] text-[40px] leading-[48px] lg:text-[50px] lg:leading-[58px] tracking-[-0.05em] transition-all duration-300 w-fit ${
                   hoveredBrand && hoveredBrand !== brand.title
                     ? "blur-sm opacity-50"
                     : "opacity-100"
