@@ -2,16 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Link } from "@/navigation";
-import { useTranslations } from "next-intl";
 import { BranImagesWp } from "../_interfaces/wordpress-components";
 
 interface BrandCardProps {
   images: BranImagesWp[];
   title?: string;
-  date?: string;
   description?: string;
   className?: string;
-  url?: string;
   urlBrand?: string;
   category?: string;
   index?: number;
@@ -23,41 +20,82 @@ interface BrandCardProps {
 
 function BrandCard(props: BrandCardProps) {
   const {
-    urlBrand,
+    images,
     title,
-    className,
-    date,
     description,
-    url,
+    urlBrand,
     category,
     index,
     totalBrands,
     onNext,
-    images,
     onPrevious,
     onCategoryClick,
   } = props;
 
-  const t = useTranslations();
   const hasNext = index !== undefined && totalBrands && index < totalBrands - 1;
   const hasPrevious = index !== undefined && index > 0;
-  const [visibleImages, setVisibleImages] = useState<string[]>([
-    images[0].image || "",
-  ]);
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const lastScrollTime = useRef<number>(0);
+
+  const handleScroll = (event: WheelEvent) => {
+    if (!images || images.length <= 1) return;
+
+    const now = Date.now();
+    if (now - lastScrollTime.current < 1400) return;
+    lastScrollTime.current = now;
+
+    requestAnimationFrame(() => {
+      setCurrentImageIndex((prevIndex) => {
+        if (event.deltaY > 0) {
+          return prevIndex < images.length - 1 ? prevIndex + 1 : 0;
+        } else {
+          return prevIndex > 0 ? prevIndex - 1 : images.length - 1;
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("wheel", handleScroll);
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+    };
+  }, [images]);
 
   return (
-    <div className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full">
-      <div className={`group relative ${className}`}>
-        {visibleImages.map((imageSrc, index) => (
-          <img
-            key={index}
-            src={imageSrc}
-            alt={`brand-image-${index}`}
-            className={`lg:absolute top-0 left-0 h-[500px] lg:h-full w-full object-cover transition-opacity duration-500 ease-in-out transform lazy-load`}
-            loading="lazy"
-          />
-        ))}
+    <div className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden">
+      <div className={`group relative ${props.className}`}>
+        <div className="relative w-full h-[500px] lg:h-full overflow-hidden">
+          {images.map((image, i) => (
+            <img
+              key={i}
+              src={image.image || ""}
+              alt={`brand-image-${i}`}
+              className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                i === currentImageIndex
+                  ? "opacity-100 z-10"
+                  : "opacity-0 z-0"
+              }`}
+              loading="lazy"
+            />
+          ))}
+        </div>
+        <div className="absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2 flex gap-2">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              className={`w-[6px] h-[6px] rounded-full transition-all duration-300 ${
+                i === currentImageIndex
+                  ? "bg-[#E0E0E0]"
+                  : "border border-[#E0E0E0] bg-transparent"
+              }`}
+              onClick={() => setCurrentImageIndex(i)}
+            />
+          ))}
+        </div>
       </div>
+
       <div className="pl-[30px] py-[30px] flex flex-col lg:justify-between">
         <div>
           {category && (
@@ -76,11 +114,9 @@ function BrandCard(props: BrandCardProps) {
             </Link>
           )}
           <div className="flex flex-col pb-[22px]">
-            <Link href={url || ""}>
+            <Link href={urlBrand || ""}>
               <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
                 {title}
-                <br />
-                <span className="opacity-30">{date}</span>
               </h1>
             </Link>
           </div>
@@ -92,11 +128,6 @@ function BrandCard(props: BrandCardProps) {
                 }}
               />
             )}
-            <Link className="inline-block" href={`mailto:info@espairo.com`}>
-              <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
-                SOLICITA INFORMACIÓN
-              </button>
-            </Link>
           </div>
         </div>
         <div className="flex justify-between">
