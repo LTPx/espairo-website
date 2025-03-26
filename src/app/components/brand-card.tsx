@@ -37,6 +37,7 @@ function BrandCard(props: BrandCardProps) {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const lastScrollTime = useRef<number>(0);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = (event: WheelEvent) => {
     if (!images || images.length <= 1) return;
@@ -57,14 +58,20 @@ function BrandCard(props: BrandCardProps) {
   };
 
   useEffect(() => {
-    window.addEventListener("wheel", handleScroll);
-    return () => {
-      window.removeEventListener("wheel", handleScroll);
-    };
+    const cardElement = cardRef.current;
+    if (cardElement) {
+      cardElement.addEventListener("wheel", handleScroll);
+      return () => {
+        cardElement.removeEventListener("wheel", handleScroll);
+      };
+    }
   }, [images]);
 
   return (
-    <div className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden">
+    <div
+      ref={cardRef}
+      className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden"
+    >
       <div className={`group relative ${props.className}`}>
         <div className="relative w-full h-[500px] lg:h-full overflow-hidden">
           {images.map((image, i) => (
@@ -73,9 +80,7 @@ function BrandCard(props: BrandCardProps) {
               src={image.image || ""}
               alt={`brand-image-${i}`}
               className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out ${
-                i === currentImageIndex
-                  ? "opacity-100 z-10"
-                  : "opacity-0 z-0"
+                i === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
               loading="lazy"
             />
