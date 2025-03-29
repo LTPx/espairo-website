@@ -53,14 +53,17 @@ export function Footer() {
             >
               info@espairo.com
             </Link>
-            <Link
-              href={"https://www.instagram.com/espai_ro/"}
-              target="_blank"
-              className="text-[14px] leading-[18px] tracking-[-0.04em]"
-            >
-              ig: @espai_ro
-            </Link>
+            <div className="w-full flex justify-between">
+              <Link
+                href={"https://www.instagram.com/espai_ro/"}
+                target="_blank"
+                className="text-[14px] leading-[18px] tracking-[-0.04em]"
+              >
+                ig: @espai_ro
+              </Link>
+            </div>
           </div>
+
           <div className="flex flex-col gap-[0px]">
             <Link
               href={"/legal-notice"}

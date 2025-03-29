@@ -171,7 +171,7 @@ button {
     font-size: 16px;
     line-height: 20px;
     letter-spacing: -0.04em;
-    color: white;
+    color: #E0E0E0;
   }
 }
 
@@ -204,10 +204,10 @@ button {
     font-size: 40px;
     line-height: 44px;
     letter-spacing: -0.05em;
-    color: white;
+    color: #E0E0E0;
   }
   div {
-    color: white !important;
+    color: #E0E0E0 !important;
   }
 }
 
@@ -216,26 +216,29 @@ button {
     font-size: 18px;
     line-height: 22px;
     letter-spacing: -0.04em;
-    color: white;
+    color: #E0E0E0;
   }
   a {
-    color: white !important;
+    color: #E0E0E0 !important;
   }
 }
 
 .custom-content-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
   p {
     font-size: 18px;
     line-height: 24px;
     letter-spacing: -0.04em;
-    color: white;
+    color: #E0E0E0;
   }
   a {
-    color: white;
+    color: #E0E0E0;
   }
 
   span {
-    color: white;
+    color: #E0E0E0;
   }
 }
 

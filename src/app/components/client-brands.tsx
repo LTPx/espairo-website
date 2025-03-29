@@ -45,14 +45,14 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
       </div>
       <div className="lg:h-[calc(100vh)] lg:overflow-auto no-scrollbar">
         <div className="px-[30px] py-[30px]">
-          <div className="w-full sticky top-[30px] z-[100000] bg-opacity-60 backdrop-blur-sm">
+          <div className="w-full sticky top-[30px] z-[100000]">
             <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[30px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
               <button
                 onClick={() => {
                   setSelectedCategory(null);
                   onCategorySelect(null);
                 }}
-                className={`font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                   selectedCategory === null
                     ? "bg-[#3F4751] text-white"
                     : "hover:bg-[#3F4751] hover:text-white"
@@ -73,7 +73,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                       setSelectedCategory(newCategory);
                       onCategorySelect(newCategory);
                     }}
-                    className={`font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                    className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                       selectedCategory === category.term_id
                         ? "bg-[#3F4751] text-white"
                         : "hover:bg-[#3F4751] hover:text-white"

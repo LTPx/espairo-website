@@ -16,14 +16,8 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   return {
-    title: "Espairo",
-    description: "New Site",
-    // robots: seoData.robots,
-    openGraph: {
-      title: "Espairo",
-      description: "New Site",
-      siteName: "",
-      locale: locale,
+    icons: {
+      icon: "/images/logo.png",
     },
   };
 }

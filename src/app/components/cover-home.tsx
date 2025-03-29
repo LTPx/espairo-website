@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import { HomePageWp } from "../_interfaces/wordpress-components";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   home_information: HomePageWp;
@@ -38,25 +37,19 @@ export function CoverHome(props: Props) {
             onClick={toggleDescription}
           />
           <div className="pt-[15px]">
-            <p className="text-white text-[18px} leading-[22px] tracking-[-0.04em]">
+            <p className="text-[#E0E0E0] text-[18px] leading-[22px] tracking-[-0.04em]">
               Showroom & fine
               <br />
               craftsmanship products.
             </p>
-            <AnimatePresence>
-              {isDescriptionVisible && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3 }}
-                  className="custom-text-home pt-[20px] lg:w-[335px] font-regular text-white text-[18px] leading-[22px]"
-                  dangerouslySetInnerHTML={{
-                    __html: home_information.description,
-                  }}
-                />
-              )}
-            </AnimatePresence>
+            <div
+              className={`custom-text-home pt-[20px] lg:w-[335px] font-regular text-white text-[18px] leading-[22px] overflow-hidden transition-all duration-700 ease-in-out ${
+                isDescriptionVisible
+                  ? "opacity-100 max-h-[500px]"
+                  : "opacity-0 max-h-0"
+              }`}
+              dangerouslySetInnerHTML={{ __html: home_information.description }}
+            />
           </div>
         </div>
       </div>
