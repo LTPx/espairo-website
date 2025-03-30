@@ -1,6 +1,7 @@
 import { BrandsPageWp, BrandsWp } from "@/app/_interfaces/wordpress-components";
 import { getCategories, getWordPressCustomPage } from "@/app/_services/api";
 import BrandCard from "@/app/components/brand-card";
+import BrandsMobile from "@/app/components/brand-mobile";
 import BrandsPage from "@/app/components/brands-page";
 import ClientBrands from "@/app/components/client-brands";
 import Link from "next/link";
@@ -50,11 +51,9 @@ async function Brands(nextParams: {
 
   return (
     <>
-      <BrandsPage
+      <BrandsMobile
         brands_information={brands_information}
-        allCategories={allCategories} setSelectedBrandTitle={function (value: SetStateAction<string | null>): void {
-          throw new Error("Function not implemented.");
-        } }        // mergedCategories={mergedCategories}
+        allCategories={allCategories}        // mergedCategories={mergedCategories}
         // brands={brands}
       />
     </>

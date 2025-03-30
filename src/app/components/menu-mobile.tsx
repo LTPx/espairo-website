@@ -49,7 +49,7 @@ export function MenuMobile({ links, languages, locale }: MenuMobileProps) {
         <div className="h-full flex flex-col justify-between" ref={menuRef}>
           <div className="flex flex-col flex-grow">
             <div className="pl-[28px] items-center flex justify-between h-[50px]">
-              <Link href="/">
+              <Link href="/" onClick={() => setMenuOpen(false)}>
                 <p className="font-regular text-[16px] leading-[16px] tracking-[-0.04em]">
                   Espai Rö
                 </p>
@@ -61,7 +61,7 @@ export function MenuMobile({ links, languages, locale }: MenuMobileProps) {
                 {links.map((link, index) => (
                   <div key={index}>
                     <Link
-                      className="pl-[28px] block font-regular text-[40px] py-[20px] leading-[48px] tracking-[-0.05em]"
+                      className="pl-[28px] hover:bg-[#3F4751] hover:text-[#E0E0E0] block font-regular text-[40px] py-[20px] leading-[48px] tracking-[-0.05em]"
                       href={link.url}
                       onClick={() => setMenuOpen(false)}
                     >

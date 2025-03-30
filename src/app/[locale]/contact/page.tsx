@@ -2,7 +2,6 @@ import { ContactPageWp } from "@/app/_interfaces/wordpress-components";
 import { getWordPressCustomPage } from "@/app/_services/api";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 
 async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
   const {
@@ -15,7 +14,7 @@ async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
   return (
     <div className="lg:h-screen lg:flex lg:pl-[120px]">
       <div className="container lg:hidden bg-[#3F4751] flex items-center">
-        <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
+        <span className="font-regular text-[#E0E0E0] py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
           {`${t("header.contact")}`}
         </span>
       </div>

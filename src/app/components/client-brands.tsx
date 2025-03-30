@@ -35,24 +35,24 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
     : brands_information.cover_page.url;
 
   return (
-    <div className="flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-[100vh] lg:overflow-auto">
-      <div className=" lg:h-[calc(100vh)]">
+    <div className="flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100vh] overflow-auto">
+      <div className="hidden lg:block lg:h-[calc(100vh)]">
         <img
           src={selectedCover}
           alt="alt-projects"
           className="h-[100vh] w-full object-cover"
         />
       </div>
-      <div className="lg:h-[calc(100vh)] lg:overflow-auto no-scrollbar">
+      <div className="h-[calc(100vh)] overflow-auto no-scrollbar">
         <div className="px-[30px] py-[30px]">
-          <div className="w-full sticky top-[30px] z-[100000]">
+          <div className="w-full sticky top-[30px] z-[10] lg:z-[100000]">
             <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[30px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
               <button
                 onClick={() => {
                   setSelectedCategory(null);
                   onCategorySelect(null);
                 }}
-                className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[20px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[14px] leading-[20px] lg:text-[12px] lg:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                   selectedCategory === null
                     ? "bg-[#3F4751] text-white"
                     : "hover:bg-[#3F4751] hover:text-white"
@@ -73,7 +73,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                       setSelectedCategory(newCategory);
                       onCategorySelect(newCategory);
                     }}
-                    className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[12px] leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                    className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[14px] leading-[20px] lg:text-[12px] lg:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                       selectedCategory === category.term_id
                         ? "bg-[#3F4751] text-white"
                         : "hover:bg-[#3F4751] hover:text-white"
@@ -87,7 +87,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
           {(selectedCategory === 1 || selectedCategory === null) &&
             brands_information.description && (
               <div
-                className="lg:pr-[40px] xl:pr-[143px] pb-[30px]"
+                className="hidden lg:block lg:pr-[40px] xl:pr-[143px] pb-[30px]"
                 dangerouslySetInnerHTML={{
                   __html: brands_information.description,
                 }}

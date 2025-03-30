@@ -34,13 +34,17 @@ function BrandCard(props: BrandCardProps) {
 
   const hasNext = index !== undefined && totalBrands && index < totalBrands - 1;
   const hasPrevious = index !== undefined && index > 0;
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobileDescriptionOpen, setIsMobileDescriptionOpen] = useState(false);
   const lastScrollTime = useRef<number>(0);
   const cardRef = useRef<HTMLDivElement>(null);
+  const isTouchDevice = useRef(
+    typeof window !== "undefined" &&
+      window.matchMedia("(pointer: coarse)").matches
+  );
 
   const handleScroll = (event: WheelEvent) => {
-    if (!images || images.length <= 1) return;
+    if (isTouchDevice.current || !images || images.length <= 1) return;
 
     const now = Date.now();
     if (now - lastScrollTime.current < 1400) return;
@@ -57,12 +61,41 @@ function BrandCard(props: BrandCardProps) {
     });
   };
 
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const handleTouchStart = (event: TouchEvent) => {
+    touchStartX = event.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    touchEndX = event.changedTouches[0].clientX;
+    const deltaX = touchStartX - touchEndX;
+
+    if (Math.abs(deltaX) > 50) {
+      setCurrentImageIndex((prevIndex) => {
+        if (deltaX > 0) {
+          return prevIndex < images.length - 1 ? prevIndex + 1 : 0;
+        } else {
+          return prevIndex > 0 ? prevIndex - 1 : images.length - 1;
+        }
+      });
+    }
+  };
+
   useEffect(() => {
     const cardElement = cardRef.current;
     if (cardElement) {
-      cardElement.addEventListener("wheel", handleScroll);
+      if (!isTouchDevice.current) {
+        cardElement.addEventListener("wheel", handleScroll);
+      } else {
+        cardElement.addEventListener("touchstart", handleTouchStart);
+        cardElement.addEventListener("touchend", handleTouchEnd);
+      }
       return () => {
         cardElement.removeEventListener("wheel", handleScroll);
+        cardElement.removeEventListener("touchstart", handleTouchStart);
+        cardElement.removeEventListener("touchend", handleTouchEnd);
       };
     }
   }, [images]);
@@ -73,7 +106,17 @@ function BrandCard(props: BrandCardProps) {
       className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden"
     >
       <div className={`group relative ${props.className}`}>
-        <div className="relative w-full h-[500px] lg:h-full overflow-hidden">
+        <div className="lg:hidden absolute top-[30px] left-[30px] z-[40]">
+          <Link href={""}>
+            <button
+              onClick={onCategoryClick}
+              className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer h-[35px] px-[20px] rounded-full"
+            >
+              BRANDS
+            </button>
+          </Link>
+        </div>
+        <div className="relative w-full h-[85vh] lg:h-full overflow-hidden">
           {images.map((image, i) => (
             <img
               key={i}
@@ -101,9 +144,20 @@ function BrandCard(props: BrandCardProps) {
             ))}
           </div>
         )}
+        <div className="flex justify-between items-center px-[30px] pt-[30px]">
+          <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
+            {title}
+          </h1>
+          <img
+            src={"/images/open-brand.svg"}
+            className="h-[25px] w-[25px]"
+            loading="lazy"
+            onClick={() => setIsMobileDescriptionOpen(true)}
+          />
+        </div>
       </div>
 
-      <div className="pl-[30px] py-[30px] flex flex-col lg:justify-between">
+      <div className="hidden lg:flex pl-[30px] py-[30px] flex flex-col lg:justify-between">
         <div>
           {category && (
             <Link href={""} className="flex gap-[10px] pb-[50px]">
@@ -121,7 +175,7 @@ function BrandCard(props: BrandCardProps) {
             </Link>
           )}
           <div className="flex flex-col pb-[22px]">
-            <Link href={urlBrand || ""}>
+            <Link target='_blank' href={urlBrand || ""}>
               <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
                 {title}
               </h1>
@@ -168,6 +222,70 @@ function BrandCard(props: BrandCardProps) {
           </div>
         </div>
       </div>
+
+      {isMobileDescriptionOpen && (
+        <div
+          className={`fixed inset-0 z-50 bg-[#E0E0E0] flex flex-col justify-between p-[30px] transition-transform duration-500 ease-in-out ${
+            isMobileDescriptionOpen ? "translate-y-0" : "translate-y-full"
+          }`}
+          style={{
+            transform: isMobileDescriptionOpen
+              ? "translateY(0%)"
+              : "translateY(100%)",
+          }}
+        >
+          <div className="flex flex-col">
+            {category && (
+              <Link href={""} className="flex gap-[10px] pb-[20px]">
+                <button
+                  onClick={onCategoryClick}
+                  className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer h-[35px] px-[20px] rounded-full"
+                >
+                  {category}
+                </button>
+              </Link>
+            )}
+            <div className="flex justify-between items-center">
+              <h1 className="font-regular text-[40px] leading-[48px] tracking-[-0.05em]">
+                {title}
+              </h1>{" "}
+              <img
+                src={"/images/close-brand.svg"}
+                className="h-[25px] w-[25px]"
+                loading="lazy"
+                onClick={() => setIsMobileDescriptionOpen(false)}
+              />
+            </div>
+          </div>
+          <div className="flex-grow overflow-auto mt-[30px]">
+            {description && (
+              <div
+                className="description-brand-mobile"
+                dangerouslySetInnerHTML={{
+                  __html: description,
+                }}
+              />
+            )}{" "}
+            <Link
+              className="pt-[48px] inline-block"
+              href={`mailto:info@espairo.com`}
+            >
+              <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+                SOLICITA INFORMACIÓN
+              </button>
+            </Link>
+            <Link
+              className="absolute bottom-[70px] left-[30px]"
+              href={urlBrand || ""}
+              target="_blank"
+            >
+              <span className="flex items-end font-regular text-[12px] leading-[20px] tracking-[-0.04em] underline">
+                Página web
+              </span>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -25,7 +25,10 @@ export function CoverHome(props: Props) {
           alt="Espai Rö"
           className="h-full w-full object-cover"
         />
-        <div className="font-regular absolute bottom-[30px] left-[30px] text-white text-[18px] leading-[22px]">
+        <h1 className="lg:hidden absolute left-[30px] top-[20px] text-[#E0E0E0] text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100000]">
+          Espai Rö
+        </h1>
+        <div className="font-regular absolute bottom-[45px] lg:bottom-[30px] left-[30px] text-white text-[18px] leading-[22px]">
           <img
             src={
               isDescriptionVisible
@@ -33,17 +36,17 @@ export function CoverHome(props: Props) {
                 : "/images/arrow-up.svg"
             }
             alt="Toggle Description"
-            className="h-[26px] w-[26px] cursor-pointer"
+            className="hidden lg:block h-[26px] w-[26px] cursor-pointer"
             onClick={toggleDescription}
           />
           <div className="pt-[15px]">
-            <p className="text-[#E0E0E0] text-[18px] leading-[22px] tracking-[-0.04em]">
-              Showroom & fine
-              <br />
-              craftsmanship products.
+            <p className="text-[#E0E0E0] text-[16px] leading-[20px] lg:text-[18px] lg:leading-[22px] tracking-[-0.04em]">
+              Showroom & <br className="lg:hidden" /> fine
+              <br className="hidden lg:block" />
+              craftsmanship <br className="lg:hidden" /> products.
             </p>
             <div
-              className={`custom-text-home pt-[20px] lg:w-[335px] font-regular text-white text-[18px] leading-[22px] overflow-hidden transition-all duration-700 ease-in-out ${
+              className={`lg:block hidden custom-text-home pt-[20px] lg:w-[335px] font-regular text-white text-[18px] leading-[22px] overflow-hidden transition-all duration-700 ease-in-out ${
                 isDescriptionVisible
                   ? "opacity-100 max-h-[500px]"
                   : "opacity-0 max-h-0"

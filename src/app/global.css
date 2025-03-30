@@ -152,6 +152,15 @@ button {
     letter-spacing: -0.05em;
   }
 
+  .description-brand-mobile {
+    p {
+      font-size: 16px !important;     
+      line-height: 22px !important;  
+      font-family: "Regular";   
+      letter-spacing: -0.05em; 
+    }
+  }
+
   .description-second-card {
     p {
       font-size: 16px !important;     

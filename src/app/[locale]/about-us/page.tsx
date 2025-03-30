@@ -23,7 +23,7 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
   return (
     <div className="page-AboutUs relative lg:pl-[60px] lg:pr-[60px]">
       <div className="container lg:hidden bg-[#3F4751] flex items-center">
-        <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
+        <span className="font-regular text-[#E0E0E0] py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
           {`${t("header.about-us")}`}
         </span>
       </div>
