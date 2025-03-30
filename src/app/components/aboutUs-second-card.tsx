@@ -22,12 +22,12 @@ function AboutUsSecondCard({
       className={`flex flex-col gap-[40px] lg:gap-[50px] lg:grid lg:grid-cols-2 lg:h-full`}
     >
       <div
-        className={`flex flex-col lg:justify-between ${
+        className={`px-[27px] lg:px-[0px] flex flex-col lg:justify-between ${
           reverseLayout ? "lg:pr-[30px]" : "lg:pl-[30px]"
         }`}
       >
         <div></div>
-        <div className="flex flex-col gap-[50px]">
+        <div className="flex flex-col gap-[30px] lg:gap-[50px]">
           {title && (
             <div
               className="title-card font-regular"
@@ -36,10 +36,10 @@ function AboutUsSecondCard({
               }}
             />
           )}
-          <div className="container lg:flex flex-col lg:pr-[50px]">
+          <div className="lg:container lg:flex flex-col lg:pr-[50px]">
             {description && (
               <div
-                className="font-regular"
+                className="description-second-card font-regular"
                 dangerouslySetInnerHTML={{
                   __html: description,
                 }}
@@ -50,7 +50,7 @@ function AboutUsSecondCard({
       </div>
       <div
         className={`w-full ${
-          reverseLayout ? "lg:order-first" : "lg:order-last"
+          reverseLayout ? "order-first" : "order-last"
         }`}
       >
         <img

@@ -62,11 +62,11 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages} timeZone={timeZone}>
-          {/* <MenuOptions
+          <MenuOptions
             params={{
               locale: locale,
             }}
-          /> */}
+          />
           {/* <NavbarSecond/> */}
           <CallAllPages
             home={home_information}
@@ -76,7 +76,7 @@ export default async function LocaleLayout({
             aboutUs_information={aboutUs_information}
             contact_information={contact_information}
           />
-          {/* <App locale={locale}><CallAllPages/></App> */}
+          <App locale={locale}>{children}</App>
           <Footer />
         </NextIntlClientProvider>
       </body>

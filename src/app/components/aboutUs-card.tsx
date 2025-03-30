@@ -15,8 +15,8 @@ function AboutUsCard(props: AboutUsCardProps) {
 
   return (
     <div
-      className={`flex flex-col gap-[40px] lg:gap-[50px] lg:grid lg:grid-cols-2 lg:h-full ${
-        reverseLayout ? "flex-row-reverse" : ""
+      className={`flex flex-col gap-[30px] lg:gap-[50px] lg:grid lg:grid-cols-2 lg:h-full ${
+        reverseLayout ? "" : ""
       }`}
     >
       <img
@@ -24,7 +24,11 @@ function AboutUsCard(props: AboutUsCardProps) {
         alt="base image"
         className="h-[550px] lg:h-[901px] lg:w-full object-cover"
       />
-      <div className="lg:pr-[30px] flex flex-col lg:justify-between">
+      <div
+        className={`px-[27px] lg:pl-[0px] lg:pr-[30px] flex flex-col lg:justify-between ${
+          reverseLayout ? "order-first" : "order-last"
+        }`}
+      >
         {title && (
           <div
             className="title-card font-regular"
@@ -33,10 +37,10 @@ function AboutUsCard(props: AboutUsCardProps) {
             }}
           />
         )}
-        <div className="container lg:flex flex-col lg:pr-[50px]">
+        <div className="pt-[30px] lg:pt-[0px] lg:flex flex-col lg:pr-[50px]">
           {description && (
             <div
-              className="font-regular"
+              className="description-card font-regular"
               dangerouslySetInnerHTML={{
                 __html: description,
               }}

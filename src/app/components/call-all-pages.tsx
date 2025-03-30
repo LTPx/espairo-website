@@ -106,7 +106,7 @@ function CallAllPages(props: PageProps) {
   ];
 
   return (
-    <div className="h-full relative overflow-hidden">
+    <div className="hidden lg:block h-full relative overflow-hidden">
       <NavbarSecond setSelectedBrandTitle={setSelectedBrandTitle} navOptions={navOptions} selectedBrandTitle={selectedBrandTitle}  />
       <motion.div
         className="flex w-full"

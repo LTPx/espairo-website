@@ -11,13 +11,13 @@ function AuthorCard(props: AuthorCardProps) {
   return (
     <div className={"flex flex-col gap-[30px] lg:gap-[60px]"}>
       <div
-        className="author-name font-regular lg:w-[550px]"
+        className="px-[27px] lg:px-[0px] author-name font-regular lg:w-[550px]"
         dangerouslySetInnerHTML={{
           __html: authorName,
         }}
       />
       <div
-        className="font-regular lg:w-[550px]"
+        className="px-[27px] lg:px-[0px] author-description font-regular lg:w-[550px]"
         dangerouslySetInnerHTML={{
           __html: description,
         }}

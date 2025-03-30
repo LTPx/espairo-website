@@ -152,17 +152,73 @@ button {
     letter-spacing: -0.05em;
   }
 
+  .description-second-card {
+    p {
+      font-size: 16px !important;     
+      line-height: 22px !important;  
+      font-family: "Regular";   
+      letter-spacing: -0.05em; 
+      /* margin-bottom: 2px;  */
+    }
+  }
+
   .container {
     padding-left: 28px;
     padding-right: 28px;
   }
 
   .p {
-    font-size: 16px;     
+    font-size: 16px !important;     
     line-height: 22px !important;  
     font-family: "Regular";   
     letter-spacing: -0.05em; 
-    margin-bottom: 2px; 
+    /* margin-bottom: 2px;  */
+  }
+
+  .description-card {
+    p {
+      font-size: 16px !important;     
+      line-height: 22px !important;  
+      font-family: "Regular";   
+      letter-spacing: -0.05em; 
+      /* margin-bottom: 2px;  */
+    }
+  }
+
+  .custom-title-authors {
+    p {
+      font-size: 16px !important;     
+      line-height: 22px !important;  
+      font-family: "Regular";   
+      letter-spacing: -0.04em; 
+      /* margin-bottom: 2px;  */
+    }
+  }
+
+  .title-card {
+    p {
+      font-size: 30px !important;
+      line-height: 35px !important;
+      letter-spacing: -0.05em !important;
+    }
+  }
+
+  .author-name {
+    p {
+      font-size: 30px !important;
+      line-height: 35px !important;
+      letter-spacing: -0.05em !important;
+    }
+  }
+
+  .author-description {
+    p {
+      font-size: 16px !important;     
+      line-height: 22px !important;  
+      font-family: "Regular";   
+      letter-spacing: -0.03em; 
+      /* margin-bottom: 2px;  */
+    }
   }
 }
 
