@@ -24,17 +24,16 @@ async function Projects(nextParams: {
   const { acf } = data;
   const { projects_information } = acf;
 
-  // const t = await getTranslations();
+  const t = await getTranslations();
   return (
-    <div className="pl-[90px] pr-[30px] w-full page-Projects">
+    <div className="w-full page-Projects">
       <div className="container lg:hidden bg-[#3F4751] flex items-center">
         <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
-          {/* {`${t("header.projects")}`} */}
+          {`${t("header.projects")}`}
         </span>
       </div>
       <Cover media={projects_information.cover_page} />
-      <ProjectsInformation project={projects_information.projects} />
-      <div></div>
+      <ProjectsInformation reverseLayout={true} project={projects_information.projects} />
     </div>
   );
 }

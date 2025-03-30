@@ -158,7 +158,61 @@ button {
       line-height: 22px !important;  
       font-family: "Regular";   
       letter-spacing: -0.05em; 
-      /* margin-bottom: 2px;  */
+    }
+  }
+
+  .custom-title-contact {
+    p {
+      font-size: 40px;
+      line-height: 44px;
+      letter-spacing: -0.05em;
+      color: #3F4751 !important;
+    }
+    div {
+      color: #3F4751 !important;
+    }
+  }
+  
+  .custom-subTitle-contact {
+    p {
+      font-size: 16px !important;
+      line-height: 22px !important;
+      letter-spacing: -0.05em !important;
+      font-weight: 700 !important;
+      padding-bottom: 44px;
+      color: #3F4751 !important;
+    }
+    a {
+      color: #3F4751 !important;
+    }
+  }
+  
+  .custom-content-contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    p {
+      font-size: 16px !important;
+      line-height: 22px !important;
+      letter-spacing: -0.05em !important;
+      color: #3F4751 !important;
+    }
+    a {
+      color: #3F4751 !important;
+    }
+  
+    span {
+      color: #3F4751 !important;
+    }
+  }
+  
+
+  .project-description {
+    p {
+      font-size: 16px !important;     
+      line-height: 22px !important;  
+      font-family: "Regular";   
+      letter-spacing: -0.05em; 
     }
   }
 
