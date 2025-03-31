@@ -25,7 +25,7 @@ export function CoverHome(props: Props) {
           alt="Espai Rö"
           className="h-full w-full object-cover"
         />
-        <h1 className="lg:hidden absolute left-[30px] top-[20px] text-[#E0E0E0] text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100000]">
+        <h1 className="lg:hidden absolute left-[30px] top-[20px] text-[#E0E0E0] text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100]">
           Espai Rö
         </h1>
         <div className="font-regular absolute bottom-[45px] lg:bottom-[30px] left-[30px] text-white text-[18px] leading-[22px]">

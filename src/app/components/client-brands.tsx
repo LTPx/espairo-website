@@ -46,7 +46,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
       <div className="h-[calc(100vh)] overflow-auto no-scrollbar">
         <div className="px-[30px] py-[30px]">
           <div className="w-full sticky top-[30px] z-[10] lg:z-[100000]">
-            <div className=" filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[30px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
+            <div className="filters flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[30px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
               <button
                 onClick={() => {
                   setSelectedCategory(null);

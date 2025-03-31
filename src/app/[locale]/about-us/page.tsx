@@ -103,6 +103,33 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
           description={aboutUs_information.last_information_section.description}
         />
       </section>
+      <section className="pt-[30px] pl-[30px] pb-[50px]">
+        <div className="flex flex-col">
+          <label className="font-bold text-[14px] leading-[18px] tracking-[-0.05em]">
+            Espai Rö
+          </label>
+          <p className="text-[14px] leading-[18px] tracking-[-0.05em]">
+            Showroom y Estudio <br /> de Arquitectura
+          </p>
+          <div className="flex flex-col pt-[30px]">
+            <Link
+              href={`mailto:info@espairo.com`}
+              className="text-[14px] leading-[18px] tracking-[-0.05em]"
+            >
+              info@espairo.com
+            </Link>
+            <div className="w-full flex justify-between">
+              <Link
+                href={"https://www.instagram.com/espai_ro/"}
+                target="_blank"
+                className="text-[14px] leading-[18px] tracking-[-0.05em]"
+              >
+                ig: @espai_ro
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

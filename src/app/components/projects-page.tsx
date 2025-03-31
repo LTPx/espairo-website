@@ -22,8 +22,7 @@ interface Props {
           {/* {`${t("header.projects")}`} */}
         </span>
       </div>
-      <Cover media={projects_information.cover_page} />
-      <ProjectsInformation project={projects_information.projects} />
+      <ProjectsInformation projects_information={projects_information} />
       <div></div>
     </div>
   );
