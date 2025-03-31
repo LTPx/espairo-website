@@ -46,10 +46,10 @@ export function CoverHome(props: Props) {
               craftsmanship <br className="lg:hidden" /> products.
             </p>
             <div
-              className={`lg:block hidden custom-text-home pt-[20px] lg:w-[335px] font-regular text-white text-[18px] leading-[22px] overflow-hidden transition-all duration-700 ease-in-out ${
+              className={`lg:block hidden custom-text-home lg:w-[335px] font-regular text-white text-[18px] leading-[22px] overflow-hidden transition-all duration-700 ease-in-out ${
                 isDescriptionVisible
-                  ? "opacity-100 max-h-[500px]"
-                  : "opacity-0 max-h-0"
+                  ? "opacity-100 max-h-[500px] visible pt-[20px]"
+                  : "opacity-0 max-h-0 invisible h-auto"
               }`}
               dangerouslySetInnerHTML={{ __html: home_information.description }}
             />

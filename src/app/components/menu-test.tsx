@@ -4,31 +4,29 @@ import React, { useRef, useState } from "react";
 import { Link, usePathname } from "@/navigation";
 import { useTranslations } from "next-intl";
 
-interface Link {
-  title: string;
-  url: string;
+interface MenuTestProps {
+  customClassName?: string;
 }
 
-export interface MenuMobileProps {
-  links: Link[];
-  languages: { name: string; url: string }[];
-  locale: "en" | "es" | "de";
-}
-
-export function MenuMobile({ links, languages, locale }: MenuMobileProps) {
+export function MenuTest({ customClassName }: MenuTestProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const t = useTranslations();
   const pathname = usePathname();
+  const menuLinks = [
+    { title: `${t("header.brands")}`, url: `/brands` },
+    { title: `${t("header.about-us")}`, url: `/about-us` },
+    { title: `${t("header.projects")}`, url: `/projects` },
+    { title: `${t("header.contact")}`, url: "/contact" },
+  ];
 
-  if (pathname.includes("/brands")) {
-    return null;
-  }
+  // Si se define un customClassName, lo usa; si no, mantiene el valor por defecto
+  const menuButtonClass = customClassName || "fixed bottom-[33px] right-[30px]";
 
   return (
     <>
       <button
-        className="fixed bottom-[33px] right-[30px] z-[3000] w-[82px] h-[82px] bg-[#3F4751] rounded-full flex items-center justify-center"
+        className={`${menuButtonClass} z-[3000] w-[82px] h-[82px] bg-[#3F4751] rounded-full flex items-center justify-center`}
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <img
@@ -62,7 +60,7 @@ export function MenuMobile({ links, languages, locale }: MenuMobileProps) {
             <div className="flex flex-col justify-end">
               <nav>
                 <hr className="border-t border-black border-1" />
-                {links.map((link, index) => (
+                {menuLinks.map((link, index) => (
                   <div key={index}>
                     <Link
                       className="pl-[28px] hover:bg-[#3F4751] hover:text-[#E0E0E0] block font-regular text-[40px] py-[20px] leading-[48px] tracking-[-0.05em]"
@@ -92,4 +90,4 @@ export function MenuMobile({ links, languages, locale }: MenuMobileProps) {
   );
 }
 
-export default MenuMobile;
+export default MenuTest;

@@ -6,6 +6,7 @@ import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import BrandCard from "./brand-card";
 import ClientBrands from "./client-brands";
 import React from "react";
+import MenuTest from "./menu-test";
 
 interface BrandsMobileProps {
   brands_information: BrandsPageWp;
@@ -15,6 +16,7 @@ interface BrandsMobileProps {
 function BrandsMobile(props: BrandsMobileProps) {
   const { brands_information, allCategories } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [trueMenu, setTrueMenu] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null); // Estado de la categoría seleccionada
   const pathname = usePathname();
 
@@ -74,12 +76,13 @@ function BrandsMobile(props: BrandsMobileProps) {
   const onBrandClick = (selectedBrand: BrandsWp) => {
     console.log("Selected Category:", selectedCategory);
     console.log("Selected Brand:", selectedBrand.title);
-    console.log(filteredBrands)
+    setTrueMenu(true);
+    console.log(filteredBrands);
     const realIndex = filteredBrands.findIndex((b) => {
       console.log("Brand in iteration:", b.title);
-      console.log("Selected Brand Title:", selectedBrand.title); 
+      console.log("Selected Brand Title:", selectedBrand.title);
       return b.title === selectedBrand.title;
-    });    
+    });
     console.log("Real Index:", realIndex);
 
     if (realIndex !== -1) {
@@ -96,7 +99,7 @@ function BrandsMobile(props: BrandsMobileProps) {
     if (currentIndex < filteredBrands.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
-    //   setSelectedBrandTitle(filteredBrands[nextIndex].title); 
+      //   setSelectedBrandTitle(filteredBrands[nextIndex].title);
     }
   };
 
@@ -104,7 +107,7 @@ function BrandsMobile(props: BrandsMobileProps) {
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
       setCurrentIndex(prevIndex);
-    //   setSelectedBrandTitle(filteredBrands[prevIndex].title); 
+      //   setSelectedBrandTitle(filteredBrands[prevIndex].title);
     }
   };
 
@@ -130,12 +133,18 @@ function BrandsMobile(props: BrandsMobileProps) {
             totalBrands={filteredBrands.length}
             onNext={goToNextBrand}
             onPrevious={goToPreviousBrand}
-            // onCategoryClick={() => {
-            //   setSelectedBrandTitle(null);
-            // }}
+            onCategoryClick={() => {
+              setTrueMenu(false);
+            }}
+            onMenu={() => {
+              setTrueMenu(true);
+            }}
           />
         </div>
       ))}
+      <MenuTest
+        customClassName={trueMenu ? "fixed top-[30px] right-[30px]" : ""}
+      />
     </div>
   );
 }

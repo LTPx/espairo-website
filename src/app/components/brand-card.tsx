@@ -17,6 +17,7 @@ interface BrandCardProps {
   onNext?: () => void;
   onPrevious?: () => void;
   onCategoryClick?: () => void;
+  onMenu?: () => void;
 }
 
 function BrandCard(props: BrandCardProps) {
@@ -31,6 +32,7 @@ function BrandCard(props: BrandCardProps) {
     onNext,
     onPrevious,
     onCategoryClick,
+    onMenu,
   } = props;
 
   const hasNext = index !== undefined && totalBrands && index < totalBrands - 1;
@@ -38,11 +40,23 @@ function BrandCard(props: BrandCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobileDescriptionOpen, setIsMobileDescriptionOpen] = useState(false);
   const lastScrollTime = useRef<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const isTouchDevice = useRef(
     typeof window !== "undefined" &&
       window.matchMedia("(pointer: coarse)").matches
   );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleScroll = (event: WheelEvent) => {
     if (isTouchDevice.current || !images || images.length <= 1) return;
@@ -104,9 +118,11 @@ function BrandCard(props: BrandCardProps) {
   return (
     <div
       ref={cardRef}
-      className="flex flex-col gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden"
+      className="flex flex-col h-full gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden"
     >
-      <div className={`group relative ${props.className}`}>
+      <div
+        className={`h-full group relative flex flex-col gap-[30px] ${props.className}`}
+      >
         <div className="lg:hidden absolute top-[30px] left-[30px] z-[40]">
           <Link href={""}>
             <button
@@ -117,18 +133,41 @@ function BrandCard(props: BrandCardProps) {
             </button>
           </Link>
         </div>
-        <div className="relative w-full h-[85vh] lg:h-full overflow-hidden">
-          {images.map((image, i) => (
-            <img
-              key={i}
-              src={image.image || ""}
-              alt={`brand-image-${i}`}
-              className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out ${
-                i === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
-              loading="lazy"
-            />
-          ))}
+        <div className="relative w-full h-[88vh] lg:h-full overflow-hidden">
+          {isMobile ? (
+            <motion.div
+              className="relative h-full flex w-full"
+              initial={{ x: `-${currentImageIndex * 100}%` }}
+              animate={{ x: `-${currentImageIndex * 100}%` }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 50,
+              }}
+            >
+              {images.map((image, i) => (
+                <motion.img
+                  key={i}
+                  src={image.image || ""}
+                  alt={`brand-image-${i}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              ))}
+            </motion.div>
+          ) : (
+            images.map((image, i) => (
+              <img
+                key={i}
+                src={image.image || ""}
+                alt={`brand-image-${i}`}
+                className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                  i === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+                loading="lazy"
+              />
+            ))
+          )}
         </div>
         {images.length > 1 && (
           <div className="absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2 flex gap-2">
@@ -145,7 +184,7 @@ function BrandCard(props: BrandCardProps) {
             ))}
           </div>
         )}
-        <div className="flex justify-between items-center px-[30px] pt-[30px]">
+        <div className="lg:hidden flex justify-between items-center px-[30px]">
           <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
             {title}
           </h1>
@@ -153,11 +192,13 @@ function BrandCard(props: BrandCardProps) {
             src={"/images/open-brand.svg"}
             className="h-[25px] w-[25px]"
             loading="lazy"
-            onClick={() => setIsMobileDescriptionOpen(true)}
+            onClick={() => {
+              setIsMobileDescriptionOpen(true);
+              onCategoryClick && onCategoryClick();
+            }}
           />
         </div>
       </div>
-
       <div className="hidden lg:flex pl-[30px] py-[30px] flex flex-col lg:justify-between">
         <div>
           {category && (
@@ -223,7 +264,6 @@ function BrandCard(props: BrandCardProps) {
           </div>
         </div>
       </div>
-
       <AnimatePresence>
         {isMobileDescriptionOpen && (
           <motion.div
@@ -260,7 +300,10 @@ function BrandCard(props: BrandCardProps) {
                   src={"/images/close-brand.svg"}
                   className="h-[25px] w-[25px]"
                   loading="lazy"
-                  onClick={() => setIsMobileDescriptionOpen(false)}
+                  onClick={() => {
+                    setIsMobileDescriptionOpen(false);
+                    onMenu && onMenu();
+                  }}
                 />
               </div>
             </div>
