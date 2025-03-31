@@ -6,6 +6,8 @@ import AboutUsSecondCard from "./aboutUs-second-card";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import MenuLateral from "./menu-lateral";
+import Link from "next/link";
+import Footer from "./footer";
 
 interface Props {
   aboutUs_information: AboutUsPageWp;
@@ -36,14 +38,21 @@ function AboutUsPage(props: Props) {
 
   return (
     <div className="relative h-[100vh] flex">
+      <Link href={"/"}>
+        <h1 className="hidden lg:block absolute top-[30px] left-[90px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]">
+          Espai Rö
+        </h1>
+      </Link>
       <MenuLateral links={leftMenuLinks} />
-      <div className="flex-1 overflow-y-auto pb-[60px]">
+      <div className="flex-1 overflow-y-auto no-scrollbar">
         <Cover media={aboutUs_information.cover_page} />
         <section className="pt-[40px] lg:pt-[100px]">
           <AboutUsCard
             image={aboutUs_information.first_information_section.image}
             title={aboutUs_information.first_information_section.title}
-            description={aboutUs_information.first_information_section.description}
+            description={
+              aboutUs_information.first_information_section.description
+            }
           />
         </section>
         <section className="pt-[100px]">
@@ -77,7 +86,9 @@ function AboutUsPage(props: Props) {
           <AboutUsSecondCard
             image={aboutUs_information.second_information_section.image}
             title={aboutUs_information.second_information_section.title}
-            description={aboutUs_information.second_information_section.description}
+            description={
+              aboutUs_information.second_information_section.description
+            }
           />
         </section>
         <section className="pt-[100px]">
@@ -90,16 +101,19 @@ function AboutUsPage(props: Props) {
           <AboutUsSecondCard
             image={aboutUs_information.last_information_section.image}
             title={aboutUs_information.last_information_section.title}
-            description={aboutUs_information.last_information_section.description}
+            description={
+              aboutUs_information.last_information_section.description
+            }
             reverseLayout={true}
           />
         </section>
-        <section className="pt-[100px] mb-[250px]">
+        <section className="pt-[100px]">
           <img
             src={aboutUs_information.last_image}
             className="h-[800px] object-cover w-full"
           />
         </section>
+        <Footer/>
       </div>
       <MenuLateral links={rightMenuLinks} />
     </div>

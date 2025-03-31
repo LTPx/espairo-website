@@ -205,7 +205,8 @@ function BrandCard(props: BrandCardProps) {
             <Link href={""} className="flex gap-[10px] pb-[50px]">
               <button
                 onClick={onCategoryClick}
-                className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
+                
+                className="cursor-pointer bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
               >
                 {category}
                 <img
