@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "@/navigation";
 import { BranImagesWp } from "../_interfaces/wordpress-components";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface BrandCardProps {
   images: BranImagesWp[];
@@ -110,7 +111,7 @@ function BrandCard(props: BrandCardProps) {
           <Link href={""}>
             <button
               onClick={onCategoryClick}
-              className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer h-[35px] px-[20px] rounded-full"
+              className="backdrop-blur-sm border border-[#3F4751] h-[35px] px-[20px] text-[#3F4751] uppercase inline-block flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer rounded-full"
             >
               BRANDS
             </button>
@@ -175,7 +176,7 @@ function BrandCard(props: BrandCardProps) {
             </Link>
           )}
           <div className="flex flex-col pb-[22px]">
-            <Link target='_blank' href={urlBrand || ""}>
+            <Link target="_blank" href={urlBrand || ""}>
               <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
                 {title}
               </h1>
@@ -223,69 +224,76 @@ function BrandCard(props: BrandCardProps) {
         </div>
       </div>
 
-      {isMobileDescriptionOpen && (
-        <div
-          className={`fixed inset-0 z-50 bg-[#E0E0E0] flex flex-col justify-between p-[30px] transition-transform duration-500 ease-in-out ${
-            isMobileDescriptionOpen ? "translate-y-0" : "translate-y-full"
-          }`}
-          style={{
-            transform: isMobileDescriptionOpen
-              ? "translateY(0%)"
-              : "translateY(100%)",
-          }}
-        >
-          <div className="flex flex-col">
-            {category && (
-              <Link href={""} className="flex gap-[10px] pb-[20px]">
-                <button
-                  onClick={onCategoryClick}
-                  className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer h-[35px] px-[20px] rounded-full"
+      <AnimatePresence>
+        {isMobileDescriptionOpen && (
+          <motion.div
+            className="fixed inset-0 z-[1000] bg-[#E0E0E0] flex flex-col justify-between p-[30px]"
+            initial={{ translateY: "100%" }}
+            animate={{ translateY: "0%" }}
+            exit={{ translateY: "100%" }}
+            transition={{
+              type: "spring",
+              stiffness: 150,
+              damping: 30,
+            }}
+          >
+            <div className="flex flex-col">
+              {category && (
+                <Link
+                  href={""}
+                  onClick={() => setIsMobileDescriptionOpen(false)}
+                  className="flex gap-[10px] pb-[20px]"
                 >
-                  {category}
+                  <button
+                    onClick={onCategoryClick}
+                    className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer h-[35px] px-[20px] rounded-full"
+                  >
+                    {category}
+                  </button>
+                </Link>
+              )}
+              <div className="flex justify-between items-center">
+                <h1 className="font-regular text-[40px] leading-[48px] tracking-[-0.05em]">
+                  {title}
+                </h1>
+                <img
+                  src={"/images/close-brand.svg"}
+                  className="h-[25px] w-[25px]"
+                  loading="lazy"
+                  onClick={() => setIsMobileDescriptionOpen(false)}
+                />
+              </div>
+            </div>
+            <div className="flex-grow overflow-auto mt-[30px]">
+              {description && (
+                <div
+                  className="description-brand-mobile"
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                  }}
+                />
+              )}
+              <Link
+                className="pt-[48px] inline-block"
+                href={`mailto:info@espairo.com`}
+              >
+                <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+                  SOLICITA INFORMACIÓN
                 </button>
               </Link>
-            )}
-            <div className="flex justify-between items-center">
-              <h1 className="font-regular text-[40px] leading-[48px] tracking-[-0.05em]">
-                {title}
-              </h1>{" "}
-              <img
-                src={"/images/close-brand.svg"}
-                className="h-[25px] w-[25px]"
-                loading="lazy"
-                onClick={() => setIsMobileDescriptionOpen(false)}
-              />
+              <Link
+                className="absolute bottom-[70px] left-[30px]"
+                href={urlBrand || ""}
+                target="_blank"
+              >
+                <span className="flex items-end font-regular text-[12px] leading-[20px] tracking-[-0.04em] underline">
+                  Página web
+                </span>
+              </Link>
             </div>
-          </div>
-          <div className="flex-grow overflow-auto mt-[30px]">
-            {description && (
-              <div
-                className="description-brand-mobile"
-                dangerouslySetInnerHTML={{
-                  __html: description,
-                }}
-              />
-            )}{" "}
-            <Link
-              className="pt-[48px] inline-block"
-              href={`mailto:info@espairo.com`}
-            >
-              <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
-                SOLICITA INFORMACIÓN
-              </button>
-            </Link>
-            <Link
-              className="absolute bottom-[70px] left-[30px]"
-              href={urlBrand || ""}
-              target="_blank"
-            >
-              <span className="flex items-end font-regular text-[12px] leading-[20px] tracking-[-0.04em] underline">
-                Página web
-              </span>
-            </Link>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -50,13 +50,11 @@ async function Brands(nextParams: {
     .sort((a: any, b: any) => a.term_id - b.term_id);
 
   return (
-    <>
       <BrandsMobile
         brands_information={brands_information}
         allCategories={allCategories}        // mergedCategories={mergedCategories}
         // brands={brands}
       />
-    </>
   );
 }
 
