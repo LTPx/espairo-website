@@ -123,7 +123,7 @@ function CallAllPages(props: PageProps) {
               ? "-300%"
               : "-400%",
         }}
-        transition={{ type: "tween", duration: 1 }}
+        transition={{ type: "tween", duration: 1.5 }}
         style={{
           height: sectionHeights[activeSection]
             ? `${sectionHeights[activeSection]}px`
