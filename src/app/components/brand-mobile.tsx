@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import BrandCard from "./brand-card";
@@ -19,6 +19,7 @@ function BrandsMobile(props: BrandsMobileProps) {
   const [trueMenu, setTrueMenu] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null); // Estado de la categoría seleccionada
   const pathname = usePathname();
+  const clientBrandsRef = useRef<HTMLDivElement | null>(null);
 
   const brands: BrandsWp[] = brands_information.brand;
 
@@ -116,9 +117,10 @@ function BrandsMobile(props: BrandsMobileProps) {
       <div className="relative h-full">
         <ClientBrands
           brands_information={brands_information}
-          categories={mergedCategories}
+          categories={mergedCategories} 
           onBrandClick={onBrandClick}
           onCategorySelect={setSelectedCategory}
+          ref={clientBrandsRef}
         />
       </div>
       {filteredBrands.map((brand, index) => (

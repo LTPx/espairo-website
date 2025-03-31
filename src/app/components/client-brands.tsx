@@ -114,4 +114,6 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(({
   );
 });
 
+ClientBrands.displayName = "ClientBrands";
+
 export default ClientBrands;
