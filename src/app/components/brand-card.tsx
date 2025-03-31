@@ -133,7 +133,7 @@ function BrandCard(props: BrandCardProps) {
             </button>
           </Link>
         </div>
-        <div className="relative w-full h-[88vh] lg:h-full overflow-hidden">
+        <div className="relative w-full h-[85vh] lg:h-full overflow-hidden">
           {isMobile ? (
             <motion.div
               className="relative h-full flex w-full"
@@ -170,7 +170,7 @@ function BrandCard(props: BrandCardProps) {
           )}
         </div>
         {images.length > 1 && (
-          <div className="absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2 flex gap-2">
+          <div className="hidden lg:flex absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2  gap-2">
             {images.map((_, i) => (
               <button
                 key={i}

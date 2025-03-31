@@ -13,7 +13,7 @@ async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
   const t = await getTranslations();
   return (
     <div className="lg:h-screen lg:flex lg:pl-[120px]">
-      <div className="container lg:hidden bg-[#3F4751] flex items-center">
+      <div className="sticky top-[0px] z-[10] container lg:hidden bg-[#3F4751] flex items-center">
         <span className="font-regular text-[#E0E0E0] py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
           {`${t("header.contact")}`}
         </span>
