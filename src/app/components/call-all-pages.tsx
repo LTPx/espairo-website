@@ -110,7 +110,7 @@ function CallAllPages(props: PageProps) {
     <div className="hidden lg:block h-full relative overflow-hidden">
       {/* <NavbarSecond setSelectedBrandTitle={setSelectedBrandTitle} navOptions={navOptions} selectedBrandTitle={selectedBrandTitle}  /> */}
       <motion.div
-        className="flex w-full"
+        className="flex w-full no-scrollbar"
         initial={{ x: 0 }}
         animate={{
           x:
@@ -124,11 +124,7 @@ function CallAllPages(props: PageProps) {
               ? "-300%"
               : "-400%",
         }}
-        transition={{
-          type: "tween",
-          duration: 1.5,
-          // ease: "easeInOut",
-        }}
+        transition={{ type: "tween", duration: 1.45 }}
         style={{
           height: sectionHeights[activeSection]
             ? `${sectionHeights[activeSection]}px`
