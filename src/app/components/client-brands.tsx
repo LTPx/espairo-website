@@ -52,7 +52,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                   setSelectedCategory(null);
                   onCategorySelect(null);
                 }}
-                className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[14px] leading-[20px] lg:text-[12px] lg:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center lg:items-start justify-center font-medium text-[14px] leading-[20px] lg:text-[12px] lg:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                   selectedCategory === null
                     ? "bg-[#3F4751] text-white"
                     : "hover:bg-[#3F4751] hover:text-white"
@@ -73,7 +73,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                       setSelectedCategory(newCategory);
                       onCategorySelect(newCategory);
                     }}
-                    className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center justify-center font-medium text-[14px] leading-[20px] lg:text-[12px] lg:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                    className={`backdrop-blur-sm font-regular items-center lg:items-start uppercase inline-block flex justify-center font-medium text-[14px] leading-[20px] lg:text-[12px] lg:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                       selectedCategory === category.term_id
                         ? "bg-[#3F4751] text-white"
                         : "hover:bg-[#3F4751] hover:text-white"
