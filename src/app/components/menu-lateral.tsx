@@ -1,26 +1,15 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface MenuLateralProps {
   links: { href: string; label: string }[];
-  scrollToClientBrands?: () => void;
-  selectedBrandTitle?: string | null;
 }
 
-export const MenuLateral = ({
-  links,
-  scrollToClientBrands,
-  selectedBrandTitle
-}: MenuLateralProps) => {
+export const MenuLateral = ({ links }: MenuLateralProps) => {
   const pathname = usePathname();
-  const handleLinkClick = (href: string) => {
-    scrollToClientBrands && scrollToClientBrands();
-  };
 
   return (
-    <div className="lg:flex hidden">
+    <div className="flex">
       {links.map((link) => (
         <div
           key={link.href}
@@ -32,7 +21,6 @@ export const MenuLateral = ({
         >
           <Link
             href={link.href}
-            onClick={() => handleLinkClick(link.href)}
             className={`pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] rotate-180 transition duration-300 ${
               pathname === link.href
                 ? "text-white"
@@ -41,12 +29,6 @@ export const MenuLateral = ({
             style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
           >
             {link.label}
-            {pathname.includes("brands") && selectedBrandTitle && (
-                <>
-                  <span className="my-[7px] text-white">|</span>
-                  <span className="text-white">{selectedBrandTitle}</span>
-                </>
-              )}
           </Link>
         </div>
       ))}

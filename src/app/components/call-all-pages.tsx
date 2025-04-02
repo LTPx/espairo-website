@@ -40,9 +40,7 @@ function CallAllPages(props: PageProps) {
   } = props;
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(
-    null
-  );
+  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(null);
 
   const getSectionFromPath = (path: string) => {
     if (path.includes("/brands")) return "brands";
@@ -99,6 +97,7 @@ function CallAllPages(props: PageProps) {
     }
   }, [activeSection]);
 
+
   const navOptions = [
     { label: "Brands", section: "brands", route: "/es/brands" },
     { label: "Nosotros", section: "about-us", route: "/es/about-us" },
@@ -110,7 +109,7 @@ function CallAllPages(props: PageProps) {
     <div className="hidden lg:block h-full relative overflow-hidden">
       {/* <NavbarSecond setSelectedBrandTitle={setSelectedBrandTitle} navOptions={navOptions} selectedBrandTitle={selectedBrandTitle}  /> */}
       <motion.div
-        className="flex w-full no-scrollbar"
+        className="flex w-full"
         initial={{ x: 0 }}
         animate={{
           x:
@@ -124,22 +123,18 @@ function CallAllPages(props: PageProps) {
               ? "-300%"
               : "-400%",
         }}
-        transition={{ type: "tween", duration: 1.45 }}
-        style={{
-          height: sectionHeights[activeSection]
-            ? `${sectionHeights[activeSection]}px`
-            : "100vh",
-        }}
+        transition={{ type: "tween", duration: 1.75 }}
+        // style={{
+        //   height: sectionHeights[activeSection]
+        //     ? `${sectionHeights[activeSection]}px`
+        //     : "100vh",
+        // }}
       >
         <div className="w-full flex-shrink-0" ref={homeRef}>
           <Home home_information={home} />
         </div>
         <div className="w-full flex-shrink-0" ref={brandsRef}>
-          <BrandsPage
-            brands_information={brands}
-            allCategories={categories}
-            setSelectedBrandTitle={setSelectedBrandTitle}
-          />
+          <BrandsPage brands_information={brands} allCategories={categories} setSelectedBrandTitle={setSelectedBrandTitle}/>
         </div>
         <div className="w-full h-auto flex-shrink-0" ref={aboutUsRef}>
           <AboutUsPage aboutUs_information={aboutUs_information} />

@@ -57,9 +57,9 @@ function BrandsMobile(props: BrandsMobileProps) {
 
   useEffect(() => {
     if (pathname === "/es/brands") {
-      document.body.classList.add("no-mobile-scroll");
+      document.body.classList.add("no-scroll");
       return () => {
-        document.body.classList.remove("no-mobile-scroll");
+        document.body.classList.remove("no-scroll");
       };
     }
   }, [pathname]);

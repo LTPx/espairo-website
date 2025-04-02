@@ -20,7 +20,7 @@ export function Footer() {
   return (
     <>
       <footer
-        className={`lg:block hidden lg:bg-body pt-[250px] pb-[30px] px-[30px]`}
+        className={`lg:block hidden lg:bg-body pt-[250px] pb-[30px] ${footerPadding}`}
       >
         <div className="flex justify-between items-end">
           <div className="flex flex-col">

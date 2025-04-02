@@ -1,4 +1,6 @@
-import React, { useState, forwardRef } from "react";
+"use client";
+
+import { useState } from "react";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 
 interface ClientBrandsProps {
@@ -8,12 +10,12 @@ interface ClientBrandsProps {
   onCategorySelect: (category: number | null) => void;
 }
 
-const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(({
+const ClientBrands: React.FC<ClientBrandsProps> = ({
   categories,
   onBrandClick,
   brands_information,
-  onCategorySelect
-}, ref) => {
+  onCategorySelect,
+}) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
@@ -33,7 +35,7 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(({
     : brands_information.cover_page.url;
 
   return (
-    <div ref={ref} className="flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100vh] overflow-auto">
+    <div className="flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100vh] overflow-auto">
       <div className="hidden lg:block lg:h-[calc(100vh)]">
         <img
           src={selectedCover}
@@ -112,6 +114,6 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(({
       </div>
     </div>
   );
-});
+};
 
 export default ClientBrands;

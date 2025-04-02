@@ -141,17 +141,11 @@ button {
   max-width: 100%;
 }
 
-@media (min-width: 1024px) {
-  .no-scroll {
-    overflow: hidden;
-  }
+.no-scroll {
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
-  .no-mobile-scroll {
-    overflow: hidden;
-  }
-
   h1 {
     font-size: 40px;
     line-height: 48px;
