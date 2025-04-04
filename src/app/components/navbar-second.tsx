@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface NavbarSecondProps {
   navOptions: { label: string; route: string; section: string }[];
   selectedBrandTitle?: string | null;
-  setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>; // Agregar función para resetear el título
+  setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export default function NavbarSecond({
@@ -16,6 +16,7 @@ export default function NavbarSecond({
   setSelectedBrandTitle,
 }: NavbarSecondProps) {
   const pathname = usePathname();
+  const [showTitle, setShowTitle] = useState(true);
 
   const currentIndex = navOptions.findIndex((option) =>
     pathname.includes(option.section)
@@ -49,16 +50,96 @@ export default function NavbarSecond({
     }
   }, [pathname, setSelectedBrandTitle]);
 
+  useEffect(() => {
+    if (!pathname.includes("/about-us")) {
+      setShowTitle(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      const container = document.querySelector(".hide-title-trigger-container");
+
+      if (!container) {
+        setShowTitle(true);
+        return;
+      }
+
+      const triggers = container.querySelectorAll(".hide-title-trigger");
+
+      let shouldHide = false;
+
+      triggers.forEach((trigger) => {
+        const rect = trigger.getBoundingClientRect();
+        const isAboveTrigger = rect.top <= 30 && rect.bottom >= 0;
+
+        if (isAboveTrigger) {
+          shouldHide = true;
+        }
+      });
+
+      setShowTitle(!shouldHide);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!pathname.includes("/projects")) {
+      setShowTitle(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      const container = document.querySelector(".hide-title-trigger-projects");
+
+      if (!container) {
+        setShowTitle(true);
+        return;
+      }
+
+      const triggers = container.querySelectorAll(
+        ".hide-title-trigger-project"
+      );
+
+      let shouldHide = false;
+
+      triggers.forEach((trigger) => {
+        const rect = trigger.getBoundingClientRect();
+        const isAboveTrigger = rect.top <= 30 && rect.bottom >= 0;
+
+        if (isAboveTrigger) {
+          shouldHide = true;
+        }
+      });
+
+      setShowTitle(!shouldHide);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [pathname]);
+
   return (
     <>
-      <Link href={"/"}>
-        <h1
-          className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
-          style={{ left: leftPosition }}
-        >
-          Espai Rö
-        </h1>
-      </Link>
+      {showTitle && (
+        <Link href={"/"}>
+          <h1
+            className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
+            style={{ left: leftPosition }}
+          >
+            Espai Rö
+          </h1>
+        </Link>
+      )}
       <div className="fixed left-0 z-[100000] h-screen flex">
         {sectionsInPath.map((option) => (
           <div

@@ -23,7 +23,7 @@ export function ProjectsInformation({
   );
 
   return (
-    <div className="flex flex-col gap-[0px]">
+    <div className="hide-title-trigger-projects flex flex-col gap-[0px]">
       <div className="lg:hidden sticky top-[70px] z-[10] lg:z-[100000]">
         <div className="left-[0px] absolute z-[10] w-full ">
           <div className="pl-[30px] whitespace-nowrap flex gap-[7px] overflow-x-scroll no-scrollbar">
@@ -46,7 +46,7 @@ export function ProjectsInformation({
             <div key={index} className="project-container">
               {reverseLayout ? (
                 <>
-                  <section className="px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
+                  <section className="hide-title-trigger-project hide-title-trigger-project px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
                     <h2 className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]">
                       {title}
                     </h2>
@@ -55,8 +55,9 @@ export function ProjectsInformation({
                       dangerouslySetInnerHTML={{ __html: description }}
                     />
                   </section>
+
                   {gallery_project.length > 0 && (
-                    <section className="pt-[40px] lg:pt-[15px]">
+                    <section className=" pt-[40px] lg:pt-[15px]">
                       <Gallery gallery={gallery_project} />
                     </section>
                   )}
@@ -68,7 +69,7 @@ export function ProjectsInformation({
                       <Gallery gallery={gallery_project} />
                     </section>
                   )}
-                  <section className="px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
+                  <section className="hide-title-trigger-project px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
                     <h2 className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]">
                       {title}
                     </h2>
