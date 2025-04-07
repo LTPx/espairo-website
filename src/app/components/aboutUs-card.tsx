@@ -20,6 +20,7 @@ function AboutUsCard(props: AboutUsCardProps) {
       }`}
     >
       <img
+        data-aos="fade-up"
         src={image}
         alt="base image"
         className="h-[550px] lg:h-[901px] lg:w-full object-cover"
@@ -31,6 +32,7 @@ function AboutUsCard(props: AboutUsCardProps) {
       >
         {title && (
           <div
+            data-aos="fade-up"
             className="title-card font-regular"
             dangerouslySetInnerHTML={{
               __html: title,
@@ -40,6 +42,7 @@ function AboutUsCard(props: AboutUsCardProps) {
         <div className="pt-[30px] lg:pt-[0px] lg:flex flex-col lg:pr-[50px]">
           {description && (
             <div
+              data-aos="fade-up"
               className="description-card font-regular"
               dangerouslySetInnerHTML={{
                 __html: description,

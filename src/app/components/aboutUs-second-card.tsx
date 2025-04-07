@@ -30,6 +30,7 @@ function AboutUsSecondCard({
         <div className="flex flex-col gap-[30px] lg:gap-[50px]">
           {title && (
             <div
+              data-aos="fade-up"
               className="title-card font-regular"
               dangerouslySetInnerHTML={{
                 __html: title,
@@ -39,6 +40,7 @@ function AboutUsSecondCard({
           <div className="lg:container lg:flex flex-col lg:pr-[50px]">
             {description && (
               <div
+                data-aos="fade-up"
                 className="description-second-card font-regular"
                 dangerouslySetInnerHTML={{
                   __html: description,
@@ -48,12 +50,9 @@ function AboutUsSecondCard({
           </div>
         </div>
       </div>
-      <div
-        className={`w-full ${
-          reverseLayout ? "order-first" : "order-last"
-        }`}
-      >
+      <div className={`w-full ${reverseLayout ? "order-first" : "order-last"}`}>
         <img
+          data-aos="fade-up"
           src={image}
           alt="base image"
           className="h-[550px] lg:h-[901px] w-full object-cover"

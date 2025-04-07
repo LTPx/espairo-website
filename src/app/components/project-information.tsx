@@ -47,10 +47,14 @@ export function ProjectsInformation({
               {reverseLayout ? (
                 <>
                   <section className="hide-title-trigger-project hide-title-trigger-project px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
-                    <h2 className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]">
+                    <h2
+                      data-aos="fade-up"
+                      className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]"
+                    >
                       {title}
                     </h2>
                     <div
+                      data-aos="fade-up"
                       className="project-description"
                       dangerouslySetInnerHTML={{ __html: description }}
                     />
@@ -70,10 +74,14 @@ export function ProjectsInformation({
                     </section>
                   )}
                   <section className="hide-title-trigger-project px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
-                    <h2 className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]">
+                    <h2
+                      data-aos="fade-up"
+                      className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]"
+                    >
                       {title}
                     </h2>
                     <div
+                      data-aos="fade-up"
                       className="project-description"
                       dangerouslySetInnerHTML={{ __html: description }}
                     />

@@ -202,7 +202,7 @@ function BrandCard(props: BrandCardProps) {
       <div className="hidden lg:flex pl-[30px] py-[30px] flex flex-col lg:justify-between">
         <div>
           {category && (
-            <Link href={""} className="flex gap-[10px] pb-[50px]">
+            <Link data-aos="fade-up" href={""} className="flex gap-[10px] pb-[50px]">
               <button
                 onClick={onCategoryClick}
                 className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
@@ -217,7 +217,7 @@ function BrandCard(props: BrandCardProps) {
             </Link>
           )}
           <div className="flex flex-col pb-[22px]">
-            <Link target="_blank" href={urlBrand || ""}>
+            <Link data-aos="fade-up" target="_blank" href={urlBrand || ""}>
               <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
                 {title}
               </h1>
@@ -226,12 +226,17 @@ function BrandCard(props: BrandCardProps) {
           <div className="hidden lg:flex flex-col gap-[46px] pr-[75px]">
             {description && (
               <div
+                data-aos="fade-up"
                 dangerouslySetInnerHTML={{
                   __html: description,
                 }}
               />
             )}
-            <Link className="inline-block" href={`mailto:info@espairo.com`}>
+            <Link
+              data-aos="fade-up"
+              className="inline-block"
+              href={`mailto:info@espairo.com`}
+            >
               <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
                 SOLICITA INFORMACIÓN
               </button>
@@ -239,7 +244,7 @@ function BrandCard(props: BrandCardProps) {
           </div>
         </div>
         <div className="flex justify-between">
-          <Link href={urlBrand || ""} target="_blank">
+          <Link  href={urlBrand || ""} target="_blank">
             <span className="flex items-end font-regular text-[14px] leading-[14px] tracking-[-0.04em] underline">
               Página web
             </span>
@@ -247,6 +252,7 @@ function BrandCard(props: BrandCardProps) {
           <div className="flex gap-[10px] lg:pr-[30px]">
             {hasPrevious && (
               <span
+                // data-aos="fade-up"
                 className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onPrevious}
               >
@@ -255,6 +261,7 @@ function BrandCard(props: BrandCardProps) {
             )}
             {hasNext && (
               <span
+                // data-aos="fade-up"
                 className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onNext}
               >
