@@ -91,9 +91,9 @@ function BrandsMobile(props: BrandsMobileProps) {
     }
   };
 
-  useEffect(() => {
-    scrollToBrand(currentIndex);
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   scrollToBrand(currentIndex);
+  // }, [currentIndex]);
 
   const goToNextBrand = () => {
     if (currentIndex < filteredBrands.length - 1) {
