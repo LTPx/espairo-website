@@ -85,26 +85,21 @@ function BrandsPage(props: BrandsPageProps) {
     console.log("Real Index:", realIndex);
 
     if (realIndex !== -1) {
-      setTriggeredByClick(true);
-      setCurrentIndex(realIndex);
+      // setTriggeredByClick(true);
       setCurrentIndex(realIndex);
       scrollToBrand(realIndex);
     }
   };
 
   const [hasMounted, setHasMounted] = useState(false);
-  const [triggeredByClick, setTriggeredByClick] = useState(false);
-  
+
   useEffect(() => {
-    if (hasMounted && !triggeredByClick) {
+    if (hasMounted) {
       scrollToBrand(currentIndex);
+    } else {
+      setHasMounted(true);
     }
-    setTriggeredByClick(false);
   }, [currentIndex]);
-  
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
   const goToNextBrand = () => {
     if (currentIndex < filteredBrands.length - 1) {
