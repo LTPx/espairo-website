@@ -6,8 +6,14 @@
     "projects": "Proyectos",
     "about-us": "Nosotros",
     "brands": "Brands",
-    "contact": "Contacto",
-    "gallery": "Galería"
+    "contact": "Contacto"
+  },
+  "brandPage": {
+    "all": "Todos",
+    "information": "SOLICITA INFORMACIÓN",
+    "web": "Página web",
+    "prev": "Anterior",
+    "next": "Siguiente"
   },
   "footer": {
     "information": "¿Interesado en construir con nosotros? Contáctanos y te brindaremos una asesoría personalizada.",

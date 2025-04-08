@@ -69,6 +69,7 @@ export default async function LocaleLayout({
           />
           {/* <NavbarSecond/> */}
           <CallAllPages
+            locale={locale}
             home={home_information}
             projects={projects_information}
             brands={brands_information}

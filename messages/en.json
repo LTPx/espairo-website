@@ -15,11 +15,17 @@
     "legal-notice": "Legal notice",
     "accessibility-statement": "Accessibility statement"
   },
+  "brandPage": {
+    "all": "All",
+    "information": "REQUEST INFORMATION",
+    "web": "Web page",
+    "prev": "Previous",
+    "next": "Next"
+  },
   "header": {
     "projects": "Projects",
     "about-us": "About us",
     "brands": "Brands",
-    "contact": "Contact",
-    "gallery": "Gallery"
+    "contact": "Contact"
   }
 }

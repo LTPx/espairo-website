@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
+import { useTranslations } from "next-intl";
 
 interface ClientBrandsProps {
   categories: { term_id: number; name: string }[];
@@ -18,6 +19,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
 }) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const t = useTranslations();
 
   const filteredBrands =
     selectedCategory === null
@@ -35,7 +37,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
     : brands_information.cover_page.url;
 
   return (
-    <div className="flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100vh] overflow-auto">
+    <div className="brands flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100vh] overflow-auto">
       <div className="hidden lg:block lg:h-[calc(100vh)]">
         <img
           src={selectedCover}
@@ -58,10 +60,12 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
                     : "hover:bg-[#3F4751] hover:text-white"
                 }`}
               >
-                Todos
+                {t("brandPage.all")}
               </button>
               {categories
-                .filter((category) => category.term_id !== 1)
+                .filter(
+                  (category) => category.term_id !== 1 && category.term_id !== 8
+                )
                 .map((category) => (
                   <button
                     key={category.term_id}

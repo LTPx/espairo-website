@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "@/navigation";
 import { BranImagesWp } from "../_interfaces/wordpress-components";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface BrandCardProps {
   images: BranImagesWp[];
@@ -42,6 +43,8 @@ function BrandCard(props: BrandCardProps) {
   const lastScrollTime = useRef<number>(0);
   const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations();
+
   const isTouchDevice = useRef(
     typeof window !== "undefined" &&
       window.matchMedia("(pointer: coarse)").matches
@@ -202,7 +205,11 @@ function BrandCard(props: BrandCardProps) {
       <div className="hidden lg:flex pl-[30px] py-[30px] flex flex-col lg:justify-between">
         <div>
           {category && (
-            <Link data-aos="fade-up" href={""} className="flex gap-[10px] pb-[50px]">
+            <Link
+              data-aos="fade-up"
+              href={""}
+              className="flex gap-[10px] pb-[50px]"
+            >
               <button
                 onClick={onCategoryClick}
                 className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
@@ -232,21 +239,23 @@ function BrandCard(props: BrandCardProps) {
                 }}
               />
             )}
-            <Link
-              data-aos="fade-up"
-              className="inline-block"
-              href={`mailto:info@espairo.com`}
-            >
-              <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
-                SOLICITA INFORMACIÓN
-              </button>
-            </Link>
+            <div>
+              <Link
+                data-aos="fade-up"
+                className="inline-block"
+                href={`mailto:info@espairo.com`}
+              >
+                <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+                  {t("brandPage.information")}
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
         <div className="flex justify-between">
-          <Link  href={urlBrand || ""} target="_blank">
+          <Link href={urlBrand || ""} target="_blank">
             <span className="flex items-end font-regular text-[14px] leading-[14px] tracking-[-0.04em] underline">
-              Página web
+              {t("brandPage.web")}
             </span>
           </Link>
           <div className="flex gap-[10px] lg:pr-[30px]">
@@ -256,7 +265,7 @@ function BrandCard(props: BrandCardProps) {
                 className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onPrevious}
               >
-                Anterior
+                {t("brandPage.prev")}
               </span>
             )}
             {hasNext && (
@@ -265,7 +274,7 @@ function BrandCard(props: BrandCardProps) {
                 className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onNext}
               >
-                Siguiente
+                {t("brandPage.next")}
               </span>
             )}
           </div>

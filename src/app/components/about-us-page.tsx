@@ -21,7 +21,7 @@ function AboutUsPage(props: Props) {
   useEffect(() => {
     AOS.init({ duration: 1000, easing: "ease-out", offset: 80, once: false });
   }, []);
-
+  
   // const t = await getTranslations();
   return (
     <div className="hide-title-trigger-container page-AboutUs relative lg:pl-[60px] lg:pr-[60px]">

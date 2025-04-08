@@ -4,6 +4,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Home from "../[locale]/home";
+import { useTranslations } from "next-intl";
+
 import {
   AboutUsPageWp,
   BrandsPageWp,
@@ -24,6 +26,7 @@ interface PageProps {
   categories: any;
   aboutUs_information: AboutUsPageWp;
   contact_information: ContactPageWp;
+  locale: "en" | "es" | "de";
 }
 
 export type Section = "home" | "brands" | "aboutUs" | "projects" | "contact";
@@ -36,11 +39,16 @@ function CallAllPages(props: PageProps) {
     categories,
     aboutUs_information,
     contact_information,
+    locale,
   } = props;
 
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(null);
+  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(
+    null
+  );
+  const [opacity, setOpacity] = useState(0);
+  const t = useTranslations();
 
   const getSectionFromPath = (path: string): Section => {
     if (path.includes("/brands")) return "brands";
@@ -54,13 +62,15 @@ function CallAllPages(props: PageProps) {
     getSectionFromPath(pathname)
   );
 
-  const [sectionHeights, setSectionHeights] = useState<Record<Section, number>>({
-    home: 0,
-    brands: 0,
-    aboutUs: 0,
-    projects: 0,
-    contact: 0,
-  });
+  const [sectionHeights, setSectionHeights] = useState<Record<Section, number>>(
+    {
+      home: 0,
+      brands: 0,
+      aboutUs: 0,
+      projects: 0,
+      contact: 0,
+    }
+  );
 
   const homeRef = useRef<HTMLDivElement>(null);
   const brandsRef = useRef<HTMLDivElement>(null);
@@ -96,11 +106,32 @@ function CallAllPages(props: PageProps) {
     }
   }, [activeSection]);
 
+  useEffect(() => {
+    setOpacity(0);
+    setTimeout(() => setOpacity(1), 100);
+  }, [pathname]);
+
   const navOptions = [
-    { label: "Brands", section: "brands", route: "/es/brands" },
-    { label: "Nosotros", section: "aboutUs", route: "/es/about-us" },
-    { label: "Proyectos", section: "projects", route: "/es/projects" },
-    { label: "Contacto", section: "contact", route: "/es/contact" },
+    {
+      label: `${t("header.brands")}`,
+      section: "brands",
+      route: `/${locale}/brands`,
+    },
+    {
+      label: `${t("header.about-us")}`,
+      section: "aboutUs",
+      route: `/${locale}/about-us`,
+    },
+    {
+      label: `${t("header.projects")}`,
+      section: "projects",
+      route: `/${locale}/projects`,
+    },
+    {
+      label: `${t("header.contact")}`,
+      section: "contact",
+      route: `/${locale}/contact`,
+    },
   ];
 
   return (
@@ -109,11 +140,11 @@ function CallAllPages(props: PageProps) {
         navOptions={navOptions}
         selectedBrandTitle={selectedBrandTitle}
         setSelectedBrandTitle={setSelectedBrandTitle}
-        setActiveSection={setActiveSection} 
+        setActiveSection={setActiveSection}
       />
       <motion.div
         className="flex w-full"
-        initial={{ x: 0 }}
+        initial={{ x: 0, opacity: 0 }}
         animate={{
           x:
             activeSection === "home"
@@ -125,6 +156,7 @@ function CallAllPages(props: PageProps) {
               : activeSection === "projects"
               ? "-300%"
               : "-400%",
+          opacity: opacity,
         }}
         transition={{ type: "tween", duration: 2 }}
         style={{

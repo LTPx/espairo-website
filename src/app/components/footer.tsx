@@ -7,14 +7,19 @@ import { usePathname } from "next/navigation";
 export function Footer() {
   const t = useTranslations();
   const pathname = usePathname();
-  let footerPadding = "px-[30px]";
-  if (pathname === "/es/about-us") {
-    footerPadding = "pl-[90px] pr-[90px]";
-  } else if (pathname === "/es/projects") {
-    footerPadding = "pl-[120px] pr-[60px]";
-  }
-  if (pathname !== "/es/projects" && pathname !== "/es/about-us") {
+
+  const showFooter =
+    pathname?.includes("/about-us") || pathname?.includes("/projects");
+
+  if (!showFooter) {
     return null;
+  }
+
+  let footerPadding = "px-[30px]";
+  if (pathname?.includes("/about-us")) {
+    footerPadding = "pl-[90px] pr-[90px]";
+  } else if (pathname?.includes("/projects")) {
+    footerPadding = "pl-[120px] pr-[60px]";
   }
 
   return (

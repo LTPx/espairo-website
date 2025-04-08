@@ -20,8 +20,11 @@ export default function NavbarSecond({
   const pathname = usePathname();
   const router = useRouter();
   const [showTitle, setShowTitle] = useState(true);
+  const locale = pathname.split("/")[1]
 
-  const currentIndex = navOptions.findIndex((option) => pathname === option.route);
+  const currentIndex = navOptions.findIndex(
+    (option) => pathname === option.route
+  );
 
   const sectionsInPath =
     currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
@@ -40,6 +43,19 @@ export default function NavbarSecond({
       : pathname.includes("contact")
       ? "150px"
       : "30px";
+
+  const rightPosition =
+    pathname === "/"
+      ? "150px"
+      : pathname.includes("brands")
+      ? "120px"
+      : pathname.includes("about-us")
+      ? "90px"
+      : pathname.includes("projects")
+      ? "60px"
+      : pathname.includes("contact")
+      ? "30px"
+      : "150px";
 
   const handleLinkClick = (route: string, section: string) => {
     setSelectedBrandTitle(null);
@@ -103,7 +119,9 @@ export default function NavbarSecond({
         return;
       }
 
-      const triggers = container.querySelectorAll(".hide-title-trigger-project");
+      const triggers = container.querySelectorAll(
+        ".hide-title-trigger-project"
+      );
 
       let shouldHide = false;
 
@@ -125,12 +143,58 @@ export default function NavbarSecond({
   return (
     <>
       {showTitle && (
-        <div
-          onClick={() => handleLinkClick("/", "home")}
-          className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
-          style={{ left: leftPosition, cursor: "pointer" }}
-        >
-          Espai Rö
+        <div>
+          <div
+            onClick={() => handleLinkClick(`/${locale}`, "home")}
+            className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
+            style={{ left: leftPosition, cursor: "pointer" }}
+          >
+            Espai Rö
+          </div>
+          <div
+            className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
+            style={{ right: rightPosition, cursor: "pointer" }}
+          >
+            <span
+              onClick={() => {
+                const newPath = pathname.replace(/^\/(en|es|de)/, "/es");
+                router.push(newPath);
+              }}
+              className={`text-[15px] leading-[22px] tracking-[-0.04em] cursor-pointer hover:underline ${
+                pathname.startsWith("/es") ? "" : "opacity-50"
+              } ${
+                pathname.includes("brands")
+                  ? "text-[#3F4751]"
+                  : "text-[#E0E0E0]"
+              }`}
+            >
+              ESP
+            </span>
+            <span
+              className={`text-[15px] leading-[22px] tracking-[-0.04em] ${
+                pathname.includes("brands")
+                  ? "text-[#3F4751]"
+                  : "text-[#E0E0E0]"
+              }`}
+            >
+              |
+            </span>
+            <span
+              onClick={() => {
+                const newPath = pathname.replace(/^\/(en|es|de)/, "/en");
+                router.push(newPath);
+              }}
+              className={`text-[15px] leading-[22px] tracking-[-0.04em] cursor-pointer hover:underline ${
+                pathname.startsWith("/en") ? "" : "opacity-50"
+              } ${
+                pathname.includes("brands")
+                  ? "text-[#3F4751]"
+                  : "text-[#E0E0E0]"
+              }`}
+            >
+              ENG
+            </span>
+          </div>{" "}
         </div>
       )}
 

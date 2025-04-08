@@ -6,6 +6,7 @@ import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import BrandCard from "./brand-card";
 import ClientBrands from "./client-brands";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 interface BrandsPageProps {
   brands_information: BrandsPageWp;
@@ -18,6 +19,7 @@ function BrandsPage(props: BrandsPageProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null); // Estado de la categoría seleccionada
   const pathname = usePathname();
+  const t = useTranslations();
 
   const brands: BrandsWp[] = brands_information.brand;
 
@@ -55,12 +57,17 @@ function BrandsPage(props: BrandsPageProps) {
   };
 
   useEffect(() => {
-    if (pathname === "/es/brands") {
       document.body.classList.add("no-scroll");
-      return () => {
-        document.body.classList.remove("no-scroll");
-      };
+    if (
+      pathname.includes("about-us") ||
+      pathname.includes("projects") ||
+      pathname.includes("contact")
+    ) {
+      document.body.classList.remove("no-scroll");
     }
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
   }, [pathname]);
 
   const scrollToBrand = (index: number) => {

@@ -143,6 +143,7 @@ button {
 
 .no-scroll {
   overflow: hidden;
+  /* height: 100vh; */
 }
 
 @media (max-width: 768px) {
