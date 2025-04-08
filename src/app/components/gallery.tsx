@@ -138,6 +138,7 @@ export function Gallery({ gallery }: GalleryProps) {
       {isMobile && (
         <div className="relative">
           <img
+            data-aos="fade-up"
             src={gallery[photoIndex].image.url}
             className="object-cover object-center lg:rounded-[0px] h-[578px] md:h-[500px] lg:h-[800px] w-full"
             alt={`Gallery image ${photoIndex + 1}`}
