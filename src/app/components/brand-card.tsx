@@ -151,7 +151,7 @@ function BrandCard(props: BrandCardProps) {
               {images.map((image, i) => (
                 <motion.img
                   key={i}
-                  src={image.image || ""}
+                  src={image.image.url || ""}
                   alt={`brand-image-${i}`}
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -162,7 +162,7 @@ function BrandCard(props: BrandCardProps) {
             images.map((image, i) => (
               <img
                 key={i}
-                src={image.image || ""}
+                src={image.image.url || ""}
                 alt={`brand-image-${i}`}
                 className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out ${
                   i === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"

@@ -33,7 +33,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
   const selectedCover = selectedCategory
     ? brands_information.cover_categories.find(
         (cover) => cover.category === selectedCategory
-      )?.image_cover || brands_information.cover_page.url
+      )?.image_cover.url || brands_information.cover_page.url
     : brands_information.cover_page.url;
 
   return (

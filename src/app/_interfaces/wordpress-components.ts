@@ -42,7 +42,7 @@ export interface BrandsPageWp {
 }
 
 export interface CoverCategoriesWp {
-  image_cover: string;
+  image_cover: ImageAcf;
   category: number;
 }
 
@@ -56,9 +56,8 @@ export interface BrandsWp {
 }
 
 export interface BranImagesWp {
-  image: string;
+  image: ImageAcf;
 }
-
 
 export interface CategoryBrandWp {
   term_id: number;
