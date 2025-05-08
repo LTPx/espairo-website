@@ -253,11 +253,15 @@ function BrandCard(props: BrandCardProps) {
           </div>
         </div>
         <div className="flex justify-between">
-          <Link href={urlBrand || ""} target="_blank">
-            <span className="flex items-end font-regular text-[14px] leading-[14px] tracking-[-0.04em] underline">
-              {t("brandPage.web")}
-            </span>
-          </Link>
+          {urlBrand ? (
+            <Link href={urlBrand || ""} target="_blank">
+              <span className="flex items-end font-regular text-[14px] leading-[14px] tracking-[-0.04em] underline">
+                {t("brandPage.web")}
+              </span>
+            </Link>
+          ) : (
+            <div></div>
+          )}
           <div className="flex gap-[10px] lg:pr-[30px]">
             {hasPrevious && (
               <span
@@ -337,18 +341,20 @@ function BrandCard(props: BrandCardProps) {
                 href={`mailto:info@espairo.com`}
               >
                 <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
-                  SOLICITA INFORMACIÓN
+                  {t("brandPage.information")}
                 </button>
               </Link>
-              <Link
-                className="absolute bottom-[70px] left-[30px]"
-                href={urlBrand || ""}
-                target="_blank"
-              >
-                <span className="flex items-end font-regular text-[12px] leading-[20px] tracking-[-0.04em] underline">
-                  Página web
-                </span>
-              </Link>
+              {urlBrand && (
+                <Link
+                  className="absolute bottom-[70px] left-[30px]"
+                  href={urlBrand || ""}
+                  target="_blank"
+                >
+                  <span className="flex items-end font-regular text-[12px] leading-[20px] tracking-[-0.04em] underline">
+                    {t("brandPage.web")}
+                  </span>
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
