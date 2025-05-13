@@ -159,7 +159,7 @@ function BrandCard(props: BrandCardProps) {
               ))}
             </motion.div>
           ) : (
-            images.map((image, i) => (
+            images && images.map((image, i) => (
               <img
                 key={i}
                 src={image.image.url || ""}
