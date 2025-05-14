@@ -46,7 +46,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
         />
       </div>
       <div className="h-[100dvh] overflow-auto no-scrollbar">
-        <div className="h-[100dvh] pl-[30px] lg:px-[30px] py-[30px]">
+        <div className="pl-[30px] lg:px-[30px] py-[30px]">
           <div className="w-full sticky top-[30px] z-[10] lg:z-[100000]">
             <div className="filters pr-[30px] flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[30px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
               <button
