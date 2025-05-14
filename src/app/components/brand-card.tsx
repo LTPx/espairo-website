@@ -121,10 +121,10 @@ function BrandCard(props: BrandCardProps) {
   return (
     <div
       ref={cardRef}
-      className="flex flex-col h-full gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden"
+      className="flex flex-col h-[100dvh] gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden"
     >
       <div
-        className={`h-full group relative flex flex-col gap-[30px] ${props.className}`}
+        className={`h-[100dvh] group relative flex flex-col gap-[30px] ${props.className}`}
       >
         <div className="lg:hidden absolute top-[30px] left-[30px] z-[40]">
           <Link href={""}>
@@ -136,7 +136,7 @@ function BrandCard(props: BrandCardProps) {
             </button>
           </Link>
         </div>
-        <div className="relative w-full h-[85vh] lg:h-full overflow-hidden">
+        <div className="relative w-full h-[85dvh] lg:h-full overflow-hidden">
           {isMobile ? (
             <motion.div
               className="relative h-full flex w-full"

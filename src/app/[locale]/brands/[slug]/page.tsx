@@ -10,7 +10,7 @@ async function BrandSlugPage(nextParams: {
   } = nextParams;
 
   return (
-    <div className="brand-slug-page h-[100vh]">
+    <div className="brand-slug-page h-[100dvh]">
       {/* <BrandCard
         image="https://s3-alpha-sig.figma.com/img/6c50/2e20/f5e070ec5300720200f0b54a97f703d1?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=h6GITxOMiHo0nRWWqzRJkj8vr6I2bnFLANs1Uye7DvsPHaPCNk9D~CVPU77qjUPXEYhM~aX2tZPGlQQNRThl4sqzCrYPn0NEDjK2orMgQyNpArh7lZdYtVG-vlFu7m-4diL0M1CmYFfkKFip4Z64jS2x8Fo34BLi2hV7hjoKm3M7vtAON6Drd1EstaXtoTbJZ0dtlD3RYIK0KyJnncMN6~kL11B6uP~2dhhkxNszNuYEVNKZ-z5awlT3IqM2LLZVVC0TA-QR-i~wsU2szekIeV9B6JeRSsfooNeDEniCaHDq3Vnu~mm2TtNmVR8-gfOLz2nujOYVBQBCH021i-Qt6A__"
         title="Vaselli"

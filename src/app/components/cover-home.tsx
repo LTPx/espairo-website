@@ -19,7 +19,7 @@ export function CoverHome(props: Props) {
 
   return (
     <div className="flex-1 flex items-center justify-center">
-      <div className="relative h-[100vh] w-full">
+      <div className="relative h-[100dvh] w-full">
         <img
           src={home_information.cover_page.url}
           alt="Espai Rö"
