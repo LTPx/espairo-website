@@ -122,7 +122,7 @@ function BrandsMobile(props: BrandsMobileProps) {
         />
       </div>
       {filteredBrands.map((brand, index) => (
-        <div key={index} className="brand-slug-page h-[100vh]">
+        <div key={index} className="brand-slug-page h-[100dvh]">
           <BrandCard
             images={brand.images_brand}
             title={brand.title}
