@@ -148,7 +148,7 @@ function BrandCard(props: BrandCardProps) {
                 damping: 50,
               }}
             >
-              {images.map((image, i) => (
+              {images && images.map((image, i) => (
                 <motion.img
                   key={i}
                   src={image.image.url || ""}
