@@ -38,14 +38,14 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
 
   return (
     <div className="brands flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100vh] overflow-auto">
-      <div className="hidden lg:block lg:h-[calc(100vh)]">
+      <div className="hidden lg:block lg:h-[calc(100dvh)]">
         <img
           src={selectedCover}
           alt="alt-projects"
-          className="h-[100vh] w-full object-cover"
+          className="h-[100dvh] w-full object-cover"
         />
       </div>
-      <div className="h-[calc(100vh)] overflow-auto no-scrollbar">
+      <div className="h-[calc(100dvh)] overflow-auto no-scrollbar">
         <div className="pl-[30px] lg:px-[30px] py-[30px]">
           <div className="w-full sticky top-[30px] z-[10] lg:z-[100000]">
             <div className="filters pr-[30px] flex lg:flex-wrap gap-[7px] lg:gap-[10px] mb-[20px] lg:mb-[30px] lg:pr-[10px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
