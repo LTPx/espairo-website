@@ -37,7 +37,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
     : brands_information.cover_page.url;
 
   return (
-    <div className="brands flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100vh] overflow-auto">
+    <div className="brands flex flex-col gap-[20px] lg:gap-[0px] lg:grid lg:grid-cols-2 h-[100dvh] overflow-auto">
       <div className="hidden lg:block lg:h-[calc(100dvh)]">
         <img
           src={selectedCover}
