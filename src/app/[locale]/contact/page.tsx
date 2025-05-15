@@ -25,7 +25,7 @@ async function Contact(nextParams: { params: { locale: "es" | "de" | "en" } }) {
           className="w-full h-[426px] lg:h-full object-cover"
         />
       </div>
-      <div className="pl-[30px] lg:pl-[30px] lg:py-[30px] pt-[30px] lg:w-1/2 h-full lg:bg-[#3F4751] lg:text-white flex flex-col lg:gap-[0px] justify-between">
+      <div className="pl-[30px] pb-[30px] lg:pl-[30px] lg:py-[30px] pt-[30px] lg:w-1/2 h-full lg:bg-[#3F4751] lg:text-white flex flex-col lg:gap-[0px] justify-between">
         <div className="flex flex-col gap-[40px]">
           <div
             className="custom-subTitle-contact"

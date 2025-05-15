@@ -30,7 +30,7 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
       <Cover media={aboutUs_information.cover_page} />
       <section className="pt-[30px] lg:pt-[70px]">
         <AboutUsCard
-        reverseLayout={true}
+          reverseLayout={true}
           image={aboutUs_information.first_information_section.image}
           title={aboutUs_information.first_information_section.title}
           description={
@@ -46,6 +46,7 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
       />
       <section className="pt-[30px]">
         <img
+          data-aos="fade-up"
           src={aboutUs_information.first_image}
           className="h-[300px] lg:h-[800px] object-cover w-full"
         />
@@ -60,6 +61,7 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
             {index === 0 && (
               <section className="pt-[0px]">
                 <img
+                  data-aos="fade-up"
                   src={aboutUs_information.second_image}
                   className="h-[300px] lg:h-[800px] object-cover w-full"
                 />
@@ -86,12 +88,14 @@ async function AboutUs(nextParams: { params: { locale: "es" | "de" | "en" } }) {
       </section>
       <section className="hidden lg:block pt-[70px]">
         <img
+          data-aos="fade-up"
           src={aboutUs_information.third_image}
           className="h-[300px] lg:h-[800px] object-cover w-full"
         />
       </section>
       <section className="pt-[30px] lg:mb-[250px]">
         <img
+          data-aos="fade-up"
           src={aboutUs_information.last_image}
           className="h-[300px] lg:h-[800px] object-cover w-full"
         />

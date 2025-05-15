@@ -23,12 +23,12 @@ export function Cover(props: Props) {
       {img && (
         <img
           src={img}
-          className={`${className} w-full h-[731px] lg:h-[100vh] object-cover`}
+          className={`${className} w-full h-[100dvh] object-cover`}
         />
       )}
       {media?.type === "video" && (
         <video
-          className={`${className} w-full h-[731px] lg:h-[100vh] object-cover`}
+          className={`${className} w-full h-[100dvh] object-cover`}
           autoPlay={true}
           loop={true}
           muted
@@ -41,11 +41,11 @@ export function Cover(props: Props) {
       {media?.type === "image" && (
         <img
           src={media.url}
-          className={`${className} w-full h-[731px] lg:h-[100vh] object-cover`}
+          className={`${className} w-full h-[100dvh] object-cover`}
         />
       )}
       <div
-        className={`hidden lg:absolute lg:h-full inset-0 h-[731px] ${className}`}
+        className={`hidden lg:absolute lg:h-full inset-0 h-[100dvh] ${className}`}
         style={{
           backgroundImage:
             "linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.25))",

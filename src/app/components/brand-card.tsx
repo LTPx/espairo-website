@@ -205,30 +205,34 @@ function BrandCard(props: BrandCardProps) {
       <div className="hidden lg:flex pl-[30px] py-[30px] flex flex-col lg:justify-between">
         <div>
           {category && (
-            <Link
-              data-aos="fade-up"
-              href={""}
-              className="flex gap-[10px] pb-[50px]"
-            >
-              <button
-                onClick={onCategoryClick}
-                className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
+            <div className="flex pb-[50px]">
+              <Link
+                data-aos="fade-up"
+                href={""}
+                className="flex gap-[10px]  w-auto"
               >
-                {category}
-                <img
-                  src={"/images/close-t.svg"}
-                  className="h-[6px] w-[6px] ml-[10px]"
-                  loading="lazy"
-                />
-              </button>
-            </Link>
+                <button
+                  onClick={onCategoryClick}
+                  className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
+                >
+                  {category}
+                  <img
+                    src={"/images/close-t.svg"}
+                    className="h-[6px] w-[6px] ml-[10px]"
+                    loading="lazy"
+                  />
+                </button>
+              </Link>
+            </div>
           )}
           <div className="flex flex-col pb-[22px]">
-            <Link data-aos="fade-up" target="_blank" href={urlBrand || ""}>
-              <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
-                {title}
-              </h1>
-            </Link>
+            <div className="flex">
+              <Link data-aos="fade-up" target="_blank" href={urlBrand || ""}>
+                <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
+                  {title}
+                </h1>
+              </Link>
+            </div>
           </div>
           <div className="hidden lg:flex flex-col gap-[46px] pr-[75px]">
             {description && (
@@ -299,18 +303,20 @@ function BrandCard(props: BrandCardProps) {
           >
             <div className="flex flex-col">
               {category && (
-                <Link
-                  href={""}
-                  onClick={() => setIsMobileDescriptionOpen(false)}
-                  className="flex gap-[10px] pb-[20px]"
-                >
-                  <button
-                    onClick={onCategoryClick}
-                    className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer h-[35px] px-[20px] rounded-full"
+                <div className="pb-[20px] flex">
+                  <Link
+                    href={""}
+                    onClick={() => setIsMobileDescriptionOpen(false)}
+                    className="flex gap-[10px] "
                   >
-                    {category}
-                  </button>
-                </Link>
+                    <button
+                      onClick={onCategoryClick}
+                      className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer h-[35px] px-[20px] rounded-full"
+                    >
+                      {category}
+                    </button>
+                  </Link>
+                </div>
               )}
               <div className="flex justify-between items-center">
                 <h1 className="font-regular text-[40px] leading-[48px] tracking-[-0.05em]">
@@ -336,14 +342,16 @@ function BrandCard(props: BrandCardProps) {
                   }}
                 />
               )}
-              <Link
-                className="pt-[48px] inline-block"
-                href={`mailto:info@espairo.com`}
-              >
-                <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
-                  {t("brandPage.information")}
-                </button>
-              </Link>
+              <div className="flex pt-[48px]">
+                <Link
+                  className="inline-block"
+                  href={`mailto:info@espairo.com`}
+                >
+                  <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
+                    {t("brandPage.information")}
+                  </button>
+                </Link>
+              </div>
               {urlBrand && (
                 <Link
                   className="absolute bottom-[70px] left-[30px]"
