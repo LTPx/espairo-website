@@ -19,51 +19,55 @@ export default function NavbarSecond({
 }: NavbarSecondProps) {
   const pathname = usePathname();
   const router = useRouter();
+
   const [showTitle, setShowTitle] = useState(true);
-  const locale = pathname.split("/")[1]
+  const [currentPath, setCurrentPath] = useState(pathname);
+
+  const locale = currentPath.split("/")[1];
+
+  useEffect(() => {
+    setCurrentPath(pathname);
+  }, [pathname]);
 
   const currentIndex = navOptions.findIndex(
-    (option) => pathname === option.route
+    (option) => currentPath === option.route
   );
 
   const sectionsInPath =
     currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
   const remainingOptions = navOptions.slice(currentIndex + 1);
-  console.log("sections", sectionsInPath);
 
   const leftPosition =
-    pathname === "/"
+    currentPath === "/"
       ? "30px"
-      : pathname.includes("brands")
+      : currentPath.includes("brands")
       ? "60px"
-      : pathname.includes("about-us")
+      : currentPath.includes("about-us")
       ? "90px"
-      : pathname.includes("projects")
+      : currentPath.includes("projects")
       ? "120px"
-      : pathname.includes("contact")
+      : currentPath.includes("contact")
       ? "150px"
       : "30px";
 
   const rightPosition =
-    pathname === "/"
+    currentPath === "/"
       ? "150px"
-      : pathname.includes("brands")
+      : currentPath.includes("brands")
       ? "120px"
-      : pathname.includes("about-us")
+      : currentPath.includes("about-us")
       ? "90px"
-      : pathname.includes("projects")
+      : currentPath.includes("projects")
       ? "60px"
-      : pathname.includes("contact")
+      : currentPath.includes("contact")
       ? "30px"
       : "150px";
 
   const handleLinkClick = (route: string, section: string) => {
     setSelectedBrandTitle(null);
     setActiveSection(section as Section);
+    setCurrentPath(route);
     router.push(route);
-    console.log(setActiveSection);
-    console.log(section);
-    console.log(route);
   };
 
   useEffect(() => {
@@ -80,7 +84,6 @@ export default function NavbarSecond({
 
     const handleScroll = () => {
       const container = document.querySelector(".hide-title-trigger-container");
-
       if (!container) {
         setShowTitle(true);
         return;
@@ -113,15 +116,12 @@ export default function NavbarSecond({
 
     const handleScroll = () => {
       const container = document.querySelector(".hide-title-trigger-projects");
-
       if (!container) {
         setShowTitle(true);
         return;
       }
 
-      const triggers = container.querySelectorAll(
-        ".hide-title-trigger-project"
-      );
+      const triggers = container.querySelectorAll(".hide-title-trigger-project");
 
       let shouldHide = false;
 
@@ -194,7 +194,7 @@ export default function NavbarSecond({
             >
               ENG
             </span>
-          </div>{" "}
+          </div>
         </div>
       )}
 
@@ -203,14 +203,14 @@ export default function NavbarSecond({
           <div
             key={option.section}
             className={`transition duration-300 hover:bg-[#3F4751] h-full w-[30px] border-r border-[#3F4751] flex items-center ${
-              pathname === option.route ? "bg-[#3F4751]" : "bg-[#E0E0E0]"
+              currentPath === option.route ? "bg-[#3F4751]" : "bg-[#E0E0E0]"
             }`}
             onClick={() => handleLinkClick(option.route, option.section)}
             style={{ cursor: "pointer" }}
           >
             <div
               className={`pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] rotate-180 transition duration-300 ${
-                pathname === option.route ? "text-white" : "text-[#3F4751]"
+                currentPath === option.route ? "text-white" : "text-[#3F4751]"
               } hover:text-white`}
               style={{
                 writingMode: "vertical-rl",
@@ -218,7 +218,7 @@ export default function NavbarSecond({
               }}
             >
               {option.label}
-              {pathname.includes("brands") && selectedBrandTitle && (
+              {currentPath.includes("brands") && selectedBrandTitle && (
                 <>
                   <span className="my-[7px] text-white">|</span>
                   <span className="text-white">{selectedBrandTitle}</span>
