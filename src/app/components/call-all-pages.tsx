@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import Home from "../[locale]/home";
 import { useTranslations } from "next-intl";
 
 import {
@@ -18,6 +17,7 @@ import ProjectsPage from "./projects-page";
 import AboutUsPage from "./about-us-page";
 import BrandsPage from "./brands-page";
 import ContactPage from "./contact-page";
+import Home from "./home-page";
 
 interface PageProps {
   home: HomePageWp;

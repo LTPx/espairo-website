@@ -9,7 +9,7 @@ interface Props {
 
 function Home({ home_information }: Props) {
   return (
-    <div className="relative flex h-[100dvh] lg:pr-[120px]">
+    <div className="relative flex h-[100dvh]">
       <CoverHome home_information={home_information} />
     </div>
   );
