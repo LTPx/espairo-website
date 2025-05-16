@@ -96,18 +96,20 @@ function BrandsMobile(props: BrandsMobileProps) {
   // }, [currentIndex]);
 
   const goToNextBrand = () => {
+    console.log("click");
     if (currentIndex < filteredBrands.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
-      //   setSelectedBrandTitle(filteredBrands[nextIndex].title);
+      scrollToBrand(nextIndex);
     }
   };
 
   const goToPreviousBrand = () => {
+    console.log("click");
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
       setCurrentIndex(prevIndex);
-      //   setSelectedBrandTitle(filteredBrands[prevIndex].title);
+      scrollToBrand(prevIndex);
     }
   };
 

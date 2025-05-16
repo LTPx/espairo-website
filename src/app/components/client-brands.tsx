@@ -91,7 +91,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
           {(selectedCategory === 1 || selectedCategory === null) &&
             brands_information.description && (
               <div
-                className="hidden md:block md:pr-[40px] xl:pr-[143px] pb-[30px]"
+                className="hidden lg:block md:pr-[40px] xl:pr-[143px] pb-[30px]"
                 dangerouslySetInnerHTML={{
                   __html: brands_information.description,
                 }}
