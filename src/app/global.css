@@ -146,6 +146,33 @@ button {
   /* height: 100vh; */
 }
 
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .title-card {
+    p {
+      font-size: 30px !important;
+      line-height: 35px !important;
+      letter-spacing: -0.05em !important;
+    }
+  }
+  .custom-title-authors {
+    p {
+      font-size: 16px !important;     
+      line-height: 22px !important;  
+      font-family: "Regular";   
+      letter-spacing: -0.04em; 
+      /* margin-bottom: 2px;  */
+    }
+  }
+  .author-name {
+    p {
+      font-size: 30px !important;
+      line-height: 35px !important;
+      letter-spacing: -0.05em !important;
+    }
+  }
+
+}
+
 @media (max-width: 768px) {
   h1 {
     font-size: 40px;

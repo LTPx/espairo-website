@@ -20,13 +20,12 @@ export function MenuTest({ customClassName }: MenuTestProps) {
     { title: `${t("header.contact")}`, url: "/contact" },
   ];
 
-  // Si se define un customClassName, lo usa; si no, mantiene el valor por defecto
   const menuButtonClass = customClassName || "fixed bottom-[33px] right-[30px]";
 
   return (
     <>
       <button
-        className={`${menuButtonClass} z-[3000] w-[82px] h-[82px] bg-[#3F4751] rounded-full flex items-center justify-center`}
+        className={`${menuButtonClass} z-[300000] w-[82px] h-[82px] bg-[#3F4751] rounded-full flex items-center justify-center`}
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <img
@@ -38,13 +37,13 @@ export function MenuTest({ customClassName }: MenuTestProps) {
 
       {menuOpen && (
         <div
-          className="fixed inset-0 z-[2000] bg-black bg-opacity-50"
+          className="fixed inset-0 z-[200000] bg-black bg-opacity-50"
           onClick={() => setMenuOpen(false)}
         ></div>
       )}
 
       <div
-        className={`fixed top-0 left-0 z-[2000] w-full h-full bg-[#E0E0E0] transition-transform transform ${
+        className={`fixed top-0 left-0 z-[200000] w-full h-full bg-[#E0E0E0] transition-transform transform ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

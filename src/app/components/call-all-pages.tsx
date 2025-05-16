@@ -133,9 +133,9 @@ function CallAllPages(props: PageProps) {
       route: `/${locale}/contact`,
     },
   ];
-
+ 
   return (
-    <div className="hidden md:block h-full relative overflow-hidden">
+    <div className="hidden lg:block h-full relative overflow-hidden">
       <NavbarSecond
         navOptions={navOptions}
         selectedBrandTitle={selectedBrandTitle}

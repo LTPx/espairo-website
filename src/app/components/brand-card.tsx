@@ -121,12 +121,12 @@ function BrandCard(props: BrandCardProps) {
   return (
     <div
       ref={cardRef}
-      className="flex flex-col h-[100dvh] gap-[15px] lg:gap-[0px] lg:grid lg:grid-cols-2 lg:h-full overflow-hidden"
+      className="flex flex-col h-[100dvh] gap-[15px] md:gap-[0px] md:grid md:grid-cols-2 md:h-full overflow-hidden"
     >
       <div
         className={`h-[100dvh] group relative flex flex-col gap-[30px] ${props.className}`}
       >
-        <div className="lg:hidden absolute top-[30px] left-[30px] z-[40]">
+        <div className="md:hidden absolute top-[30px] left-[30px] z-[40]">
           <Link href={""}>
             <button
               onClick={onCategoryClick}
@@ -136,7 +136,7 @@ function BrandCard(props: BrandCardProps) {
             </button>
           </Link>
         </div>
-        <div className="relative w-full h-[85dvh] lg:h-full overflow-hidden">
+        <div className="relative w-full h-[85dvh] md:h-full overflow-hidden">
           {isMobile ? (
             <motion.div
               className="relative h-full flex w-full"
@@ -148,18 +148,20 @@ function BrandCard(props: BrandCardProps) {
                 damping: 50,
               }}
             >
-              {images && images.map((image, i) => (
-                <motion.img
-                  key={i}
-                  src={image.image.url || ""}
-                  alt={`brand-image-${i}`}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              ))}
+              {images &&
+                images.map((image, i) => (
+                  <motion.img
+                    key={i}
+                    src={image.image.url || ""}
+                    alt={`brand-image-${i}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ))}
             </motion.div>
           ) : (
-            images && images.map((image, i) => (
+            images &&
+            images.map((image, i) => (
               <img
                 key={i}
                 src={image.image.url || ""}
@@ -173,7 +175,7 @@ function BrandCard(props: BrandCardProps) {
           )}
         </div>
         {images.length > 1 && (
-          <div className="hidden lg:flex absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2  gap-2">
+          <div className="hidden md:flex absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2  gap-2">
             {images.map((_, i) => (
               <button
                 key={i}
@@ -187,8 +189,8 @@ function BrandCard(props: BrandCardProps) {
             ))}
           </div>
         )}
-        <div className="lg:hidden flex justify-between items-center px-[30px]">
-          <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
+        <div className="md:hidden flex justify-between items-center px-[30px]">
+          <h1 className="font-regular text-[40px] leading-[45px] md:text-[50px] md:leading-[50px] tracking-[-0.05em]">
             {title}
           </h1>
           <img
@@ -202,7 +204,7 @@ function BrandCard(props: BrandCardProps) {
           />
         </div>
       </div>
-      <div className="hidden lg:flex pl-[30px] py-[30px] flex flex-col lg:justify-between">
+      <div className="hidden md:flex pl-[30px] py-[30px] flex flex-col md:justify-between">
         <div>
           {category && (
             <div className="flex pb-[50px]">
@@ -228,13 +230,13 @@ function BrandCard(props: BrandCardProps) {
           <div className="flex flex-col pb-[22px]">
             <div className="flex">
               <Link data-aos="fade-up" target="_blank" href={urlBrand || ""}>
-                <h1 className="font-regular text-[40px] leading-[45px] lg:text-[50px] lg:leading-[50px] tracking-[-0.05em]">
+                <h1 className="font-regular text-[40px] leading-[45px] md:text-[50px] md:leading-[50px] tracking-[-0.05em]">
                   {title}
                 </h1>
               </Link>
             </div>
           </div>
-          <div className="hidden lg:flex flex-col gap-[46px] pr-[75px]">
+          <div className="hidden md:flex flex-col gap-[46px] md:pr-[30px] lg:pr-[30px] xl:pr-[75px]">
             {description && (
               <div
                 data-aos="fade-up"
@@ -266,7 +268,7 @@ function BrandCard(props: BrandCardProps) {
           ) : (
             <div></div>
           )}
-          <div className="flex gap-[10px] lg:pr-[30px]">
+          <div className="flex gap-[10px] md:pr-[30px]">
             {hasPrevious && (
               <span
                 // data-aos="fade-up"
@@ -343,10 +345,7 @@ function BrandCard(props: BrandCardProps) {
                 />
               )}
               <div className="flex pt-[48px]">
-                <Link
-                  className="inline-block"
-                  href={`mailto:info@espairo.com`}
-                >
+                <Link className="inline-block" href={`mailto:info@espairo.com`}>
                   <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[20px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
                     {t("brandPage.information")}
                   </button>
