@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xl-flex': { raw: '(min-width: 1280px) and (max-width: 1535px)' },
+        'mac': { 'raw': '(min-width: 1280px) and (max-width: 1330px)' },
+      },
       colors: {
         primary: {
           100: "#ffd5eb",
