@@ -135,7 +135,7 @@ function CallAllPages(props: PageProps) {
   ];
 
   return (
-    <div className="hidden lg:block h-full relative overflow-hidden">
+    <div className="hidden md:block h-full relative overflow-hidden">
       <NavbarSecond
         navOptions={navOptions}
         selectedBrandTitle={selectedBrandTitle}
