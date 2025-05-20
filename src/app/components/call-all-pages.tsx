@@ -72,13 +72,22 @@ function CallAllPages(props: PageProps) {
     getSectionFromPath(pathname)
   );
 
+  const [sectionHeights, setSectionHeights] = useState<Record<Section, number>>(
+    {
+      home: 0,
+      brands: 0,
+      aboutUs: 0,
+      projects: 0,
+      contact: 0,
+    }
+  );
+
   const [prevIndex, setPrevIndex] = useState(
     sectionOrder.indexOf(activeSection)
   );
   const activeIndex = sectionOrder.indexOf(activeSection);
   const direction = activeIndex > prevIndex ? 1 : -1;
 
-  // Update previous index when active section changes
   useEffect(() => {
     setPrevIndex(activeIndex);
   }, [activeSection]);
@@ -96,6 +105,23 @@ function CallAllPages(props: PageProps) {
       setSelectedBrandTitle(null);
     }
   }, [activeSection]);
+
+  const homeRef = useRef<HTMLDivElement>(null);
+  const brandsRef = useRef<HTMLDivElement>(null);
+  const aboutUsRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  const [pageReady, setPageReady] = useState(false);
+
+  const getAllHeights = () => {
+    setSectionHeights({
+      home: homeRef.current?.scrollHeight || 0,
+      brands: brandsRef.current?.scrollHeight || 0,
+      aboutUs: aboutUsRef.current?.scrollHeight || 0,
+      projects: projectsRef.current?.scrollHeight || 0,
+      contact: contactRef.current?.scrollHeight || 0,
+    });
+  };
 
   useEffect(() => {
     setOpacity(0);
@@ -126,6 +152,10 @@ function CallAllPages(props: PageProps) {
     },
   ];
 
+  useEffect(() => {
+    getAllHeights();
+  }, []);
+
   return (
     <div className="hidden lg:block h-full relative overflow-hidden">
       <NavbarSecond
@@ -134,7 +164,6 @@ function CallAllPages(props: PageProps) {
         setSelectedBrandTitle={setSelectedBrandTitle}
         setActiveSection={setActiveSection}
       />
-
       <div className="relative w-full min-h-screen overflow-hidden">
         {sectionOrder.map((section, index) => {
           const isVisible = index <= activeIndex;
@@ -149,6 +178,11 @@ function CallAllPages(props: PageProps) {
                   transition={{ type: "spring", stiffness: 50, damping: 20 }}
                   className="absolute top-0 left-0 w-full min-h-screen"
                   style={{ zIndex: index }}
+                  onAnimationComplete={() => {
+                    if (index === activeIndex) {
+                      setPageReady(true);
+                    }
+                  }}
                 >
                   {section === "home" && <Home home_information={home} />}
                   {section === "brands" && (
@@ -159,7 +193,7 @@ function CallAllPages(props: PageProps) {
                     />
                   )}
                   {section === "aboutUs" && (
-                    <AboutUsPage aboutUs_information={aboutUs_information} />
+                    <AboutUsPage ready={pageReady} aboutUs_information={aboutUs_information} />
                   )}
                   {section === "projects" && (
                     <ProjectsPage projects_information={projects} />
