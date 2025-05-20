@@ -88,6 +88,7 @@ function CallAllPages(props: PageProps) {
   const activeIndex = sectionOrder.indexOf(activeSection);
   const direction = activeIndex > prevIndex ? 1 : -1;
 
+  // Update previous index when active section changes
   useEffect(() => {
     setPrevIndex(activeIndex);
   }, [activeSection]);
@@ -174,7 +175,7 @@ function CallAllPages(props: PageProps) {
                   key={section}
                   initial={{ x: `${100 * direction}%`, opacity: 1 }}
                   animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: `${100 * direction}%`, opacity: 1 }}
+                  exit={{ x: direction === -1 ? "100%" : "-100%", opacity: 1 }}
                   transition={{ type: "spring", stiffness: 50, damping: 20 }}
                   className="absolute top-0 left-0 w-full min-h-screen"
                   style={{ zIndex: index }}

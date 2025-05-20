@@ -209,7 +209,7 @@ function BrandCard(props: BrandCardProps) {
           {category && (
             <div className="flex pb-[50px]">
               <Link
-                data-aos="fade-up"
+                // data-aos="fade-up"
                 href={""}
                 className="flex gap-[10px]  w-auto"
               >
@@ -229,7 +229,11 @@ function BrandCard(props: BrandCardProps) {
           )}
           <div className="flex flex-col pb-[22px]">
             <div className="flex">
-              <Link data-aos="fade-up" target="_blank" href={urlBrand || ""}>
+              <Link
+                // data-aos="fade-up"
+                target="_blank"
+                href={urlBrand || ""}
+              >
                 <h1 className="font-regular text-[40px] leading-[45px] md:text-[50px] md:leading-[50px] tracking-[-0.05em]">
                   {title}
                 </h1>
@@ -239,7 +243,7 @@ function BrandCard(props: BrandCardProps) {
           <div className="hidden md:flex flex-col gap-[46px] md:pr-[30px] lg:pr-[30px] xl:pr-[75px]">
             {description && (
               <div
-                data-aos="fade-up"
+                // data-aos="fade-up"
                 dangerouslySetInnerHTML={{
                   __html: description,
                 }}
@@ -247,7 +251,7 @@ function BrandCard(props: BrandCardProps) {
             )}
             <div>
               <Link
-                data-aos="fade-up"
+                // data-aos="fade-up"
                 className="inline-block"
                 href={`mailto:info@espairo.com`}
               >
