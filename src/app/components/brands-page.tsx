@@ -125,7 +125,7 @@ function BrandsPage(props: BrandsPageProps) {
   };
 
   return (
-    <div className="page-Brands lg:pl-[30px] lg:pr-[90px] relative h-screen">
+    <div className="page-Brands lg:pl-[30px] lg:pr-[90px] relative h-screen bg-body">
       <div className="relative h-full">
         <ClientBrands
           brands_information={brands_information}

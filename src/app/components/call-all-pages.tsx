@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 import {
@@ -12,6 +12,7 @@ import {
   HomePageWp,
   ProjectsPageWp,
 } from "../_interfaces/wordpress-components";
+
 import NavbarSecond from "./navbar-second";
 import ProjectsPage from "./projects-page";
 import AboutUsPage from "./about-us-page";
@@ -31,6 +32,14 @@ interface PageProps {
 
 export type Section = "home" | "brands" | "aboutUs" | "projects" | "contact";
 
+const sectionOrder: Section[] = [
+  "home",
+  "brands",
+  "aboutUs",
+  "projects",
+  "contact",
+];
+
 function CallAllPages(props: PageProps) {
   const {
     home,
@@ -44,11 +53,12 @@ function CallAllPages(props: PageProps) {
 
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations();
+
   const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(
     null
   );
   const [opacity, setOpacity] = useState(0);
-  const t = useTranslations();
 
   const getSectionFromPath = (path: string): Section => {
     if (path.includes("/brands")) return "brands";
@@ -62,35 +72,16 @@ function CallAllPages(props: PageProps) {
     getSectionFromPath(pathname)
   );
 
-  const [sectionHeights, setSectionHeights] = useState<Record<Section, number>>(
-    {
-      home: 0,
-      brands: 0,
-      aboutUs: 0,
-      projects: 0,
-      contact: 0,
-    }
+  const [prevIndex, setPrevIndex] = useState(
+    sectionOrder.indexOf(activeSection)
   );
+  const activeIndex = sectionOrder.indexOf(activeSection);
+  const direction = activeIndex > prevIndex ? 1 : -1;
 
-  const homeRef = useRef<HTMLDivElement>(null);
-  const brandsRef = useRef<HTMLDivElement>(null);
-  const aboutUsRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
-  const contactRef = useRef<HTMLDivElement>(null);
-
-  const getAllHeights = () => {
-    setSectionHeights({
-      home: homeRef.current?.scrollHeight || 0,
-      brands: brandsRef.current?.scrollHeight || 0,
-      aboutUs: aboutUsRef.current?.scrollHeight || 0,
-      projects: projectsRef.current?.scrollHeight || 0,
-      contact: contactRef.current?.scrollHeight || 0,
-    });
-  };
-
+  // Update previous index when active section changes
   useEffect(() => {
-    getAllHeights();
-  }, []);
+    setPrevIndex(activeIndex);
+  }, [activeSection]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -108,7 +99,8 @@ function CallAllPages(props: PageProps) {
 
   useEffect(() => {
     setOpacity(0);
-    setTimeout(() => setOpacity(1), 100);
+    const timeout = setTimeout(() => setOpacity(1), 100);
+    return () => clearTimeout(timeout);
   }, [pathname]);
 
   const navOptions = [
@@ -133,7 +125,7 @@ function CallAllPages(props: PageProps) {
       route: `/${locale}/contact`,
     },
   ];
- 
+
   return (
     <div className="hidden lg:block h-full relative overflow-hidden">
       <NavbarSecond
@@ -142,49 +134,45 @@ function CallAllPages(props: PageProps) {
         setSelectedBrandTitle={setSelectedBrandTitle}
         setActiveSection={setActiveSection}
       />
-      <motion.div
-        className="flex w-full"
-        initial={{ x: 0, opacity: 0 }}
-        animate={{
-          x:
-            activeSection === "home"
-              ? "0%"
-              : activeSection === "brands"
-              ? "-100%"
-              : activeSection === "aboutUs"
-              ? "-200%"
-              : activeSection === "projects"
-              ? "-300%"
-              : "-400%",
-          opacity: opacity,
-        }}
-        transition={{ type: "tween", duration: 2 }}
-        style={{
-          height: sectionHeights[activeSection]
-            ? `${sectionHeights[activeSection]}px`
-            : "100vh",
-        }}
-      >
-        <div className="w-full flex-shrink-0" ref={homeRef}>
-          <Home home_information={home} />
-        </div>
-        <div className="w-full flex-shrink-0" ref={brandsRef}>
-          <BrandsPage
-            brands_information={brands}
-            allCategories={categories}
-            setSelectedBrandTitle={setSelectedBrandTitle}
-          />
-        </div>
-        <div className="w-full h-auto flex-shrink-0" ref={aboutUsRef}>
-          <AboutUsPage aboutUs_information={aboutUs_information} />
-        </div>
-        <div className="w-full h-auto flex-shrink-0" ref={projectsRef}>
-          <ProjectsPage projects_information={projects} />
-        </div>
-        <div className="w-full h-auto flex-shrink-0" ref={contactRef}>
-          <ContactPage contact_information={contact_information} />
-        </div>
-      </motion.div>
+
+      <div className="relative w-full min-h-screen overflow-hidden">
+        {sectionOrder.map((section, index) => {
+          const isVisible = index <= activeIndex;
+          return (
+            <AnimatePresence key={section}>
+              {isVisible && (
+                <motion.div
+                  key={section}
+                  initial={{ x: `${100 * direction}%`, opacity: 1 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: `${100 * direction}%`, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 50, damping: 20 }}
+                  className="absolute top-0 left-0 w-full min-h-screen"
+                  style={{ zIndex: index }}
+                >
+                  {section === "home" && <Home home_information={home} />}
+                  {section === "brands" && (
+                    <BrandsPage
+                      brands_information={brands}
+                      allCategories={categories}
+                      setSelectedBrandTitle={setSelectedBrandTitle}
+                    />
+                  )}
+                  {section === "aboutUs" && (
+                    <AboutUsPage aboutUs_information={aboutUs_information} />
+                  )}
+                  {section === "projects" && (
+                    <ProjectsPage projects_information={projects} />
+                  )}
+                  {section === "contact" && (
+                    <ContactPage contact_information={contact_information} />
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          );
+        })}
+      </div>
     </div>
   );
 }
