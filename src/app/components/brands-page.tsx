@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import BrandCard from "./brand-card";
 import ClientBrands from "./client-brands";
 import React from "react";
-import { useTranslations } from "next-intl";
+import MenuLateral from "./menu-lateral";
+import Link from "next/link";
 
 interface BrandsPageProps {
   brands_information: BrandsPageWp;
@@ -16,10 +17,14 @@ interface BrandsPageProps {
 
 function BrandsPage(props: BrandsPageProps) {
   const { brands_information, allCategories, setSelectedBrandTitle } = props;
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null); // Estado de la categoría seleccionada
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const pathname = usePathname();
-  const t = useTranslations();
+  const hasMounted = useRef(false);
+  const clientBrandsRef = useRef<HTMLDivElement | null>(null);
+  const [selectedBrandTitle, setSelectedBrandTitleTest] = useState<
+    string | null
+  >(null);
 
   const brands: BrandsWp[] = brands_information.brand;
 
@@ -52,106 +57,120 @@ function BrandsPage(props: BrandsPageProps) {
       )
     : brands;
 
-  const calculateScrollPosition = (index: number) => {
-    return index === 0 ? 0 : index * window.innerHeight;
-  };
-
   useEffect(() => {
+    if (pathname === "/es/brands") {
       document.body.classList.add("no-scroll");
-    if (
-      pathname.includes("about-us") ||
-      pathname.includes("projects") ||
-      pathname.includes("contact")
-    ) {
-      document.body.classList.remove("no-scroll");
+      return () => {
+        document.body.classList.remove("no-scroll");
+      };
     }
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
   }, [pathname]);
 
   const scrollToBrand = (index: number) => {
-    console.log("index-r", index);
-    const scrollPosition = calculateScrollPosition(index + 1);
-    window.scrollTo({
-      top: scrollPosition,
-      behavior: "smooth",
-    });
+    if (index !== null) {
+      const brandElement = document.querySelectorAll(".brand-slug-page")[index];
+      if (brandElement) {
+        brandElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
   };
 
   const onBrandClick = (selectedBrand: BrandsWp) => {
-    console.log("Selected Category:", selectedCategory);
-    console.log("Selected Brand:", selectedBrand.title);
-    setSelectedBrandTitle(selectedBrand.title); 
-    console.log(filteredBrands)
-    const realIndex = filteredBrands.findIndex((b) => {
-      console.log("Brand in iteration:", b.title);
-      console.log("Selected Brand Title:", selectedBrand.title); 
-      return b.title === selectedBrand.title;
-    });    
-    console.log("Real Index:", realIndex);
+    setSelectedBrandTitleTest(selectedBrand.title);
+    const realIndex = filteredBrands.findIndex(
+      (b) => b.title === selectedBrand.title
+    );
 
     if (realIndex !== -1) {
-      // setTriggeredByClick(true);
       setCurrentIndex(realIndex);
       scrollToBrand(realIndex);
     }
   };
 
-  const [hasMounted, setHasMounted] = useState(false);
-
   useEffect(() => {
-    if (hasMounted) {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+
+    if (currentIndex !== null) {
       scrollToBrand(currentIndex);
-    } else {
-      setHasMounted(true);
     }
   }, [currentIndex]);
 
   const goToNextBrand = () => {
-    if (currentIndex < filteredBrands.length - 1) {
+    if (currentIndex !== null && currentIndex < filteredBrands.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
-      setSelectedBrandTitle(filteredBrands[nextIndex].title); 
+      setSelectedBrandTitleTest(filteredBrands[nextIndex].title);
     }
   };
 
   const goToPreviousBrand = () => {
-    if (currentIndex > 0) {
+    if (currentIndex !== null && currentIndex > 0) {
       const prevIndex = currentIndex - 1;
       setCurrentIndex(prevIndex);
-      setSelectedBrandTitle(filteredBrands[prevIndex].title); 
+      setSelectedBrandTitleTest(filteredBrands[prevIndex].title);
     }
   };
 
+  const menuRight = [{ href: "/es/brands", label: "Brands" }];
+  const menuLeft = [
+    { href: "/es/about-us", label: "Nosotros" },
+    { href: "/es/projects", label: "Proyectos" },
+    { href: "/es/contact", label: "Contacto" },
+  ];
+
+  const scrollToClientBrands = () => {
+    if (clientBrandsRef.current) {
+      clientBrandsRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+    setSelectedBrandTitleTest(null);
+  };
+
   return (
-    <div className="page-Brands lg:pl-[30px] lg:pr-[90px] relative h-screen bg-body">
-      <div className="relative h-full">
-        <ClientBrands
-          brands_information={brands_information}
-          categories={mergedCategories}
-          onBrandClick={onBrandClick}
-          onCategorySelect={setSelectedCategory}
-        />
-      </div>
-      {filteredBrands.map((brand, index) => (
-        <div key={index} className="brand-slug-page h-[100dvh]">
-          <BrandCard
-            images={brand.images_brand}
-            title={brand.title}
-            description={brand.description}
-            urlBrand={brand.url_brand}
-            category={brand.category_brand.name}
-            index={index}
-            totalBrands={filteredBrands.length}
-            onNext={goToNextBrand}
-            onPrevious={goToPreviousBrand}
-            onCategoryClick={() => {
-              setSelectedBrandTitle(null);
-            }}
-          />
+    <div className="relative flex h-[100vh] bg-body">
+      <MenuLateral
+        links={menuRight}
+        scrollToClientBrands={scrollToClientBrands}
+        selectedBrandTitle={selectedBrandTitle}
+      />
+      <div className="flex-1 overflow-y-auto">
+        <div className="no-scroll page-Brands relative h-screen">
+          <div className="relative h-full">
+            <ClientBrands
+              ref={clientBrandsRef}
+              brands_information={brands_information}
+              categories={mergedCategories}
+              onBrandClick={onBrandClick}
+              onCategorySelect={setSelectedCategory}
+            />
+          </div>
+          {filteredBrands.map((brand, index) => (
+            <div key={index} className="brand-slug-page h-[100vh]">
+              <BrandCard
+                images={brand.images_brand}
+                title={brand.title}
+                description={brand.description}
+                urlBrand={brand.url_brand}
+                category={brand.category_brand.name}
+                index={index}
+                totalBrands={filteredBrands.length}
+                onNext={goToNextBrand}
+                onPrevious={goToPreviousBrand}
+                onCategoryClick={() => {
+                  setSelectedBrandTitleTest(null);
+                  scrollToClientBrands();
+                }}
+              />
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+      <MenuLateral links={menuLeft} />
     </div>
   );
 }

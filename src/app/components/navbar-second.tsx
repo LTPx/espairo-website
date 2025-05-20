@@ -197,7 +197,7 @@ export default function NavbarSecond({
           </div>
         </div>
       )}
-
+{/* 
       <div className="fixed left-0 z-[100000] h-screen flex">
         {sectionsInPath.map((option) => (
           <div
@@ -227,7 +227,7 @@ export default function NavbarSecond({
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       <div className="fixed right-0 z-[1000] h-screen">
         <div className="h-full hover:text-white bg-[#E0E0E0] flex">

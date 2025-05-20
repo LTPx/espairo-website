@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import { useTranslations } from "next-intl";
 
@@ -11,12 +11,12 @@ interface ClientBrandsProps {
   onCategorySelect: (category: number | null) => void;
 }
 
-const ClientBrands: React.FC<ClientBrandsProps> = ({
+const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(({
   categories,
   onBrandClick,
   brands_information,
-  onCategorySelect,
-}) => {
+  onCategorySelect
+}, ref) => {
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const t = useTranslations();
@@ -37,7 +37,7 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
     : brands_information.cover_page.url;
 
   return (
-    <div className="brands flex flex-col gap-[20px] md:gap-[0px] md:grid md:grid-cols-2 h-[100dvh] overflow-auto">
+    <div ref={ref} className="brands flex flex-col gap-[20px] md:gap-[0px] md:grid md:grid-cols-2 h-[100dvh] overflow-auto">
       <div className="hidden md:block md:h-[calc(100dvh)]">
         <img
           src={selectedCover}
@@ -118,6 +118,8 @@ const ClientBrands: React.FC<ClientBrandsProps> = ({
       </div>
     </div>
   );
-};
+});
+
+ClientBrands.displayName = "ClientBrands";
 
 export default ClientBrands;
