@@ -7,22 +7,25 @@ import Cover from "@/app/components/cover";
 import Gallery from "@/app/components/gallery";
 import ProjectsInformation from "@/app/components/project-information";
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import useAOSInScrollContainer from "./scroll-component";
 import MenuLateral from "./menu-lateral";
 import Footer from "./footer";
+import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface Props {
   projects_information: ProjectsPageWp;
   ready?: boolean;
+  locale: "en" | "es" | "de";
 }
 
-function ProjectsPage({ projects_information, ready }: Props) {
-  // const t = await getTranslations();
+function ProjectsPage({ projects_information, ready, locale }: Props) {
+  const t = useTranslations();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     AOS.init({
@@ -38,34 +41,31 @@ function ProjectsPage({ projects_information, ready }: Props) {
 
   useAOSInScrollContainer(scrollContainerRef);
 
-  const leftMenuLinks = [
-    // { href: "/es/brands", label: "Brands" },
-    // { href: "/es/about-us", label: "Nosotros" },
-    { href: "/es/projects", label: "Projectos" },
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [pathname]);
+
+  const menuLeft = [
+    { href: `/${locale}/projects`, label: `${t("header.projects")}` },
   ];
 
-  const menuRight = [{ href: "/es/contact", label: "Contacto" }];
-  const menuLeft = [
-    { href: "/es/projects", label: "Proyectos" },
-    // { href: "/es/projects", label: "Contacto" },
+  const menuRight = [
+    { href: `/${locale}/contact`, label: `${t("header.contact")}` },
   ];
 
   return (
-    <div className="relative h-[100vh] ml-[60px] mr-[30px] w-[calc(100%-90px)] flex bg-body">
+    <div className="relative h-[100vh] ml-[60px] w-[calc(100%-60px)] flex bg-body">
       <MenuLateral ready={ready} activeLink="/es/projects" links={menuLeft} />
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto no-scrollbar"
       >
-        <div className="container lg:hidden bg-[#3F4751] flex items-center">
-          <span className="font-regular text-white py-[18px] text-[16px] leading-[20px] tracking-[-0.05em]">
-            {/* {`${t("header.projects")}`} */}
-          </span>
-        </div>
         <ProjectsInformation projects_information={projects_information} />
         <Footer />
       </div>
-      {/* <MenuLateral ready={ready} activeLink="/es/projects" links={menuRight} /> */}
+      <MenuLateral links={menuRight} />
     </div>
   );
 }

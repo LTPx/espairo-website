@@ -21,7 +21,7 @@ export default function NavbarSecond({
   setActiveSection,
   ready = false,
   isBackward,
-  direction
+  direction,
 }: NavbarSecondProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -41,19 +41,19 @@ export default function NavbarSecond({
 
   const sectionsInPath =
     currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
-    // const remainingOptions = navOptions.slice(currentIndex + 1);
-    console.log('direction',direction)
-    console.log('currentIndex',currentIndex)
+  // const remainingOptions = navOptions.slice(currentIndex + 1);
+  console.log("direction", direction);
+  console.log("currentIndex", currentIndex);
 
-    const sliceStart = direction === -1 ? currentIndex + 1 : currentIndex + 1;
-    const remainingOptions = navOptions.slice(sliceStart);
+  const sliceStart = direction === -1 ? currentIndex + 1 : currentIndex + 1;
+  const remainingOptions = navOptions.slice(sliceStart);
 
-    if (direction === -1) {
-      console.log("Entrando en condición: direction === -1");
-    } else {
-      console.log("Entrando en condición: direction !== -1");
-    }
-    
+  if (direction === -1) {
+    console.log("Entrando en condición: direction === -1");
+  } else {
+    console.log("Entrando en condición: direction !== -1");
+  }
+
   const leftPosition =
     currentPath === "/"
       ? "30px"
@@ -217,7 +217,7 @@ export default function NavbarSecond({
         </div>
       )}
 
-      {ready && (
+      {/* {ready && !pathname.includes("brands") && (
         <div className="fixed left-0 z-[100000] h-screen flex">
           {sectionsInPath.map((option) => (
             <div
@@ -248,31 +248,31 @@ export default function NavbarSecond({
             </div>
           ))}
         </div>
-      )}
+      )} */}
 
       {/* {isBackward && ( */}
-        <div className="fixed right-0 z-[100000] h-screen flex">
-          <div className="h-full hover:text-white bg-[#E0E0E0] flex">
-            {remainingOptions.map((option) => (
+      {/* <div className="fixed right-0 z-[100000] h-screen flex">
+        <div className="h-full hover:text-white bg-[#E0E0E0] flex">
+          {remainingOptions.map((option) => (
+            <div
+              key={option.section}
+              className="h-full w-[30px] flex items-center text-center border-l border-[#3F4751] transition duration-300 hover:bg-[#3F4751]"
+              onClick={() => handleLinkClick(option.route, option.section)}
+              style={{ cursor: "pointer" }}
+            >
               <div
-                key={option.section}
-                className="h-full w-[30px] flex items-center text-center border-l border-[#3F4751] transition duration-300 hover:bg-[#3F4751]"
-                onClick={() => handleLinkClick(option.route, option.section)}
-                style={{ cursor: "pointer" }}
+                className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
+                style={{
+                  writingMode: "vertical-rl",
+                  textOrientation: "mixed",
+                }}
               >
-                <div
-                  className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
-                  style={{
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                  }}
-                >
-                  {option.label}
-                </div>
+                {option.label}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
+      </div> */}
       {/* )} */}
     </>
   );

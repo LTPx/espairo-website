@@ -54,7 +54,9 @@ function CallAllPages(props: PageProps) {
   const pathname = usePathname();
   const t = useTranslations();
 
-  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(null);
+  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(
+    null
+  );
   const [activeSection, setActiveSection] = useState<Section>(
     getSectionFromPath(pathname)
   );
@@ -114,12 +116,15 @@ function CallAllPages(props: PageProps) {
 
   const getExitX = (section: Section) => {
     if (section === "home") return "100%";
-    if (direction === -1 && ["contact", "projects", "aboutUs", "brands"].includes(section)) {
+    if (
+      direction === -1 &&
+      ["contact", "projects", "aboutUs", "brands"].includes(section)
+    ) {
       return `${window.innerWidth - 120}px`;
     }
     return "-100%";
   };
-  
+
   function getSectionFromPath(path: string): Section {
     if (path.includes("/brands")) return "brands";
     if (path.includes("/about-us")) return "aboutUs";
@@ -161,30 +166,36 @@ function CallAllPages(props: PageProps) {
                     }, 300)
                   }
                 >
-                  {section === "home" && <Home home_information={home} />}
+                  {section === "home" && (
+                    <Home home_information={home} locale={locale} />
+                  )}
                   {section === "brands" && (
                     <BrandsPage
                       brands_information={brands}
                       allCategories={categories}
                       setSelectedBrandTitle={setSelectedBrandTitle}
+                      locale={locale}
                     />
                   )}
                   {section === "aboutUs" && (
                     <AboutUsPage
                       ready={pageReady}
                       aboutUs_information={aboutUs_information}
+                      locale={locale}
                     />
                   )}
                   {section === "projects" && (
                     <ProjectsPage
                       ready={pageReady}
                       projects_information={projects}
+                      locale={locale}
                     />
                   )}
                   {section === "contact" && (
                     <ContactPage
                       ready={pageReady}
                       contact_information={contact_information}
+                      locale={locale}
                     />
                   )}
                 </motion.div>

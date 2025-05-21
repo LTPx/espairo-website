@@ -1,30 +1,25 @@
 import { ContactPageWp } from "@/app/_interfaces/wordpress-components";
 import { getWordPressCustomPage } from "@/app/_services/api";
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import MenuLateral from "./menu-lateral";
+import { useTranslations } from "next-intl";
 
 interface Props {
   contact_information: ContactPageWp;
   ready?: boolean;
+  locale: "en" | "es" | "de";
 }
 
-function ContactPage({ contact_information, ready }: Props) {
-  // const t = await getTranslations();
+function ContactPage({ contact_information, ready, locale }: Props) {
+  const t = useTranslations();
   const allLinks = [
-    // { href: "/es/brands", label: "Brands" },
-    // { href: "/es/about-us", label: "Nosotros" },
-    // { href: "/es/projects", label: "Proyectos" },
-    { href: "/es/contact", label: "Contacto" },
+    { href: `/${locale}/contact`, label: `${t("header.contact")}` },
   ];
-  
+
   return (
     <div className="relative flex h-[100vh] ml-[90px] w-[calc(100%-90px)] bg-body">
-      <MenuLateral
-        links={allLinks}
-        activeLink="/es/contact"
-      />
+      <MenuLateral links={allLinks} activeLink="/es/contact" />
       <div className="flex-1 overflow-y-auto">
         <div className="lg:h-screen lg:flex">
           <div className="lg:w-1/2 h-full">
@@ -58,10 +53,6 @@ function ContactPage({ contact_information, ready }: Props) {
           </div>
         </div>
       </div>
-      {/* <MenuLateral
-        links={allLinks}
-        activeLink="/es/contact"
-      /> */}
     </div>
   );
 }

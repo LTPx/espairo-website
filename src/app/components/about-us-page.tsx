@@ -14,25 +14,19 @@ import MenuLateral from "./menu-lateral";
 import useAOSInScrollContainer from "./scroll-component";
 import { usePathname } from "next/navigation";
 import Footer from "./footer";
+import { useTranslations } from "next-intl";
 
 interface Props {
   aboutUs_information: AboutUsPageWp;
   ready?: boolean;
+  locale: "en" | "es" | "de";
 }
 
 function AboutUsPage(props: Props) {
-  const { aboutUs_information, ready } = props;
+  const { aboutUs_information, ready, locale } = props;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-
-  // useEffect(() => {
-  //   if (pathname === "/es/about-us") {
-  //     document.body.classList.add("no-scroll");
-  //     return () => {
-  //       document.body.classList.remove("no-scroll");
-  //     };
-  //   }
-  // }, [pathname]);
+  const t = useTranslations();
 
   useEffect(() => {
     AOS.init({
@@ -49,23 +43,26 @@ function AboutUsPage(props: Props) {
   useAOSInScrollContainer(scrollContainerRef);
 
   const leftMenuLinks = [
-    // { href: "/es/brands", label: "Brands" },
-    { href: "/es/about-us", label: "Nosotros" },
+    { href: `/${locale}/about-us`, label: `${t("header.about-us")}` },
   ];
 
-  const rightMenuLinks = [
-    { href: "/es/projects", label: "Projects" },
-    { href: "/es/contact", label: "Contact" },
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [pathname]);
+
+  const menuRight = [
+    { href: `/${locale}/projects`, label: `${t("header.projects")}` },
+    { href: `/${locale}/contact`, label: `${t("header.contact")}` },
   ];
 
-  // const t = await getTranslations();
-  //ml-[60px] w-[calc(100%-60px)]
   return (
-    <div className="relative h-[100vh] ml-[30px] mr-[60px] w-[calc(100%-90px)]  flex bg-body">
+    <div className="relative h-[100vh] ml-[30px] w-[calc(100%-30px)]  flex bg-body">
       <MenuLateral
         links={leftMenuLinks}
         ready={ready}
-        activeLink="/es/about-us" 
+        activeLink="/es/about-us"
       />
       <div
         ref={scrollContainerRef}
@@ -146,10 +143,7 @@ function AboutUsPage(props: Props) {
         </section>
         <Footer />
       </div>
-      {/* <MenuLateral
-        links={rightMenuLinks}
-        ready={ready}
-      /> */}
+      <MenuLateral links={menuRight} />
     </div>
   );
 }

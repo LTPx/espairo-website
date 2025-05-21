@@ -8,15 +8,18 @@ import ClientBrands from "./client-brands";
 import React from "react";
 import MenuLateral from "./menu-lateral";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface BrandsPageProps {
   brands_information: BrandsPageWp;
   allCategories: any;
   setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>;
+  locale: "en" | "es" | "de";
 }
 
 function BrandsPage(props: BrandsPageProps) {
-  const { brands_information, allCategories, setSelectedBrandTitle } = props;
+  const { brands_information, allCategories, setSelectedBrandTitle, locale } =
+    props;
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const pathname = usePathname();
@@ -25,6 +28,7 @@ function BrandsPage(props: BrandsPageProps) {
   const [selectedBrandTitle, setSelectedBrandTitleTest] = useState<
     string | null
   >(null);
+  const t = useTranslations();
 
   const brands: BrandsWp[] = brands_information.brand;
 
@@ -58,7 +62,7 @@ function BrandsPage(props: BrandsPageProps) {
     : brands;
 
   useEffect(() => {
-    if (pathname === "/es/brands") {
+    if (pathname === `/${locale}/brands`) {
       document.body.classList.add("no-scroll");
       return () => {
         document.body.classList.remove("no-scroll");
@@ -114,13 +118,6 @@ function BrandsPage(props: BrandsPageProps) {
     }
   };
 
-  const menuRight = [{ href: "/es/brands", label: "Brands" }];
-  const menuLeft = [
-    { href: "/es/about-us", label: "Nosotros" },
-    { href: "/es/projects", label: "Proyectos" },
-    { href: "/es/contact", label: "Contacto" },
-  ];
-
   const scrollToClientBrands = () => {
     if (clientBrandsRef.current) {
       clientBrandsRef.current.scrollIntoView({
@@ -131,10 +128,18 @@ function BrandsPage(props: BrandsPageProps) {
     setSelectedBrandTitleTest(null);
   };
 
+  const left = [{ href: `/${locale}/brands`, label: `${t("header.brands")}` }];
+
+  const menuRight = [
+    { href: `/${locale}/about-us`, label: `${t("header.about-us")}` },
+    { href: `/${locale}/projects`, label: `${t("header.projects")}` },
+    { href: `/${locale}/contact`, label: `${t("header.contact")}` },
+  ];
+
   return (
-    <div className="relative flex h-[100vh] mr-[90px] w-[calc(100%-90px)]  bg-body">
+    <div className="relative flex h-[100vh]  bg-body">
       <MenuLateral
-        links={menuRight}
+        links={left}
         scrollToClientBrands={scrollToClientBrands}
         selectedBrandTitle={selectedBrandTitle}
         activeLink="/es/brands"
@@ -171,12 +176,7 @@ function BrandsPage(props: BrandsPageProps) {
           ))}
         </div>
       </div>
-      {/* <MenuLateral
-        links={menuLeft}
-        scrollToClientBrands={scrollToClientBrands}
-        selectedBrandTitle={selectedBrandTitle}
-        activeLink="/es/brands"
-      />{" "} */}
+      <MenuLateral links={menuRight} />
     </div>
   );
 }
