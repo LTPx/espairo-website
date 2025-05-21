@@ -51,52 +51,22 @@ function CallAllPages(props: PageProps) {
     locale,
   } = props;
 
-  const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations();
 
-  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(
-    null
-  );
-  const [opacity, setOpacity] = useState(0);
-
-  const getSectionFromPath = (path: string): Section => {
-    if (path.includes("/brands")) return "brands";
-    if (path.includes("/about-us")) return "aboutUs";
-    if (path.includes("/projects")) return "projects";
-    if (path.includes("/contact")) return "contact";
-    return "home";
-  };
-
+  const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<Section>(
     getSectionFromPath(pathname)
   );
-
-  const [sectionHeights, setSectionHeights] = useState<Record<Section, number>>(
-    {
-      home: 0,
-      brands: 0,
-      aboutUs: 0,
-      projects: 0,
-      contact: 0,
-    }
-  );
-
   const [prevIndex, setPrevIndex] = useState(
     sectionOrder.indexOf(activeSection)
   );
+  const [pageReady, setPageReady] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
   const activeIndex = sectionOrder.indexOf(activeSection);
   const direction = activeIndex > prevIndex ? 1 : -1;
-  // const direction =
-  // sectionOrder[prevIndex] === "home"
-  //   ? 1
-  //   : activeSection === "home"
-  //   ? -1
-  //   : activeIndex > prevIndex
-  //   ? 1
-  //   : -1;
 
-  // Update previous index when active section changes
   useEffect(() => {
     setPrevIndex(activeIndex);
   }, [activeSection]);
@@ -115,28 +85,9 @@ function CallAllPages(props: PageProps) {
     }
   }, [activeSection]);
 
-  const homeRef = useRef<HTMLDivElement>(null);
-  const brandsRef = useRef<HTMLDivElement>(null);
-  const aboutUsRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
-  const contactRef = useRef<HTMLDivElement>(null);
-  const [pageReady, setPageReady] = useState(false);
-
-  const getAllHeights = () => {
-    setSectionHeights({
-      home: homeRef.current?.scrollHeight || 0,
-      brands: brandsRef.current?.scrollHeight || 0,
-      aboutUs: aboutUsRef.current?.scrollHeight || 0,
-      projects: projectsRef.current?.scrollHeight || 0,
-      contact: contactRef.current?.scrollHeight || 0,
-    });
-  };
-
   useEffect(() => {
-    setOpacity(0);
-    const timeout = setTimeout(() => setOpacity(1), 100);
-    return () => clearTimeout(timeout);
-  }, [pathname]);
+    setPageReady(false);
+  }, [activeSection]);
 
   const navOptions = [
     {
@@ -161,37 +112,21 @@ function CallAllPages(props: PageProps) {
     },
   ];
 
-  useEffect(() => {
-    getAllHeights();
-  }, []);
-
-  const latestSectionRef = useRef<Section>(activeSection);
-
-  useEffect(() => {
-    latestSectionRef.current = activeSection;
-  }, [activeSection]);
-
-  useEffect(() => {
-    setPageReady(false);
-  }, [activeSection]);
-
-  const isAnimatingRef = useRef(false);
-  const isNavigatingBackward = direction === -1;
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [exitX, setExitX] = useState<string | number>("100%");
-
-  useEffect(() => {
-    if (direction === -1 && activeSection === "contact") {
-      setExitX(`${window.innerWidth - 120}px`);
-    } else if (direction === -1 && activeSection === "projects") {
-      setExitX(`${window.innerWidth - 120}px`);
-    } else if (direction === -1 && activeSection === "aboutUs") {
-      setExitX(`${window.innerWidth - 120}px`);
-    } else {
-      setExitX("-100%");
+  const getExitX = (section: Section) => {
+    if (section === "home") return "100%";
+    if (direction === -1 && ["contact", "projects", "aboutUs", "brands"].includes(section)) {
+      return `${window.innerWidth - 120}px`;
     }
-  }, [direction, activeSection]);
+    return "-100%";
+  };
   
+  function getSectionFromPath(path: string): Section {
+    if (path.includes("/brands")) return "brands";
+    if (path.includes("/about-us")) return "aboutUs";
+    if (path.includes("/projects")) return "projects";
+    if (path.includes("/contact")) return "contact";
+    return "home";
+  }
 
   return (
     <div className="hidden lg:block h-full relative overflow-hidden">
@@ -202,6 +137,7 @@ function CallAllPages(props: PageProps) {
         setActiveSection={setActiveSection}
         ready={pageReady}
         isBackward={isAnimating}
+        direction={direction}
       />
       <div className="relative w-full min-h-screen overflow-hidden">
         {sectionOrder.map((section, index) => {
@@ -213,20 +149,17 @@ function CallAllPages(props: PageProps) {
                   key={section}
                   initial={{ x: `${100 * direction}%`, opacity: 1 }}
                   animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: exitX, opacity: 1 }}
+                  exit={{ x: getExitX(section), opacity: 1 }}
                   transition={{ type: "spring", stiffness: 50, damping: 20 }}
                   className="absolute top-0 left-0 w-full min-h-screen"
                   style={{ zIndex: index }}
-                  onAnimationStart={() => {
-                    setIsAnimating(true);
-                    // setPageReady(false);
-                  }}
-                  onAnimationComplete={() => {
-                      setTimeout(() => {
-                        setIsAnimating(false);
-                        setPageReady(true);
-                      }, 300);
-                  }}
+                  onAnimationStart={() => setIsAnimating(true)}
+                  onAnimationComplete={() =>
+                    setTimeout(() => {
+                      setIsAnimating(false);
+                      setPageReady(true);
+                    }, 300)
+                  }
                 >
                   {section === "home" && <Home home_information={home} />}
                   {section === "brands" && (

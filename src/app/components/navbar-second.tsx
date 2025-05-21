@@ -11,6 +11,7 @@ interface NavbarSecondProps {
   setActiveSection: React.Dispatch<React.SetStateAction<Section>>;
   ready?: boolean;
   isBackward?: boolean;
+  direction: number;
 }
 
 export default function NavbarSecond({
@@ -20,6 +21,7 @@ export default function NavbarSecond({
   setActiveSection,
   ready = false,
   isBackward,
+  direction
 }: NavbarSecondProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -39,8 +41,19 @@ export default function NavbarSecond({
 
   const sectionsInPath =
     currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
-  const remainingOptions = navOptions.slice(isBackward ? currentIndex + 2 : currentIndex + 1 );
+    // const remainingOptions = navOptions.slice(currentIndex + 1);
+    console.log('direction',direction)
+    console.log('currentIndex',currentIndex)
 
+    const sliceStart = direction === -1 ? currentIndex + 1 : currentIndex + 1;
+    const remainingOptions = navOptions.slice(sliceStart);
+
+    if (direction === -1) {
+      console.log("Entrando en condición: direction === -1");
+    } else {
+      console.log("Entrando en condición: direction !== -1");
+    }
+    
   const leftPosition =
     currentPath === "/"
       ? "30px"
@@ -155,7 +168,7 @@ export default function NavbarSecond({
             className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
             style={{ left: leftPosition, cursor: "pointer" }}
           >
-            Espai Rö
+            Espai Rö {direction}
           </div>
           <div
             className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
