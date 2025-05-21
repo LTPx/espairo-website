@@ -49,18 +49,24 @@ function AboutUsPage(props: Props) {
   useAOSInScrollContainer(scrollContainerRef);
 
   const leftMenuLinks = [
-    { href: "/es/brands", label: "Brands" },
+    // { href: "/es/brands", label: "Brands" },
     { href: "/es/about-us", label: "Nosotros" },
   ];
 
+  const rightMenuLinks = [
+    { href: "/es/projects", label: "Projects" },
+    { href: "/es/contact", label: "Contact" },
+  ];
+
   // const t = await getTranslations();
+  //ml-[60px] w-[calc(100%-60px)]
   return (
-    <div className="relative h-[100vh] ml-[30px] w-[calc(100%-30px)] flex bg-body">
+    <div className="relative h-[100vh] ml-[30px] mr-[60px] w-[calc(100%-90px)]  flex bg-body">
       <MenuLateral
         links={leftMenuLinks}
         ready={ready}
-        activeLink="/es/about-us" // forzar que "Nosotros" aparezca activo
-      />{" "}
+        activeLink="/es/about-us" 
+      />
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto no-scrollbar"
@@ -79,7 +85,7 @@ function AboutUsPage(props: Props) {
           <img
             data-aos="fade-up"
             src={aboutUs_information.first_image}
-            className="h-[800px] object-cover w-full"
+            className="h-[800px] w-full object-cover "
           />
         </section>
         <div
@@ -102,7 +108,7 @@ function AboutUsPage(props: Props) {
           <img
             data-aos="fade-up"
             src={aboutUs_information.second_image}
-            className="h-[800px] object-cover w-full"
+            className="h-[800px] w-full object-cover "
           />
         </section>
         <section className="hide-title-trigger pt-[80px]">
@@ -118,7 +124,7 @@ function AboutUsPage(props: Props) {
           <img
             data-aos="fade-up"
             src={aboutUs_information.third_image}
-            className="h-[800px] object-cover w-full"
+            className="h-[800px] object-cover "
           />
         </section>
         <section className="pt-[40px] lg:pt-[100px]">
@@ -135,11 +141,15 @@ function AboutUsPage(props: Props) {
           <img
             data-aos="fade-up"
             src={aboutUs_information.last_image}
-            className="h-[800px] object-cover w-full"
+            className="h-[800px] object-cover "
           />
         </section>
         <Footer />
       </div>
+      {/* <MenuLateral
+        links={rightMenuLinks}
+        ready={ready}
+      /> */}
     </div>
   );
 }

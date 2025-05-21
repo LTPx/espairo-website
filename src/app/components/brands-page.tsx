@@ -132,11 +132,12 @@ function BrandsPage(props: BrandsPageProps) {
   };
 
   return (
-    <div className="relative flex h-[100vh] bg-body">
+    <div className="relative flex h-[100vh] mr-[90px] w-[calc(100%-90px)]  bg-body">
       <MenuLateral
         links={menuRight}
         scrollToClientBrands={scrollToClientBrands}
         selectedBrandTitle={selectedBrandTitle}
+        activeLink="/es/brands"
       />
       <div className="flex-1 overflow-y-auto">
         <div className="no-scroll page-Brands relative h-screen">
@@ -170,7 +171,12 @@ function BrandsPage(props: BrandsPageProps) {
           ))}
         </div>
       </div>
-      <MenuLateral links={menuLeft} />
+      {/* <MenuLateral
+        links={menuLeft}
+        scrollToClientBrands={scrollToClientBrands}
+        selectedBrandTitle={selectedBrandTitle}
+        activeLink="/es/brands"
+      />{" "} */}
     </div>
   );
 }

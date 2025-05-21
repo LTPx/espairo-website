@@ -9,6 +9,8 @@ interface NavbarSecondProps {
   selectedBrandTitle?: string | null;
   setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>;
   setActiveSection: React.Dispatch<React.SetStateAction<Section>>;
+  ready?: boolean;
+  isBackward?: boolean;
 }
 
 export default function NavbarSecond({
@@ -16,6 +18,8 @@ export default function NavbarSecond({
   selectedBrandTitle,
   setSelectedBrandTitle,
   setActiveSection,
+  ready = false,
+  isBackward,
 }: NavbarSecondProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -35,7 +39,7 @@ export default function NavbarSecond({
 
   const sectionsInPath =
     currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
-  const remainingOptions = navOptions.slice(currentIndex + 1);
+  const remainingOptions = navOptions.slice(isBackward ? currentIndex + 2 : currentIndex + 1 );
 
   const leftPosition =
     currentPath === "/"
@@ -121,7 +125,9 @@ export default function NavbarSecond({
         return;
       }
 
-      const triggers = container.querySelectorAll(".hide-title-trigger-project");
+      const triggers = container.querySelectorAll(
+        ".hide-title-trigger-project"
+      );
 
       let shouldHide = false;
 
@@ -197,60 +203,64 @@ export default function NavbarSecond({
           </div>
         </div>
       )}
-{/* 
-      <div className="fixed left-0 z-[100000] h-screen flex">
-        {sectionsInPath.map((option) => (
-          <div
-            key={option.section}
-            className={`transition duration-300 hover:bg-[#3F4751] h-full w-[30px] border-r border-[#3F4751] flex items-center ${
-              currentPath === option.route ? "bg-[#3F4751]" : "bg-[#E0E0E0]"
-            }`}
-            onClick={() => handleLinkClick(option.route, option.section)}
-            style={{ cursor: "pointer" }}
-          >
-            <div
-              className={`pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] rotate-180 transition duration-300 ${
-                currentPath === option.route ? "text-white" : "text-[#3F4751]"
-              } hover:text-white`}
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-              }}
-            >
-              {option.label}
-              {currentPath.includes("brands") && selectedBrandTitle && (
-                <>
-                  <span className="my-[7px] text-white">|</span>
-                  <span className="text-white">{selectedBrandTitle}</span>
-                </>
-              )}
-            </div>
-          </div>
-        ))}
-      </div> */}
 
-      <div className="fixed right-0 z-[1000] h-screen">
-        <div className="h-full hover:text-white bg-[#E0E0E0] flex">
-          {remainingOptions.map((option) => (
+      {ready && (
+        <div className="fixed left-0 z-[100000] h-screen flex">
+          {sectionsInPath.map((option) => (
             <div
               key={option.section}
-              className="h-full w-[30px] flex items-center text-center border-l border-[#3F4751] transition duration-300 hover:bg-[#3F4751]"
+              className={`transition duration-300 hover:bg-[#3F4751] h-full w-[30px] border-r border-[#3F4751] flex items-center ${
+                currentPath === option.route ? "bg-[#3F4751]" : "bg-[#E0E0E0]"
+              }`}
               onClick={() => handleLinkClick(option.route, option.section)}
               style={{ cursor: "pointer" }}
             >
               <div
-                className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
+                className={`pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] rotate-180 transition duration-300 ${
+                  currentPath === option.route ? "text-white" : "text-[#3F4751]"
+                } hover:text-white`}
                 style={{
                   writingMode: "vertical-rl",
                   textOrientation: "mixed",
                 }}
               >
                 {option.label}
+                {currentPath.includes("brands") && selectedBrandTitle && (
+                  <>
+                    <span className="my-[7px] text-white">|</span>
+                    <span className="text-white">{selectedBrandTitle}</span>
+                  </>
+                )}
               </div>
             </div>
           ))}
         </div>
-      </div>
+      )}
+
+      {/* {isBackward && ( */}
+        <div className="fixed right-0 z-[100000] h-screen flex">
+          <div className="h-full hover:text-white bg-[#E0E0E0] flex">
+            {remainingOptions.map((option) => (
+              <div
+                key={option.section}
+                className="h-full w-[30px] flex items-center text-center border-l border-[#3F4751] transition duration-300 hover:bg-[#3F4751]"
+                onClick={() => handleLinkClick(option.route, option.section)}
+                style={{ cursor: "pointer" }}
+              >
+                <div
+                  className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
+                  style={{
+                    writingMode: "vertical-rl",
+                    textOrientation: "mixed",
+                  }}
+                >
+                  {option.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      {/* )} */}
     </>
   );
 }

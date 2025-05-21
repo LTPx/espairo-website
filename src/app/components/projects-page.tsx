@@ -17,9 +17,10 @@ import Footer from "./footer";
 
 interface Props {
   projects_information: ProjectsPageWp;
+  ready?: boolean;
 }
 
-function ProjectsPage({ projects_information }: Props) {
+function ProjectsPage({ projects_information, ready }: Props) {
   // const t = await getTranslations();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -38,12 +39,20 @@ function ProjectsPage({ projects_information }: Props) {
   useAOSInScrollContainer(scrollContainerRef);
 
   const leftMenuLinks = [
+    // { href: "/es/brands", label: "Brands" },
+    // { href: "/es/about-us", label: "Nosotros" },
     { href: "/es/projects", label: "Projectos" },
   ];
 
+  const menuRight = [{ href: "/es/contact", label: "Contacto" }];
+  const menuLeft = [
+    { href: "/es/projects", label: "Proyectos" },
+    // { href: "/es/projects", label: "Contacto" },
+  ];
+
   return (
-    <div className="relative h-[100vh] ml-[60px] w-[calc(100%-60px)] flex bg-body">
-      <MenuLateral links={leftMenuLinks} />
+    <div className="relative h-[100vh] ml-[60px] mr-[30px] w-[calc(100%-90px)] flex bg-body">
+      <MenuLateral ready={ready} activeLink="/es/projects" links={menuLeft} />
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto no-scrollbar"
@@ -56,6 +65,7 @@ function ProjectsPage({ projects_information }: Props) {
         <ProjectsInformation projects_information={projects_information} />
         <Footer />
       </div>
+      {/* <MenuLateral ready={ready} activeLink="/es/projects" links={menuRight} /> */}
     </div>
   );
 }

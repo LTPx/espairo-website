@@ -87,6 +87,14 @@ function CallAllPages(props: PageProps) {
   );
   const activeIndex = sectionOrder.indexOf(activeSection);
   const direction = activeIndex > prevIndex ? 1 : -1;
+  // const direction =
+  // sectionOrder[prevIndex] === "home"
+  //   ? 1
+  //   : activeSection === "home"
+  //   ? -1
+  //   : activeIndex > prevIndex
+  //   ? 1
+  //   : -1;
 
   // Update previous index when active section changes
   useEffect(() => {
@@ -157,6 +165,34 @@ function CallAllPages(props: PageProps) {
     getAllHeights();
   }, []);
 
+  const latestSectionRef = useRef<Section>(activeSection);
+
+  useEffect(() => {
+    latestSectionRef.current = activeSection;
+  }, [activeSection]);
+
+  useEffect(() => {
+    setPageReady(false);
+  }, [activeSection]);
+
+  const isAnimatingRef = useRef(false);
+  const isNavigatingBackward = direction === -1;
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [exitX, setExitX] = useState<string | number>("100%");
+
+  useEffect(() => {
+    if (direction === -1 && activeSection === "contact") {
+      setExitX(`${window.innerWidth - 120}px`);
+    } else if (direction === -1 && activeSection === "projects") {
+      setExitX(`${window.innerWidth - 120}px`);
+    } else if (direction === -1 && activeSection === "aboutUs") {
+      setExitX(`${window.innerWidth - 120}px`);
+    } else {
+      setExitX("-100%");
+    }
+  }, [direction, activeSection]);
+  
+
   return (
     <div className="hidden lg:block h-full relative overflow-hidden">
       <NavbarSecond
@@ -164,6 +200,8 @@ function CallAllPages(props: PageProps) {
         selectedBrandTitle={selectedBrandTitle}
         setSelectedBrandTitle={setSelectedBrandTitle}
         setActiveSection={setActiveSection}
+        ready={pageReady}
+        isBackward={isAnimating}
       />
       <div className="relative w-full min-h-screen overflow-hidden">
         {sectionOrder.map((section, index) => {
@@ -175,14 +213,19 @@ function CallAllPages(props: PageProps) {
                   key={section}
                   initial={{ x: `${100 * direction}%`, opacity: 1 }}
                   animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: direction === -1 ? "100%" : "-100%", opacity: 1 }}
+                  exit={{ x: exitX, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 50, damping: 20 }}
                   className="absolute top-0 left-0 w-full min-h-screen"
                   style={{ zIndex: index }}
+                  onAnimationStart={() => {
+                    setIsAnimating(true);
+                    // setPageReady(false);
+                  }}
                   onAnimationComplete={() => {
-                    if (index === activeIndex) {
-                      setPageReady(true);
-                    }
+                      setTimeout(() => {
+                        setIsAnimating(false);
+                        setPageReady(true);
+                      }, 300);
                   }}
                 >
                   {section === "home" && <Home home_information={home} />}
@@ -194,13 +237,22 @@ function CallAllPages(props: PageProps) {
                     />
                   )}
                   {section === "aboutUs" && (
-                    <AboutUsPage ready={pageReady} aboutUs_information={aboutUs_information} />
+                    <AboutUsPage
+                      ready={pageReady}
+                      aboutUs_information={aboutUs_information}
+                    />
                   )}
                   {section === "projects" && (
-                    <ProjectsPage projects_information={projects} />
+                    <ProjectsPage
+                      ready={pageReady}
+                      projects_information={projects}
+                    />
                   )}
                   {section === "contact" && (
-                    <ContactPage contact_information={contact_information} />
+                    <ContactPage
+                      ready={pageReady}
+                      contact_information={contact_information}
+                    />
                   )}
                 </motion.div>
               )}
