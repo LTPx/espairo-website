@@ -1,6 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface AboutUsCardProps {
   image?: string;
@@ -12,6 +15,10 @@ interface AboutUsCardProps {
 function AboutUsCard(props: AboutUsCardProps) {
   const { image, title, description, reverseLayout } = props;
   const t = useTranslations();
+  
+  useEffect(() => {
+    AOS.init({ duration: 1000, easing: "ease-out", offset: 80, once: false });
+  }, []);
 
   return (
     <div
