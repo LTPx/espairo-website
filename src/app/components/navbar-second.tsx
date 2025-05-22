@@ -33,6 +33,29 @@ export default function NavbarSecond({
   const [showTitle, setShowTitle] = useState(true);
   const [currentPath, setCurrentPath] = useState(pathname);
   const [showDelayedBackward, setShowDelayedBackward] = useState(false);
+  const [customSliceOffset, setCustomSliceOffset] = useState<number | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (direction === "left") {
+      if (fromSection === "projects" && toSection === "home") {
+        setCustomSliceOffset(4);
+      } else if (fromSection === "aboutUs" && toSection === "home") {
+        setCustomSliceOffset(3);
+      } else if (fromSection === "brands" && toSection === "home") {
+        setCustomSliceOffset(2);
+      } else {
+        return;
+      }
+
+      const timeout = setTimeout(() => {
+        setCustomSliceOffset(null);
+      }, 2400);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [direction, fromSection, toSection]);
 
   useEffect(() => {
     if (isBackward && fromSection === "contact" && toSection === "home") {
@@ -41,9 +64,9 @@ export default function NavbarSecond({
         setShowDelayedBackward(true);
       }, 2500);
 
-      return () => clearTimeout(timer); 
+      return () => clearTimeout(timer);
     } else {
-      setShowDelayedBackward(true); 
+      setShowDelayedBackward(true);
     }
   }, [isBackward, fromSection, toSection]);
 
@@ -62,10 +85,13 @@ export default function NavbarSecond({
 
   const sliceStart =
     direction === "left"
-      ? currentPath === `/${locale}` || currentPath === "/"
+      ? customSliceOffset !== null
+        ? currentIndex + customSliceOffset
+        : currentPath === `/${locale}` || currentPath === "/"
         ? currentIndex + 1
         : currentIndex + 2
       : currentIndex + 1;
+
   const remainingOptions = navOptions.slice(sliceStart);
 
   const leftPosition =
@@ -182,7 +208,7 @@ export default function NavbarSecond({
             className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
             style={{ left: leftPosition, cursor: "pointer" }}
           >
-            Espai Rö {direction} {fromSection} to {toSection}
+            Espai Rö {direction} {fromSection} to {toSection} {ready.valueOf()}
           </div>
           <div
             className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
