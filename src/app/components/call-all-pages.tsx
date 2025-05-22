@@ -66,8 +66,24 @@ function CallAllPages(props: PageProps) {
   const [pageReady, setPageReady] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  const prevIndexRef = useRef(
+    sectionOrder.indexOf(getSectionFromPath(pathname))
+  );
+
   const activeIndex = sectionOrder.indexOf(activeSection);
-  const direction = activeIndex > prevIndex ? 1 : -1;
+  const direction = activeIndex > prevIndexRef.current ? 1 : -1;
+  const entryDirectionRef = useRef<"left" | "right">("right");
+
+  useEffect(() => {
+    const prevIndex = prevIndexRef.current;
+    const activeIndex = sectionOrder.indexOf(activeSection);
+    const newDirection = activeIndex > prevIndex ? "right" : "left";
+
+    entryDirectionRef.current = newDirection;
+    prevIndexRef.current = activeIndex;
+  }, [activeSection]);
+
+  // console.log(entryDirection)
 
   useEffect(() => {
     setPrevIndex(activeIndex);
@@ -132,6 +148,7 @@ function CallAllPages(props: PageProps) {
     if (path.includes("/contact")) return "contact";
     return "home";
   }
+  // const entryDirection: "left" | "right" = direction === 1 ? "right" : "left";
 
   return (
     <div className="hidden lg:block h-full relative overflow-hidden">
@@ -142,7 +159,7 @@ function CallAllPages(props: PageProps) {
         setActiveSection={setActiveSection}
         ready={pageReady}
         isBackward={isAnimating}
-        direction={direction}
+        direction={entryDirectionRef.current}
       />
       <div className="relative w-full min-h-screen overflow-hidden">
         {sectionOrder.map((section, index) => {

@@ -137,7 +137,7 @@ function BrandsPage(props: BrandsPageProps) {
   ];
 
   return (
-    <div className="relative flex h-[100vh]  bg-body">
+    <div className="relative flex h-[100vh] bg-body">
       <MenuLateral
         links={left}
         scrollToClientBrands={scrollToClientBrands}

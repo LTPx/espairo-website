@@ -65,7 +65,7 @@ export function CoverHome(props: Props) {
           </div>
         </div>
       </div>
-      <MenuLateral links={menuRight} />
+      {/* <MenuLateral links={menuRight} /> */}
     </div>
   );
 }

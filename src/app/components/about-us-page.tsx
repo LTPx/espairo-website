@@ -59,11 +59,13 @@ function AboutUsPage(props: Props) {
 
   return (
     <div className="relative h-[100vh] ml-[30px] w-[calc(100%-30px)]  flex bg-body">
-      <MenuLateral
-        links={leftMenuLinks}
-        ready={ready}
-        activeLink="/es/about-us"
-      />
+      {/* {pathname === `/${locale}/about-us` && ( */}
+        <MenuLateral
+          links={leftMenuLinks}
+          ready={ready}
+          activeLink={`/${locale}/about-us`}
+        />
+      {/* )} */}
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto no-scrollbar"
