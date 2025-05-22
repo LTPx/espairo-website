@@ -12,6 +12,8 @@ interface NavbarSecondProps {
   ready?: boolean;
   isBackward?: boolean;
   direction: "left" | "right";
+  fromSection: Section;
+  toSection: Section;
 }
 
 export default function NavbarSecond({
@@ -20,7 +22,9 @@ export default function NavbarSecond({
   setSelectedBrandTitle,
   setActiveSection,
   ready = false,
-  isBackward,
+  isBackward = false,
+  fromSection,
+  toSection,
   direction,
 }: NavbarSecondProps) {
   const pathname = usePathname();
@@ -28,6 +32,20 @@ export default function NavbarSecond({
 
   const [showTitle, setShowTitle] = useState(true);
   const [currentPath, setCurrentPath] = useState(pathname);
+  const [showDelayedBackward, setShowDelayedBackward] = useState(false);
+
+  useEffect(() => {
+    if (isBackward && fromSection === "contact" && toSection === "home") {
+      setShowDelayedBackward(false);
+      const timer = setTimeout(() => {
+        setShowDelayedBackward(true);
+      }, 2500);
+
+      return () => clearTimeout(timer); 
+    } else {
+      setShowDelayedBackward(true); 
+    }
+  }, [isBackward, fromSection, toSection]);
 
   const locale = currentPath.split("/")[1];
 
@@ -41,18 +59,14 @@ export default function NavbarSecond({
 
   const sectionsInPath =
     currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
-  // const remainingOptions = navOptions.slice(currentIndex + 1);
-  // console.log("direction", direction);
-  // console.log("currentIndex", currentIndex);
 
-  const sliceStart = direction === "left" ? currentIndex + 2 : currentIndex + 1;
+  const sliceStart =
+    direction === "left"
+      ? currentPath === `/${locale}` || currentPath === "/"
+        ? currentIndex + 1
+        : currentIndex + 2
+      : currentIndex + 1;
   const remainingOptions = navOptions.slice(sliceStart);
-
-  // if (direction === -1) {
-  //   console.log("Entrando en condición: direction === -1");
-  // } else {
-  //   console.log("Entrando en condición: direction !== -1");
-  // }
 
   const leftPosition =
     currentPath === "/"
@@ -168,7 +182,7 @@ export default function NavbarSecond({
             className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
             style={{ left: leftPosition, cursor: "pointer" }}
           >
-            Espai Rö {direction}
+            Espai Rö {direction} {fromSection} to {toSection}
           </div>
           <div
             className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
@@ -250,30 +264,35 @@ export default function NavbarSecond({
         </div>
       )}
 
-      {isBackward && (
-        <div className="fixed right-0 z-[100000] h-screen flex">
-          <div className="h-full hover:text-white bg-[#E0E0E0] flex">
-            {remainingOptions.map((option) => (
-              <div
-                key={option.section}
-                className="h-full w-[30px] flex items-center text-center border-l border-[#3F4751] transition duration-300 hover:bg-[#3F4751]"
-                onClick={() => handleLinkClick(option.route, option.section)}
-                style={{ cursor: "pointer" }}
-              >
+      {isBackward &&
+        showDelayedBackward &&
+        !(
+          (fromSection === "contact" && toSection === "brands") ||
+          (fromSection === "projects" && toSection === "brands")
+        ) && (
+          <div className="fixed right-0 z-[100000] h-screen flex">
+            <div className="h-full hover:text-white bg-[#E0E0E0] flex">
+              {remainingOptions.map((option) => (
                 <div
-                  className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
-                  style={{
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                  }}
+                  key={option.section}
+                  className="h-full w-[30px] flex items-center text-center border-l border-[#3F4751] transition duration-300 hover:bg-[#3F4751]"
+                  onClick={() => handleLinkClick(option.route, option.section)}
+                  style={{ cursor: "pointer" }}
                 >
-                  {option.label}
+                  <div
+                    className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
+                    style={{
+                      writingMode: "vertical-rl",
+                      textOrientation: "mixed",
+                    }}
+                  >
+                    {option.label}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 }
