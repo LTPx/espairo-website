@@ -76,6 +76,9 @@ export default function NavbarSecond({
     } else if (fromSection === "home" && toSection === "aboutUs") {
       initialOffset = -1;
       timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "brands") {
+      initialOffset = 0;
+      timeoutDuration = 2400;
     }
 
     setSectionPathOffset(initialOffset);
