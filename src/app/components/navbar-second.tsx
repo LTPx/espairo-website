@@ -262,7 +262,8 @@ export default function NavbarSecond({
             className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
             style={{ left: leftPosition, cursor: "pointer" }}
           >
-            Espai Rö {direction} {fromSection} to {toSection} {ready.valueOf()}
+            Espai Rö
+            {/* Espai Rö {direction} {fromSection} to {toSection} {ready.valueOf()} */}
           </div>
           <div
             className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
