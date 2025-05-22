@@ -36,6 +36,56 @@ export default function NavbarSecond({
   const [customSliceOffset, setCustomSliceOffset] = useState<number | null>(
     null
   );
+  const [customSectionPathOffset, setCustomSectionPathOffset] = useState<
+    number | null
+  >(null);
+  const [sectionPathOffset, setSectionPathOffset] = useState(1);
+
+  console.log("ready", ready);
+
+  useEffect(() => {
+    if (direction !== "right") {
+      setSectionPathOffset(1);
+      return;
+    }
+
+    let initialOffset = 1;
+    let timeoutDuration = 2400;
+
+    if (fromSection === "projects" && toSection === "contact") {
+      initialOffset = 0;
+    } else if (fromSection === "aboutUs" && toSection === "projects") {
+      initialOffset = 0;
+    } else if (fromSection === "brands" && toSection === "aboutUs") {
+      initialOffset = 0;
+    } else if (fromSection === "brands" && toSection === "contact") {
+      initialOffset = -2;
+      timeoutDuration = 2400;
+    } else if (fromSection === "brands" && toSection === "projects") {
+      initialOffset = -1;
+      timeoutDuration = 2400;
+    } else if (fromSection === "aboutUs" && toSection === "contact") {
+      initialOffset = -1;
+      timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "contact") {
+      initialOffset = -3;
+      timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "projects") {
+      initialOffset = -2;
+      timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "aboutUs") {
+      initialOffset = -1;
+      timeoutDuration = 2400;
+    }
+
+    setSectionPathOffset(initialOffset);
+
+    const timeout = setTimeout(() => {
+      setSectionPathOffset(1);
+    }, timeoutDuration);
+
+    return () => clearTimeout(timeout);
+  }, [direction, fromSection, toSection]);
 
   useEffect(() => {
     if (direction === "left") {
@@ -45,6 +95,8 @@ export default function NavbarSecond({
         setCustomSliceOffset(3);
       } else if (fromSection === "brands" && toSection === "home") {
         setCustomSliceOffset(2);
+        // } else if (fromSection === "contact" && toSection === "aboutUs") {
+        //   setCustomSliceOffset(3);
       } else {
         return;
       }
@@ -81,7 +133,9 @@ export default function NavbarSecond({
   );
 
   const sectionsInPath =
-    currentIndex !== -1 ? navOptions.slice(0, currentIndex + 1) : [];
+    currentIndex !== -1
+      ? navOptions.slice(0, currentIndex + sectionPathOffset)
+      : [];
 
   const sliceStart =
     direction === "left"

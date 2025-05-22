@@ -53,6 +53,7 @@ function CallAllPages(props: PageProps) {
 
   const pathname = usePathname();
   const t = useTranslations();
+  const [initialRenderDone, setInitialRenderDone] = useState(false);
 
   const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(
     null
@@ -60,6 +61,12 @@ function CallAllPages(props: PageProps) {
   const [activeSection, setActiveSection] = useState<Section>(
     getSectionFromPath(pathname)
   );
+
+  useEffect(() => {
+    setPageReady(false);
+    setInitialRenderDone(false);
+  }, [activeSection]);
+
   const [prevIndex, setPrevIndex] = useState(
     sectionOrder.indexOf(activeSection)
   );
@@ -82,7 +89,7 @@ function CallAllPages(props: PageProps) {
 
     entryDirectionRef.current = newDirection;
     prevIndexRef.current = activeIndex;
-    prevSectionRef.current = sectionOrder[prevIndex]; // <- Agregado
+    prevSectionRef.current = sectionOrder[prevIndex];
   }, [activeSection]);
 
   useEffect(() => {
@@ -156,7 +163,7 @@ function CallAllPages(props: PageProps) {
         selectedBrandTitle={selectedBrandTitle}
         setSelectedBrandTitle={setSelectedBrandTitle}
         setActiveSection={setActiveSection}
-        ready={pageReady}
+        ready={pageReady && initialRenderDone}
         isBackward={isAnimating}
         direction={entryDirectionRef.current}
         fromSection={prevSectionRef.current}
@@ -177,12 +184,12 @@ function CallAllPages(props: PageProps) {
                   className="absolute top-0 left-0 w-full min-h-screen"
                   style={{ zIndex: index }}
                   onAnimationStart={() => setIsAnimating(true)}
-                  onAnimationComplete={() =>
+                  onAnimationComplete={() => {
                     setTimeout(() => {
-                      // setIsAnimating(false);
                       setPageReady(true);
-                    }, 300)
-                  }
+                      setInitialRenderDone(true);
+                    }, 1000);
+                  }}
                 >
                   {section === "home" && (
                     <Home home_information={home} locale={locale} />
