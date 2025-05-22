@@ -265,7 +265,7 @@ export default function NavbarSecond({
             Espai Rö
             {/* Espai Rö {direction} {fromSection} to {toSection} {ready.valueOf()} */}
           </div>
-          <div
+          {/* <div
             className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
             style={{ right: rightPosition, cursor: "pointer" }}
           >
@@ -308,7 +308,7 @@ export default function NavbarSecond({
             >
               ENG
             </span>
-          </div>
+          </div> */}
         </div>
       )}
 
