@@ -98,8 +98,10 @@ export default function NavbarSecond({
         setCustomSliceOffset(3);
       } else if (fromSection === "brands" && toSection === "home") {
         setCustomSliceOffset(2);
-        // } else if (fromSection === "contact" && toSection === "aboutUs") {
-        //   setCustomSliceOffset(3);
+      // } else if (fromSection === "projects" && toSection === "aboutUs") {
+      //   setCustomSliceOffset(2);
+      } else if (fromSection === "contact" && toSection === "aboutUs") {
+        setCustomSliceOffset(4);
       } else {
         return;
       }
