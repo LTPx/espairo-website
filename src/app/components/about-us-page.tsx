@@ -20,10 +20,11 @@ interface Props {
   aboutUs_information: AboutUsPageWp;
   ready?: boolean;
   locale: "en" | "es" | "de";
+  active?: boolean;
 }
 
 function AboutUsPage(props: Props) {
-  const { aboutUs_information, ready, locale } = props;
+  const { aboutUs_information, ready, locale, active } = props;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const t = useTranslations();
@@ -60,11 +61,7 @@ function AboutUsPage(props: Props) {
   return (
     <div className="relative h-[100vh] ml-[30px] w-[calc(100%-30px)]  flex bg-body">
       {/* {pathname === `/${locale}/about-us` && ( */}
-        <MenuLateral
-          links={leftMenuLinks}
-          ready={ready}
-          activeLink={`/${locale}/about-us`}
-        />
+      <MenuLateral links={leftMenuLinks} ready={ready} active={active} />
       {/* )} */}
       <div
         ref={scrollContainerRef}

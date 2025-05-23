@@ -9,6 +9,7 @@ interface MenuLateralProps {
   selectedBrandTitle?: string | null;
   ready?: boolean;
   activeLink?: string;
+  active?: boolean;
 }
 
 export const MenuLateral = ({
@@ -17,6 +18,7 @@ export const MenuLateral = ({
   selectedBrandTitle,
   ready = false,
   activeLink,
+  active,
 }: MenuLateralProps) => {
   const pathname = usePathname();
 
@@ -25,16 +27,15 @@ export const MenuLateral = ({
   };
 
   return (
-    <div
-      className={`lg:flex hidden ${ready ? "" : "relative"}`}
-    >
+    <div className={`lg:flex hidden ${ready ? "" : "relative"}`}>
       {" "}
       {links.map((link) => {
+        const isActive = active || pathname === link.href;
         return (
           <div
             key={link.href}
             className={`transition duration-300 h-full w-[30px] border-l border-[#3F4751] flex items-center ${
-              pathname === link.href
+              isActive
                 ? "bg-[#3F4751] text-white"
                 : "bg-[#E0E0E0] text-[#3F4751] hover:bg-[#3F4751] hover:text-white"
             }`}
@@ -43,7 +44,7 @@ export const MenuLateral = ({
               href={link.href}
               onClick={() => handleLinkClick(link.href)}
               className={`pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] rotate-180 transition duration-300 ${
-                pathname === link.href
+                isActive
                   ? "text-white"
                   : "text-[#3F4751] hover:bg-[#3F4751] hover:text-white"
               }`}

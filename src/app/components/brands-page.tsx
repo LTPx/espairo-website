@@ -15,11 +15,17 @@ interface BrandsPageProps {
   allCategories: any;
   setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>;
   locale: "en" | "es" | "de";
+  active?: boolean;
 }
 
 function BrandsPage(props: BrandsPageProps) {
-  const { brands_information, allCategories, setSelectedBrandTitle, locale } =
-    props;
+  const {
+    brands_information,
+    allCategories,
+    setSelectedBrandTitle,
+    locale,
+    active,
+  } = props;
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const pathname = usePathname();
@@ -142,6 +148,7 @@ function BrandsPage(props: BrandsPageProps) {
         links={left}
         scrollToClientBrands={scrollToClientBrands}
         selectedBrandTitle={selectedBrandTitle}
+        active={active}
         activeLink="/es/brands"
       />
       <div className="flex-1 overflow-y-auto">

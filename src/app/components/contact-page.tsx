@@ -9,9 +9,10 @@ interface Props {
   contact_information: ContactPageWp;
   ready?: boolean;
   locale: "en" | "es" | "de";
+  active?: boolean;
 }
 
-function ContactPage({ contact_information, ready, locale }: Props) {
+function ContactPage({ contact_information, ready, locale, active }: Props) {
   const t = useTranslations();
   const allLinks = [
     { href: `/${locale}/contact`, label: `${t("header.contact")}` },
@@ -19,7 +20,7 @@ function ContactPage({ contact_information, ready, locale }: Props) {
 
   return (
     <div className="relative flex h-[100vh] ml-[90px] w-[calc(100%-90px)] bg-body">
-      <MenuLateral links={allLinks} activeLink="/es/contact" />
+      <MenuLateral active={active} links={allLinks} activeLink="/es/contact" />
       <div className="flex-1 overflow-y-auto">
         <div className="lg:h-screen lg:flex">
           <div className="lg:w-1/2 h-full">

@@ -1,74 +1,62 @@
 "use client";
 
 import React, { useState } from "react";
-import { Link } from "@/navigation";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const menuItems = ["Brands", "Nosotros", "Proyectos", "Contacto"];
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
-  const handleItemClick = (item: string) => {
-    if (!selectedItems.includes(item)) {
-      setSelectedItems([...selectedItems, item]);
-    }
-  };
+  const [animatingItem, setAnimatingItem] = useState<string | null>(null);
 
   const getRoute = (item: string) => {
     switch (item.toLowerCase()) {
       case "brands":
-        return "/brands";
+        return "/es/brands";
       case "nosotros":
-        return "/about-us";
+        return "/es/about-us";
       case "proyectos":
-        return "/projects";
+        return "/es/projects";
       case "contacto":
-        return "/contact";
+        return "/es/contact";
       default:
         return "/";
     }
   };
 
+  const handleItemClick = (item: string) => {
+    setAnimatingItem(item);
+
+    setTimeout(() => {
+      const url = getRoute(item);
+      router.push(url); // navegación client-side sin recarga
+    }, 800); // esperar que termine animación
+  };
+
   return (
-    <div className="lg:block hidden w-full">
-      <div className="absolute z-[1000] left-0 h-full">
-        <div className="bg-[#3F4751] h-full flex flex-col justify-start items-start py-10 space-y-4">
-          {selectedItems.map((item, index) => {
-            const itemRoute = getRoute(item);
-            return (
-              <div key={index} className="w-[30px] text-base">
-                <Link
-                  href={itemRoute}
-                  className="lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-white pt-[48px] h-full font-medium rotate-180"
-                  style={{
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                  }}
-                >
-                  {item}
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="absolute z-[1000] right-0 full">
+    <div className="lg:block hidden w-full relative">
+      <div className="fixed z-[1000] top-0 right-0 h-full">
         <div className="bg-[#E0E0E0] h-full flex justify-center items-end">
           {menuItems.map((item, index) => {
-            if (selectedItems.includes(item)) {
-              return null;
-            }
+            const isAnimating = animatingItem === item;
             const itemRoute = getRoute(item);
-            const isActive =
-              pathname === itemRoute || selectedItems.includes(item);
+            const isActive = pathname === itemRoute;
+
             return (
-              <div
+              <motion.div
                 key={index}
                 className="w-[30px] border-r border-[#3F4751] text-center"
+                initial={false}
+                animate={
+                  isAnimating
+                    ? { x: "calc(-100vw - 300px)", opacity: 1 }
+                    : { x: 0, opacity: 1 }
+                }
+                transition={{ duration: 0.8, ease: "easeInOut" }}
               >
-                <Link
-                  href={itemRoute}
+                <button
+                  onClick={() => handleItemClick(item)}
                   className={`lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] h-full text-gray-600 hover:text-black transition duration-300 font-medium rotate-180 ${
                     isActive ? "text-black font-semibold" : ""
                   }`}
@@ -76,11 +64,10 @@ export const Navbar = () => {
                     writingMode: "vertical-rl",
                     textOrientation: "mixed",
                   }}
-                  onClick={() => handleItemClick(item)}
                 >
                   {item}
-                </Link>
-              </div>
+                </button>
+              </motion.div>
             );
           })}
         </div>

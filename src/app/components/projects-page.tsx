@@ -20,9 +20,10 @@ interface Props {
   projects_information: ProjectsPageWp;
   ready?: boolean;
   locale: "en" | "es" | "de";
+  active?: boolean;
 }
 
-function ProjectsPage({ projects_information, ready, locale }: Props) {
+function ProjectsPage({ projects_information, ready, locale, active }: Props) {
   const t = useTranslations();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -57,7 +58,12 @@ function ProjectsPage({ projects_information, ready, locale }: Props) {
 
   return (
     <div className="relative h-[100vh] ml-[60px] w-[calc(100%-60px)] flex bg-body">
-      <MenuLateral ready={ready} activeLink="/es/projects" links={menuLeft} />
+      <MenuLateral
+        active={active}
+        ready={ready}
+        activeLink="/es/projects"
+        links={menuLeft}
+      />
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto no-scrollbar"

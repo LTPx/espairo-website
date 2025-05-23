@@ -162,6 +162,19 @@ function CallAllPages(props: PageProps) {
     setIsInitialLoad(false);
   }, []);
 
+  const [tempActiveSection, setTempActiveSection] = useState<Section | null>(
+    null
+  );
+
+  useEffect(() => {
+    setTempActiveSection(activeSection);
+    const timer = setTimeout(() => {
+      setTempActiveSection(null);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, [activeSection]);
+
   return (
     <div className="hidden lg:block h-full relative overflow-hidden">
       <NavbarSecond
@@ -177,6 +190,8 @@ function CallAllPages(props: PageProps) {
       />
       <div className="relative w-full min-h-screen overflow-hidden">
         {sectionOrder.map((section, index) => {
+          const isActive = section === tempActiveSection;
+
           const isVisible = index <= activeIndex;
           return (
             <AnimatePresence key={section}>
@@ -212,6 +227,7 @@ function CallAllPages(props: PageProps) {
                   )}
                   {section === "brands" && (
                     <BrandsPage
+                      active={isActive}
                       brands_information={brands}
                       allCategories={categories}
                       setSelectedBrandTitle={setSelectedBrandTitle}
@@ -220,6 +236,7 @@ function CallAllPages(props: PageProps) {
                   )}
                   {section === "aboutUs" && (
                     <AboutUsPage
+                      active={isActive}
                       ready={pageReady}
                       aboutUs_information={aboutUs_information}
                       locale={locale}
@@ -227,6 +244,7 @@ function CallAllPages(props: PageProps) {
                   )}
                   {section === "projects" && (
                     <ProjectsPage
+                      active={isActive}
                       ready={pageReady}
                       projects_information={projects}
                       locale={locale}
@@ -234,6 +252,7 @@ function CallAllPages(props: PageProps) {
                   )}
                   {section === "contact" && (
                     <ContactPage
+                      active={isActive}
                       ready={pageReady}
                       contact_information={contact_information}
                       locale={locale}
