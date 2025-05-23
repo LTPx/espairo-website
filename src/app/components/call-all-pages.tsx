@@ -170,7 +170,7 @@ function CallAllPages(props: PageProps) {
     setTempActiveSection(activeSection);
     const timer = setTimeout(() => {
       setTempActiveSection(null);
-    }, 2000);
+    }, 1600);
 
     return () => clearTimeout(timer);
   }, [activeSection]);
