@@ -156,6 +156,12 @@ function CallAllPages(props: PageProps) {
     return "home";
   }
 
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  useEffect(() => {
+    setIsInitialLoad(false);
+  }, []);
+
   return (
     <div className="hidden lg:block h-full relative overflow-hidden">
       <NavbarSecond
@@ -177,10 +183,20 @@ function CallAllPages(props: PageProps) {
               {isVisible && (
                 <motion.div
                   key={section}
-                  initial={{ x: `${100 * direction}%`, opacity: 1 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: getExitX(section), opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 50, damping: 20 }}
+                  initial={
+                    isInitialLoad
+                      ? false
+                      : { x: `${100 * direction}%`, opacity: 1 }
+                  }
+                  animate={isInitialLoad ? {} : { x: 0, opacity: 1 }}
+                  exit={
+                    isInitialLoad ? {} : { x: getExitX(section), opacity: 1 }
+                  }
+                  transition={
+                    isInitialLoad
+                      ? { duration: 0 }
+                      : { type: "spring", stiffness: 50, damping: 20 }
+                  }
                   className="absolute top-0 left-0 w-full min-h-screen"
                   style={{ zIndex: index }}
                   onAnimationStart={() => setIsAnimating(true)}
