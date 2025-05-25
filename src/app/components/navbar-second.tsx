@@ -96,10 +96,14 @@ export default function NavbarSecond({
         setCustomSliceOffset(4);
       } else if (fromSection === "aboutUs" && toSection === "home") {
         setCustomSliceOffset(3);
+      } else if (fromSection === "aboutUs" && toSection === "brands") {
+        setCustomSliceOffset(2);
       } else if (fromSection === "brands" && toSection === "home") {
         setCustomSliceOffset(2);
-      // } else if (fromSection === "projects" && toSection === "aboutUs") {
-      //   setCustomSliceOffset(2);
+      } else if (fromSection === "projects" && toSection === "aboutUs") {
+        setCustomSliceOffset(2);
+      } else if (fromSection === "projects" && toSection === "brands") {
+        setCustomSliceOffset(-1);
       } else if (fromSection === "contact" && toSection === "aboutUs") {
         setCustomSliceOffset(4);
       } else {
@@ -352,10 +356,7 @@ export default function NavbarSecond({
 
       {isBackward &&
         showDelayedBackward &&
-        !(
-          (fromSection === "contact" && toSection === "brands") ||
-          (fromSection === "projects" && toSection === "brands")
-        ) && (
+        !(fromSection === "contact" && toSection === "brands") && (
           <div className="fixed right-0 z-[100000] h-screen flex">
             <div className="h-full hover:text-white bg-[#E0E0E0] flex">
               {remainingOptions.map((option) => (
