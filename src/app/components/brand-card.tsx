@@ -207,7 +207,7 @@ function BrandCard(props: BrandCardProps) {
       <div className="hidden md:flex pl-[30px] py-[30px] flex flex-col md:justify-between">
         <div>
           {category && (
-            <div className="flex pb-[50px]">
+            <div className="flex items-center justify-between">
               <Link
                 // data-aos="fade-up"
                 href={""}
@@ -218,16 +218,17 @@ function BrandCard(props: BrandCardProps) {
                   className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
                 >
                   {category}
-                  <img
-                    src={"/images/close-t.svg"}
-                    className="h-[6px] w-[6px] ml-[10px]"
-                    loading="lazy"
-                  />
                 </button>
               </Link>
+              <img
+                onClick={onCategoryClick}
+                src={"/images/close-brands.svg"}
+                className="cursor-pointer h-[18px] w-[18px] mr-[30px]"
+                loading="lazy"
+              />
             </div>
           )}
-          <div className="flex flex-col pb-[22px]">
+          <div className="flex flex-col pt-[50px] pb-[22px]">
             <div className="flex">
               <Link
                 // data-aos="fade-up"
