@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { HomePageWp } from "../_interfaces/wordpress-components";
 import { useState } from "react";
-import MenuLateral from "./menu-lateral";
+import CoverMedia from "./cover-media";
 
 interface Props {
   home_information: HomePageWp;
@@ -29,11 +29,7 @@ export function CoverHome(props: Props) {
   return (
     <div className="relative h-[100vh] w-full mr-[120px] flex flex-row bg-body">
       <div className="flex-1 relative flex items-center justify-center">
-        <img
-          src={home_information.cover_page.url}
-          alt="Espai Rö"
-          className="h-full w-full object-cover"
-        />
+        <CoverMedia media={home_information.cover_page} />     
         <h1 className="lg:hidden absolute left-[30px] top-[20px] text-[#E0E0E0] text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100]">
           Espai Rö
         </h1>
