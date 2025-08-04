@@ -49,7 +49,7 @@ export function ProjectsInformation({
                   <section className="hide-title-trigger-project hide-title-trigger-project px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
                     <h2
                       data-aos="fade-up"
-                      className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]"
+                      className="text-[35px] tracking-[-0.05em] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]"
                     >
                       {title}
                     </h2>
@@ -76,7 +76,7 @@ export function ProjectsInformation({
                   <section className="hide-title-trigger-project px-[30px] lg:grid lg:grid-cols-2 pt-[30px] lg:pt-[50px] flex flex-col gap-[40px] lg:gap-[15px]">
                     <h2
                       data-aos="fade-up"
-                      className="text-[35px] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]"
+                      className="text-[35px] tracking-[-0.05em] leading-[35px] font-regular lg:text-[55px] lg:leading-[55px]"
                     >
                       {title}
                     </h2>
