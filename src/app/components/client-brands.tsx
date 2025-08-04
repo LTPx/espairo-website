@@ -11,45 +11,46 @@ interface ClientBrandsProps {
   onCategorySelect: (category: number | null) => void;
 }
 
-const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(({
-  categories,
-  onBrandClick,
-  brands_information,
-  onCategorySelect
-}, ref) => {
-  const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const t = useTranslations();
+const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
+  ({ categories, onBrandClick, brands_information, onCategorySelect }, ref) => {
+    const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
+    const initialCategory =
+      brands_information.cover_categories[0]?.category || null;
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(
+      initialCategory
+    );
+    const t = useTranslations();
 
-  const filteredBrands =
-    selectedCategory === null
-      ? brands_information.brand
-      : selectedCategory
-      ? brands_information.brand.filter(
-          (brand) => brand.category_brand.term_id === selectedCategory
-        )
-      : brands_information.brand;
+    const filteredBrands =
+      selectedCategory === null
+        ? brands_information.brand
+        : brands_information.brand.filter(
+            (brand) => brand.category_brand.term_id === selectedCategory
+          );
 
-  const selectedCover = selectedCategory
-    ? brands_information.cover_categories.find(
-        (cover) => cover.category === selectedCategory
-      )?.image_cover.url || brands_information.cover_page.url
-    : brands_information.cover_page.url;
+    const selectedCover = selectedCategory
+      ? brands_information.cover_categories.find(
+          (cover) => cover.category === selectedCategory
+        )?.image_cover.url || brands_information.cover_page.url
+      : brands_information.cover_page.url;
 
-  return (
-    <div ref={ref} className="brands flex flex-col gap-[20px] md:gap-[0px] md:grid md:grid-cols-2 h-[100dvh] overflow-auto">
-      <div className="hidden md:block md:h-[calc(100dvh)]">
-        <img
-          src={selectedCover}
-          alt="alt-projects"
-          className="h-[100dvh] w-full object-cover"
-        />
-      </div>
-      <div className="h-[100dvh] overflow-auto no-scrollbar">
-        <div className="pl-[30px] md:px-[30px] py-[30px]">
-          <div className="w-full sticky top-[30px] z-[10] md:z-[100000]">
-            <div className="filters pr-[30px] flex md:flex-wrap gap-[7px] md:gap-[10px] mb-[20px] md:mb-[30px] md:pr-[10px] mac:pr-[100px] xl-flex:pr-[100px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
-              <button
+    return (
+      <div
+        ref={ref}
+        className="brands flex flex-col gap-[20px] md:gap-[0px] md:grid md:grid-cols-2 h-[100dvh] overflow-auto"
+      >
+        <div className="hidden md:block md:h-[calc(100dvh)]">
+          <img
+            src={selectedCover}
+            alt="alt-projects"
+            className="h-[100dvh] w-full object-cover"
+          />
+        </div>
+        <div className="h-[100dvh] overflow-auto no-scrollbar">
+          <div className="pl-[30px] md:px-[30px] py-[30px]">
+            <div className="w-full sticky top-[30px] z-[10] md:z-[100000]">
+              <div className="filters pr-[30px] flex md:flex-wrap gap-[7px] md:gap-[10px] mb-[20px] md:mb-[30px] md:pr-[10px] mac:pr-[100px] xl-flex:pr-[100px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
+                {/* <button
                 onClick={() => {
                   setSelectedCategory(null);
                   onCategorySelect(null);
@@ -61,64 +62,73 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(({
                 }`}
               >
                 {t("brandPage.all")}
-              </button>
-              {categories
-                .filter(
-                  (category) => category.term_id !== 1 && category.term_id !== 8
-                )
-                .map((category) => (
-                  <button
-                    key={category.term_id}
-                    onClick={() => {
-                      const newCategory =
-                        selectedCategory === category.term_id
+              </button> */}
+                {brands_information.cover_categories.map((cover) => {
+                  const categoryData = categories.find(
+                    (cat) => cat.term_id === cover.category
+                  );
+                  if (
+                    !categoryData ||
+                    categoryData.term_id === 1 ||
+                    categoryData.term_id === 8
+                  )
+                    return null;
+                  const isSelected = selectedCategory === categoryData.term_id;
+
+                  return (
+                    <button
+                      key={categoryData.term_id}
+                      onClick={() => {
+                        const newCategory = isSelected
                           ? null
-                          : category.term_id;
-                      setSelectedCategory(newCategory);
-                      onCategorySelect(newCategory);
-                    }}
-                    className={`backdrop-blur-sm font-regular items-center md:items-start uppercase inline-block flex justify-center font-medium text-[14px] leading-[20px] md:text-[12px] md:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
-                      selectedCategory === category.term_id
-                        ? "bg-[#3F4751] text-white"
-                        : "hover:bg-[#3F4751] hover:text-white"
-                    }`}
-                  >
-                    {category.name}
-                  </button>
-                ))}
+                          : categoryData.term_id;
+                        setSelectedCategory(newCategory);
+                        onCategorySelect(newCategory);
+                      }}
+                      className={`backdrop-blur-sm font-regular items-center md:items-start uppercase inline-block flex justify-center font-medium text-[14px] leading-[20px] md:text-[12px] md:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                        isSelected
+                          ? "bg-[#3F4751] text-white"
+                          : "hover:bg-[#3F4751] hover:text-white"
+                      }`}
+                    >
+                      {categoryData.name}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-          {(selectedCategory === 1 || selectedCategory === null) &&
-            brands_information.description && (
-              <div
-                className="hidden lg:block md:pr-[40px] xl:pr-[143px] pb-[30px]"
-                dangerouslySetInnerHTML={{
-                  __html: brands_information.description,
-                }}
-              />
-            )}
-          <div className="flex flex-col">
-            {filteredBrands.map((brand, index) => (
-              <h2
-                key={index}
-                className={`font-regular cursor-pointer text-[#3F4751] text-[40px] leading-[48px] md:text-[50px] md:leading-[58px] tracking-[-0.05em] transition-all duration-300 w-fit ${
-                  hoveredBrand && hoveredBrand !== brand.title
-                    ? "blur-sm opacity-50"
-                    : "opacity-100"
-                }`}
-                onMouseEnter={() => setHoveredBrand(brand.title)}
-                onMouseLeave={() => setHoveredBrand(null)}
-                onClick={() => onBrandClick(brand)}
-              >
-                {brand.title}
-              </h2>
-            ))}
+            {(selectedCategory === 1 || selectedCategory === null) &&
+              brands_information.description && (
+                <div
+                  className="hidden lg:block md:pr-[40px] xl:pr-[143px] pb-[30px]"
+                  dangerouslySetInnerHTML={{
+                    __html: brands_information.description,
+                  }}
+                />
+              )}
+            <div className="flex flex-col">
+              {filteredBrands.map((brand, index) => (
+                <h2
+                  key={index}
+                  className={`font-regular cursor-pointer text-[#3F4751] text-[40px] leading-[48px] md:text-[50px] md:leading-[58px] tracking-[-0.05em] transition-all duration-300 w-fit ${
+                    hoveredBrand && hoveredBrand !== brand.title
+                      ? "blur-sm opacity-50"
+                      : "opacity-100"
+                  }`}
+                  onMouseEnter={() => setHoveredBrand(brand.title)}
+                  onMouseLeave={() => setHoveredBrand(null)}
+                  onClick={() => onBrandClick(brand)}
+                >
+                  {brand.title}
+                </h2>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 ClientBrands.displayName = "ClientBrands";
 
