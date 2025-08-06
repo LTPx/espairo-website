@@ -49,7 +49,7 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
         <div className="h-[100dvh] overflow-auto no-scrollbar">
           <div className="pl-[30px] md:px-[30px] py-[30px]">
             <div className="w-full sticky top-[30px] z-[10] md:z-[100000]">
-              <div className="filters pr-[30px] flex md:flex-wrap gap-[7px] md:gap-[10px] mb-[20px] md:mb-[30px] md:pr-[10px] mac:pr-[100px] xl-flex:pr-[100px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
+              <div className="filters pr-[30px] flex md:flex-wrap gap-[7px] md:gap-[10px] mb-[20px] md:mb-[30px] md:pr-[10px] mac:pr-[100px] xl-flex:pr-[50px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
                 {/* <button
                 onClick={() => {
                   setSelectedCategory(null);
