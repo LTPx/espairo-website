@@ -46,8 +46,8 @@ function BrandsPage(props: BrandsPageProps) {
           term_id: brand.category_brand.term_id,
           name: brand.category_brand.name,
         },
-      ])
-    ).values()
+      ]),
+    ).values(),
   );
 
   const mergedCategories = allCategories
@@ -63,7 +63,7 @@ function BrandsPage(props: BrandsPageProps) {
 
   const filteredBrands = selectedCategory
     ? brands.filter(
-        (brand) => brand.category_brand.term_id === selectedCategory
+        (brand) => brand.category_brand.term_id === selectedCategory,
       )
     : brands;
 
@@ -76,43 +76,39 @@ function BrandsPage(props: BrandsPageProps) {
     }
   }, [pathname]);
 
+  // Scroll instantáneo — desde el menú de lista
+  const scrollToBrandInstant = (index: number) => {
+    const brandElement = document.querySelectorAll(".brand-slug-page")[index];
+    if (brandElement) {
+      brandElement.scrollIntoView({ behavior: "instant", block: "start" });
+    }
+  };
+
+  // Scroll suave — desde botones Anterior/Siguiente del card
   const scrollToBrand = (index: number) => {
-    if (index !== null) {
-      const brandElement = document.querySelectorAll(".brand-slug-page")[index];
-      if (brandElement) {
-        brandElement.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    const brandElement = document.querySelectorAll(".brand-slug-page")[index];
+    if (brandElement) {
+      brandElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   const onBrandClick = (selectedBrand: BrandsWp) => {
     setSelectedBrandTitleTest(selectedBrand.title);
     const realIndex = filteredBrands.findIndex(
-      (b) => b.title === selectedBrand.title
+      (b) => b.title === selectedBrand.title,
     );
-
     if (realIndex !== -1) {
       setCurrentIndex(realIndex);
-      scrollToBrand(realIndex);
+      scrollToBrandInstant(realIndex);
     }
   };
-
-  useEffect(() => {
-    if (!hasMounted.current) {
-      hasMounted.current = true;
-      return;
-    }
-
-    if (currentIndex !== null) {
-      scrollToBrand(currentIndex);
-    }
-  }, [currentIndex]);
 
   const goToNextBrand = () => {
     if (currentIndex !== null && currentIndex < filteredBrands.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
       setSelectedBrandTitleTest(filteredBrands[nextIndex].title);
+      scrollToBrand(nextIndex);
     }
   };
 
@@ -121,13 +117,14 @@ function BrandsPage(props: BrandsPageProps) {
       const prevIndex = currentIndex - 1;
       setCurrentIndex(prevIndex);
       setSelectedBrandTitleTest(filteredBrands[prevIndex].title);
+      scrollToBrand(prevIndex);
     }
   };
 
   const scrollToClientBrands = () => {
     if (clientBrandsRef.current) {
       clientBrandsRef.current.scrollIntoView({
-        behavior: "smooth",
+        behavior: "instant",
         block: "start",
       });
     }
