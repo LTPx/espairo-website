@@ -5,6 +5,7 @@ import { Link } from "@/navigation";
 import { BranImagesWp } from "../_interfaces/wordpress-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { ImageLightbox } from "./image-lightbox";
 
 interface BrandCardProps {
   images: BranImagesWp[];
@@ -40,10 +41,14 @@ function BrandCard(props: BrandCardProps) {
   const hasPrevious = index !== undefined && index > 0;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobileDescriptionOpen, setIsMobileDescriptionOpen] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const lastScrollTime = useRef<number>(0);
   const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const t = useTranslations();
+
+  const imageUrls = images?.map((img) => img.image.url || "") ?? [];
 
   const isTouchDevice = useRef(
     typeof window !== "undefined" &&
@@ -136,7 +141,9 @@ function BrandCard(props: BrandCardProps) {
             </button>
           </Link>
         </div>
+
         <div className="relative w-full h-[85dvh] md:h-full overflow-hidden">
+          {/* Mobile: swipe carousel */}
           {isMobile ? (
             <motion.div
               className="relative h-full flex w-full"
@@ -154,28 +161,37 @@ function BrandCard(props: BrandCardProps) {
                     key={i}
                     src={image.image.url || ""}
                     alt={`brand-image-${i}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover flex-shrink-0"
                     loading="lazy"
                   />
                 ))}
             </motion.div>
           ) : (
+            /* Desktop: crossfade + lightbox on click */
             images &&
             images.map((image, i) => (
               <img
                 key={i}
                 src={image.image.url || ""}
                 alt={`brand-image-${i}`}
-                className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out ${
-                  i === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out gallery-cursor ${
+                  i === currentImageIndex
+                    ? "opacity-100 z-10"
+                    : "opacity-0 z-0"
                 }`}
                 loading="lazy"
+                onClick={() => {
+                  setLightboxIndex(currentImageIndex);
+                  setLightboxOpen(true);
+                }}
               />
             ))
           )}
         </div>
+
+        {/* Dot indicators */}
         {images.length > 1 && (
-          <div className="hidden md:flex absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2  gap-2">
+          <div className="hidden md:flex absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2 gap-2">
             {images.map((_, i) => (
               <button
                 key={i}
@@ -189,6 +205,8 @@ function BrandCard(props: BrandCardProps) {
             ))}
           </div>
         )}
+
+        {/* Mobile title row */}
         <div className="md:hidden flex justify-between items-center px-[30px]">
           <h1 className="font-regular text-[40px] leading-[45px] md:text-[50px] md:leading-[50px] tracking-[-0.05em]">
             {title}
@@ -204,15 +222,13 @@ function BrandCard(props: BrandCardProps) {
           />
         </div>
       </div>
+
+      {/* Desktop right panel */}
       <div className="hidden md:flex pl-[30px] py-[30px] flex flex-col md:justify-between">
         <div>
           {category && (
             <div className="flex items-center justify-between">
-              <Link
-                // data-aos="fade-up"
-                href={""}
-                className="flex gap-[10px]  w-auto"
-              >
+              <Link href={""} className="flex gap-[10px] w-auto">
                 <button
                   onClick={onCategoryClick}
                   className="bg-[#3F4751] text-white uppercase inline-block hover:text-white flex items-center justify-center font-regular text-[12px] leading-[20px] cursor-pointer h-[28px] px-[20px] rounded-full"
@@ -230,11 +246,7 @@ function BrandCard(props: BrandCardProps) {
           )}
           <div className="flex flex-col pt-[50px] pb-[22px]">
             <div className="flex">
-              <Link
-                // data-aos="fade-up"
-                target="_blank"
-                href={urlBrand || ""}
-              >
+              <Link target="_blank" href={urlBrand || ""}>
                 <h1 className="font-regular text-[40px] leading-[45px] md:text-[50px] md:leading-[50px] tracking-[-0.05em]">
                   {title}
                 </h1>
@@ -243,19 +255,10 @@ function BrandCard(props: BrandCardProps) {
           </div>
           <div className="hidden md:flex flex-col gap-[46px] md:pr-[30px] lg:pr-[30px] xl:pr-[75px]">
             {description && (
-              <div
-                // data-aos="fade-up"
-                dangerouslySetInnerHTML={{
-                  __html: description,
-                }}
-              />
+              <div dangerouslySetInnerHTML={{ __html: description }} />
             )}
             <div>
-              <Link
-                // data-aos="fade-up"
-                className="inline-block"
-                href={`mailto:info@espairo.com`}
-              >
+              <Link className="inline-block" href={`mailto:info@espairo.com`}>
                 <button className="font-regular uppercase inline-block hover:bg-[#3F4751] hover:text-white flex items-center justify-center font-regular text-[14px] leading-[18px] cursor-pointer border border-[#3F4751] h-[35px] px-[20px] rounded-full transition-colors duration-300 ease-in-out">
                   {t("brandPage.information")}
                 </button>
@@ -276,7 +279,6 @@ function BrandCard(props: BrandCardProps) {
           <div className="flex gap-[10px] md:pr-[30px]">
             {hasPrevious && (
               <span
-                // data-aos="fade-up"
                 className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onPrevious}
               >
@@ -285,7 +287,6 @@ function BrandCard(props: BrandCardProps) {
             )}
             {hasNext && (
               <span
-                // data-aos="fade-up"
                 className="flex items-end font-regular cursor-pointer text-[14px] leading-[14px] tracking-[-0.04em] underline"
                 onClick={onNext}
               >
@@ -295,6 +296,8 @@ function BrandCard(props: BrandCardProps) {
           </div>
         </div>
       </div>
+
+      {/* Mobile description drawer */}
       <AnimatePresence>
         {isMobileDescriptionOpen && (
           <motion.div
@@ -314,7 +317,7 @@ function BrandCard(props: BrandCardProps) {
                   <Link
                     href={""}
                     onClick={() => setIsMobileDescriptionOpen(false)}
-                    className="flex gap-[10px] "
+                    className="flex gap-[10px]"
                   >
                     <button
                       onClick={onCategoryClick}
@@ -344,9 +347,7 @@ function BrandCard(props: BrandCardProps) {
               {description && (
                 <div
                   className="description-brand-mobile"
-                  dangerouslySetInnerHTML={{
-                    __html: description,
-                  }}
+                  dangerouslySetInnerHTML={{ __html: description }}
                 />
               )}
               <div className="flex pt-[48px]">
@@ -371,6 +372,24 @@ function BrandCard(props: BrandCardProps) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Desktop lightbox */}
+      {!isMobile && (
+        <ImageLightbox
+          images={imageUrls}
+          currentIndex={lightboxIndex}
+          isOpen={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+          onNext={() =>
+            setLightboxIndex((prev) => (prev + 1) % imageUrls.length)
+          }
+          onPrev={() =>
+            setLightboxIndex(
+              (prev) => (prev - 1 + imageUrls.length) % imageUrls.length
+            )
+          }
+        />
+      )}
     </div>
   );
 }

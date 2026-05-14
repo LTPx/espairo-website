@@ -3,6 +3,7 @@
 import { forwardRef, useState } from "react";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import { useTranslations } from "next-intl";
+import { ImageLightbox } from "./image-lightbox";
 
 interface ClientBrandsProps {
   categories: { term_id: number; name: string }[];
@@ -17,7 +18,7 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
     const initialCategory =
       brands_information.cover_categories[0]?.category || null;
     const [selectedCategory, setSelectedCategory] = useState<number | null>(
-      initialCategory
+      initialCategory,
     );
     const t = useTranslations();
 
@@ -25,14 +26,21 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
       selectedCategory === null
         ? brands_information.brand
         : brands_information.brand.filter(
-            (brand) => brand.category_brand.term_id === selectedCategory
+            (brand) => brand.category_brand.term_id === selectedCategory,
           );
 
     const selectedCover = selectedCategory
       ? brands_information.cover_categories.find(
-          (cover) => cover.category === selectedCategory
+          (cover) => cover.category === selectedCategory,
         )?.image_cover.url || brands_information.cover_page.url
       : brands_information.cover_page.url;
+
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+
+    const coverUrls = brands_information.cover_categories
+      .map((c) => c.image_cover.url)
+      .filter(Boolean);
 
     return (
       <div
@@ -43,7 +51,12 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
           <img
             src={selectedCover}
             alt="alt-projects"
-            className="h-[100dvh] w-full object-cover"
+            className="h-[100dvh] w-full object-cover gallery-cursor"
+            onClick={() => {
+              const idx = coverUrls.indexOf(selectedCover);
+              setLightboxIndex(idx >= 0 ? idx : 0);
+              setLightboxOpen(true);
+            }}
           />
         </div>
         <div className="h-[100dvh] overflow-auto no-scrollbar">
@@ -65,7 +78,7 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
               </button> */}
                 {brands_information.cover_categories.map((cover) => {
                   const categoryData = categories.find(
-                    (cat) => cat.term_id === cover.category
+                    (cat) => cat.term_id === cover.category,
                   );
                   if (
                     !categoryData ||
@@ -125,9 +138,23 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
             </div>
           </div>
         </div>
+        <ImageLightbox
+          images={coverUrls}
+          currentIndex={lightboxIndex}
+          isOpen={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+          onNext={() =>
+            setLightboxIndex((prev) => (prev + 1) % coverUrls.length)
+          }
+          onPrev={() =>
+            setLightboxIndex(
+              (prev) => (prev - 1 + coverUrls.length) % coverUrls.length,
+            )
+          }
+        />
       </div>
     );
-  }
+  },
 );
 
 ClientBrands.displayName = "ClientBrands";

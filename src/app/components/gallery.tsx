@@ -194,7 +194,7 @@ export function Gallery({ gallery }: GalleryProps) {
         >
           <button
             type="button"
-            className="absolute top-[24px] right-[24px] w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
+            className="absolute top-[24px] right-[54px] w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
             onClick={(e) => {
               e.stopPropagation();
               closeLightbox();
@@ -229,7 +229,7 @@ export function Gallery({ gallery }: GalleryProps) {
           {gallery.length > 1 && (
             <button
               type="button"
-              className="absolute right-[24px] top-1/2 -translate-y-1/2 w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
+              className="absolute right-[54px] top-1/2 -translate-y-1/2 w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
               onClick={(e) => {
                 e.stopPropagation();
                 nextImage();
