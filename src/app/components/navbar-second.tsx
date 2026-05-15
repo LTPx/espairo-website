@@ -34,7 +34,7 @@ export default function NavbarSecond({
   const [currentPath, setCurrentPath] = useState(pathname);
   const [showDelayedBackward, setShowDelayedBackward] = useState(false);
   const [customSliceOffset, setCustomSliceOffset] = useState<number | null>(
-    null
+    null,
   );
   const [customSectionPathOffset, setCustomSectionPathOffset] = useState<
     number | null
@@ -138,7 +138,7 @@ export default function NavbarSecond({
   }, [pathname]);
 
   const currentIndex = navOptions.findIndex(
-    (option) => currentPath === option.route
+    (option) => currentPath === option.route,
   );
 
   const sectionsInPath =
@@ -151,8 +151,8 @@ export default function NavbarSecond({
       ? customSliceOffset !== null
         ? currentIndex + customSliceOffset
         : currentPath === `/${locale}` || currentPath === "/"
-        ? currentIndex + 1
-        : currentIndex + 2
+          ? currentIndex + 1
+          : currentIndex + 2
       : currentIndex + 1;
 
   const remainingOptions = navOptions.slice(sliceStart);
@@ -161,27 +161,27 @@ export default function NavbarSecond({
     currentPath === "/"
       ? "30px"
       : currentPath.includes("brands")
-      ? "60px"
-      : currentPath.includes("about-us")
-      ? "90px"
-      : currentPath.includes("projects")
-      ? "120px"
-      : currentPath.includes("contact")
-      ? "150px"
-      : "30px";
+        ? "60px"
+        : currentPath.includes("about-us")
+          ? "90px"
+          : currentPath.includes("projects")
+            ? "120px"
+            : currentPath.includes("contact")
+              ? "150px"
+              : "30px";
 
   const rightPosition =
     currentPath === "/"
       ? "150px"
       : currentPath.includes("brands")
-      ? "120px"
-      : currentPath.includes("about-us")
-      ? "90px"
-      : currentPath.includes("projects")
-      ? "60px"
-      : currentPath.includes("contact")
-      ? "30px"
-      : "150px";
+        ? "120px"
+        : currentPath.includes("about-us")
+          ? "90px"
+          : currentPath.includes("projects")
+            ? "60px"
+            : currentPath.includes("contact")
+              ? "30px"
+              : "150px";
 
   const handleLinkClick = (route: string, section: string) => {
     setSelectedBrandTitle(null);
@@ -242,7 +242,7 @@ export default function NavbarSecond({
       }
 
       const triggers = container.querySelectorAll(
-        ".hide-title-trigger-project"
+        ".hide-title-trigger-project",
       );
 
       let shouldHide = false;
@@ -269,10 +269,13 @@ export default function NavbarSecond({
           <div
             onClick={() => handleLinkClick(`/${locale}`, "home")}
             className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
-            style={{ left: leftPosition, cursor: "pointer" }}
+            style={{
+              left: leftPosition,
+              cursor: "pointer",
+              mixBlendMode: "difference",
+            }}
           >
             Espai Rö
-            {/* Espai Rö {direction} {fromSection} to {toSection} {ready.valueOf()} */}
           </div>
           {/* <div
             className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
