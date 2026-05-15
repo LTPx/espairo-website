@@ -35,8 +35,8 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
         )?.image_cover.url || brands_information.cover_page.url
       : brands_information.cover_page.url;
 
-    const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [lightboxIndex, setLightboxIndex] = useState(0);
+    // const [lightboxOpen, setLightboxOpen] = useState(false);
+    // const [lightboxIndex, setLightboxIndex] = useState(0);
 
     const coverUrls = brands_information.cover_categories
       .map((c) => c.image_cover.url)
@@ -51,12 +51,12 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
           <img
             src={selectedCover}
             alt="alt-projects"
-            className="h-[100dvh] w-full object-cover gallery-cursor"
-            onClick={() => {
-              const idx = coverUrls.indexOf(selectedCover);
-              setLightboxIndex(idx >= 0 ? idx : 0);
-              setLightboxOpen(true);
-            }}
+            className="h-[100dvh] w-full object-cover"
+            // onClick={() => {
+              // const idx = coverUrls.indexOf(selectedCover);
+              // setLightboxIndex(idx >= 0 ? idx : 0);
+              // setLightboxOpen(true);
+            // }}
           />
         </div>
         <div className="h-[100dvh] overflow-auto no-scrollbar">
@@ -138,7 +138,7 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
             </div>
           </div>
         </div>
-        <ImageLightbox
+        {/* <ImageLightbox
           images={coverUrls}
           currentIndex={lightboxIndex}
           isOpen={lightboxOpen}
@@ -151,7 +151,7 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
               (prev) => (prev - 1 + coverUrls.length) % coverUrls.length,
             )
           }
-        />
+        /> */}
       </div>
     );
   },
