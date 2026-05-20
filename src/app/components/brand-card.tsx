@@ -48,11 +48,12 @@ function BrandCard(props: BrandCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const t = useTranslations();
 
-  const imageUrls = images?.map((img) => img.image.url || "") ?? [];
+  const imageUrls =
+    images?.map((img) => img.full_image?.url || img.image.url || "") ?? [];
 
   const isTouchDevice = useRef(
     typeof window !== "undefined" &&
-      window.matchMedia("(pointer: coarse)").matches
+      window.matchMedia("(pointer: coarse)").matches,
   );
 
   useEffect(() => {
@@ -175,9 +176,7 @@ function BrandCard(props: BrandCardProps) {
                 src={image.image.url || ""}
                 alt={`brand-image-${i}`}
                 className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out gallery-cursor ${
-                  i === currentImageIndex
-                    ? "opacity-100 z-10"
-                    : "opacity-0 z-0"
+                  i === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
                 }`}
                 loading="lazy"
                 onClick={() => {
@@ -385,7 +384,7 @@ function BrandCard(props: BrandCardProps) {
           }
           onPrev={() =>
             setLightboxIndex(
-              (prev) => (prev - 1 + imageUrls.length) % imageUrls.length
+              (prev) => (prev - 1 + imageUrls.length) % imageUrls.length,
             )
           }
         />

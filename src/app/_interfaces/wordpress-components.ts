@@ -57,6 +57,7 @@ export interface BrandsWp {
 
 export interface BranImagesWp {
   image: ImageAcf;
+  full_image: ImageAcf;
 }
 
 export interface CategoryBrandWp {
