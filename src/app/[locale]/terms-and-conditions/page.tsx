@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { getWordPressPage } from "@/app/_services/api";
 
 async function TermsAndConditions(nextParams: {
   params: { locale: "en" | "es" | "de" };

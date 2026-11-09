@@ -1,72 +1,56 @@
 import { WordPressFrontendPage } from "../_interfaces/wordpress-page";
 import { WORDPRESS_API_URL } from "../constants";
 
-export async function getWordPressPage(
-  locale: "en" | "es" | "de",
-  page: string,
-): Promise<WordPressFrontendPage> {
-  const url = `${WORDPRESS_API_URL}/wp/v2/pages/${page}`;
-  console.log("url: ", url);
+export type Locale = "en" | "es" | "de";
+
+const REVALIDATE_SECONDS = 0;
+
+const PARENT_PAGES: Record<Locale, string> = {
+  es: "spanish-pages",
+  de: "german-pages",
+  en: "english-pages",
+};
+
+async function wpFetch<T>(url: string, tags: string[]): Promise<T> {
   const response = await fetch(url, {
-    next: {
-      revalidate: 0,
-    },
+    next: { revalidate: REVALIDATE_SECONDS, tags },
   });
-  const dataJson = await response.json();
-  if (!response.ok) throw new Error(dataJson.message);
-  return dataJson;
+  const data = await response.json();
+  if (!response.ok)
+    throw new Error(data?.message ?? `WP error ${response.status}`);
+  return data as T;
 }
 
-export async function getFrontendPageBySlug(
-  slug: string,
-): Promise<WordPressFrontendPage> {
-  const url = `${WORDPRESS_API_URL}/wp/v2/pages?slug=${slug}&acf_format=standard`;
-  console.log("url: ", url);
-  const pageData = await fetch(url, {
-    next: {
-      revalidate: 0,
-    },
-  });
-  const pageJson = await pageData.json();
-  return pageJson[0];
+export function getWordPressCustomPage(locale: Locale, slug: string) {
+  const url = `${WORDPRESS_API_URL}/custom/v1/page_by_slug?slug=${slug}&parent_slug=${PARENT_PAGES[locale]}&lang=${locale}`;
+  return wpFetch<WordPressFrontendPage>(url, [
+    "wp-pages",
+    `page:${locale}:${slug}`,
+  ]);
 }
 
-export async function getWordPressCustomPage(
-  locale: "en" | "es" | "de",
-  slug: string,
-): Promise<WordPressFrontendPage> {
-  const parentPages = {
-    es: "spanish-pages",
-    de: "german-pages",
-    en: "english-pages",
-  };
-  const parentPage = parentPages[locale];
-  const url = `${WORDPRESS_API_URL}/custom/v1/page_by_slug?slug=${slug}&parent_slug=${parentPage}&lang=${locale}`;
-  console.log("url custom page: ", url);
-  const response = await fetch(url, {
-    next: {
-      revalidate: 0,
-    },
-  });
-  const page = await response.json();
-  if (!response.ok) throw new Error(page.message);
-  return page;
-}
-
-export async function getCategories(locale: "en" | "es" | "de") {
+export function getCategories(locale: Locale) {
   const url = `${WORDPRESS_API_URL}/wp/v2/categories?lang=${locale}`;
+  return wpFetch<any>(url, ["wp-categories", `categories:${locale}`]);
+}
 
-  console.log("Fetching categories from: ", url);
+export async function getSiteData(locale: Locale) {
+  const [home, projects, brands, aboutUs, contact, categories] =
+    await Promise.all([
+      getWordPressCustomPage(locale, "home"),
+      getWordPressCustomPage(locale, "projects"),
+      getWordPressCustomPage(locale, "brands"),
+      getWordPressCustomPage(locale, "about-us"),
+      getWordPressCustomPage(locale, "contact"),
+      getCategories(locale),
+    ]);
 
-  const response = await fetch(url, {
-    next: {
-      revalidate: 0,
-    },
-  });
-
-  const categories = await response.json();
-
-  if (!response.ok) throw new Error(categories.message);
-
-  return categories;
+  return {
+    home: home.acf.home_information,
+    projects: projects.acf.projects_information,
+    brands: brands.acf.brands_information,
+    aboutUs_information: aboutUs.acf.aboutUs_information,
+    contact_information: contact.acf.contact_information,
+    categories,
+  };
 }

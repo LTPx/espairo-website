@@ -1,84 +1,50 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Metadata } from "next";
-import App from "./app";
 import "tailwindcss/tailwind.css";
 import "../global.css";
-import Footer from "../components/footer";
-import MenuOptions from "../components/menuOptions";
-import CallAllPages from "../components/call-all-pages";
-import { getCategories, getWordPressCustomPage } from "../_services/api";
-import NavbarSecond from "../components/navbar-second";
+import ResponsiveShell from "../components/responsive-shell";
+import { getSiteData, type Locale } from "../_services/api";
+import { getMenuConfig } from "../components/menu-config";
 
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  return {
-    icons: {
-      icon: "/images/logo.png",
-    },
-  };
-}
+const TIME_ZONES: Record<Locale, string> = {
+  es: "Europe/Madrid",
+  de: "Europe/Berlin",
+  en: "America/New_York",
+};
+
+export const metadata: Metadata = {
+  icons: { icon: "/images/logo.png" },
+};
 
 export default async function LocaleLayout({
   children,
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: "en" | "es" | "de" };
+  params: { locale: Locale };
 }) {
-  const messages = await getMessages();
-  const timeZone =
-    locale === "es"
-      ? "Europe/Madrid"
-      : locale === "de"
-      ? "Europe/Berlin"
-      : "America/New_York";
-  const ProjectsData = await getWordPressCustomPage(locale, "projects");
-  const { acf: acfProjects } = ProjectsData;
-
-  const HomeData = await getWordPressCustomPage(locale, "home");
-  const { acf: acfHome } = HomeData;
-
-  const BrandData = await getWordPressCustomPage(locale, "brands");
-  const { acf: acfBrand } = BrandData;
-  const allCategories = await getCategories(locale);
-
-  const AboutUs = await getWordPressCustomPage(locale, "about-us");
-  const { acf: acfAboutUs } = AboutUs;
-  const { aboutUs_information } = acfAboutUs;
-
-  const ContactData = await getWordPressCustomPage(locale, "contact");
-  const { acf: acfContact } = ContactData;
-  const { contact_information } = acfContact;
-
-  const { projects_information } = acfProjects;
-  const { home_information } = acfHome;
-  const { brands_information } = acfBrand;
+  const [messages, desktopData, menu] = await Promise.all([
+    getMessages(),
+    getSiteData(locale),
+    getMenuConfig(locale),
+  ]);
 
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages} timeZone={timeZone}>
-          <MenuOptions
-            params={{
-              locale: locale,
-            }}
-          />
-          {/* <NavbarSecond/> */}
-          <CallAllPages
+        <NextIntlClientProvider
+          messages={messages}
+          timeZone={TIME_ZONES[locale]}
+        >
+          <ResponsiveShell
             locale={locale}
-            home={home_information}
-            projects={projects_information}
-            brands={brands_information}
-            categories={allCategories}
-            aboutUs_information={aboutUs_information}
-            contact_information={contact_information}
-          />
-          <App locale={locale}>{children}</App>
-          {/* <Footer /> */}
+            desktopData={desktopData}
+            menuLinks={menu.menuLinks}
+            languages={menu.languages}
+          >
+            {children}
+          </ResponsiveShell>
         </NextIntlClientProvider>
       </body>
     </html>

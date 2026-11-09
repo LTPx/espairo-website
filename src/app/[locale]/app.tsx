@@ -1,4 +1,3 @@
-
 interface Props {
   children: any;
   locale: "en" | "es" | "de";
@@ -7,9 +6,7 @@ interface Props {
 async function App(props: Props) {
   const { children, locale } = props;
 
-  return (
-    <div className="lg:hidden bg-body">{children}</div>
-  );
+  return <div className="bg-body">{children}</div>;
 }
 
 export default App;

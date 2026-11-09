@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -40,6 +40,14 @@ const sectionOrder: Section[] = [
   "contact",
 ];
 
+function getSectionFromPath(path: string): Section {
+  if (path.includes("/brands")) return "brands";
+  if (path.includes("/about-us")) return "aboutUs";
+  if (path.includes("/projects")) return "projects";
+  if (path.includes("/contact")) return "contact";
+  return "home";
+}
+
 function CallAllPages(props: PageProps) {
   const {
     home,
@@ -53,85 +61,73 @@ function CallAllPages(props: PageProps) {
 
   const pathname = usePathname();
   const t = useTranslations();
-  const [initialRenderDone, setInitialRenderDone] = useState(false);
 
+  const [activeSection, setActiveSection] = useState<Section>(() =>
+    getSectionFromPath(pathname),
+  );
   const [selectedBrandTitle, setSelectedBrandTitle] = useState<string | null>(
-    null
+    null,
   );
-  const [activeSection, setActiveSection] = useState<Section>(
-    getSectionFromPath(pathname)
-  );
-
-  useEffect(() => {
-    setPageReady(false);
-    setInitialRenderDone(false);
-  }, [activeSection]);
-
-  const [prevIndex, setPrevIndex] = useState(
-    sectionOrder.indexOf(activeSection)
+  const [tempActiveSection, setTempActiveSection] = useState<Section | null>(
+    null,
   );
   const [pageReady, setPageReady] = useState(false);
+  const [initialRenderDone, setInitialRenderDone] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  const prevIndexRef = useRef(
-    sectionOrder.indexOf(getSectionFromPath(pathname))
-  );
+  const prevIndexRef = useRef(sectionOrder.indexOf(activeSection));
+  const entryDirectionRef = useRef<"left" | "right">("right");
+  const prevSectionRef = useRef<Section>(activeSection);
+  const readyTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const activeIndex = sectionOrder.indexOf(activeSection);
   const direction = activeIndex > prevIndexRef.current ? 1 : -1;
-  const entryDirectionRef = useRef<"left" | "right">("right");
-  const prevSectionRef = useRef<Section>(activeSection);
 
-  useEffect(() => {
-    const prevIndex = prevIndexRef.current;
-    const activeIndex = sectionOrder.indexOf(activeSection);
-    const newDirection = activeIndex > prevIndex ? "right" : "left";
-
-    entryDirectionRef.current = newDirection;
-    prevIndexRef.current = activeIndex;
-    prevSectionRef.current = sectionOrder[prevIndex];
-  }, [activeSection]);
-
-  useEffect(() => {
-    setPrevIndex(activeIndex);
-  }, [activeSection]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [activeSection]);
+  useEffect(() => setIsInitialLoad(false), []);
 
   useEffect(() => {
     setActiveSection(getSectionFromPath(pathname));
   }, [pathname]);
 
   useEffect(() => {
-    if (activeSection === "brands") {
-      setSelectedBrandTitle(null);
-    }
+    const prev = prevIndexRef.current;
+    const next = sectionOrder.indexOf(activeSection);
+
+    entryDirectionRef.current = next > prev ? "right" : "left";
+    prevSectionRef.current = sectionOrder[prev];
+    prevIndexRef.current = next;
+
+    setPageReady(false);
+    setInitialRenderDone(false);
+    window.scrollTo(0, 0);
+    if (activeSection === "brands") setSelectedBrandTitle(null);
+
+    setTempActiveSection(activeSection);
+    const timer = setTimeout(() => setTempActiveSection(null), 1600);
+    return () => clearTimeout(timer);
   }, [activeSection]);
 
-  useEffect(() => {
-    setPageReady(false);
-  }, [activeSection]);
+  useEffect(() => () => clearTimeout(readyTimerRef.current), []);
 
   const navOptions = [
     {
-      label: `${t("header.brands")}`,
+      label: t("header.brands"),
       section: "brands",
       route: `/${locale}/brands`,
     },
     {
-      label: `${t("header.about-us")}`,
+      label: t("header.about-us"),
       section: "aboutUs",
       route: `/${locale}/about-us`,
     },
     {
-      label: `${t("header.projects")}`,
+      label: t("header.projects"),
       section: "projects",
       route: `/${locale}/projects`,
     },
     {
-      label: `${t("header.contact")}`,
+      label: t("header.contact"),
       section: "contact",
       route: `/${locale}/contact`,
     },
@@ -139,44 +135,20 @@ function CallAllPages(props: PageProps) {
 
   const getExitX = (section: Section) => {
     if (section === "home") return "100%";
-    if (
-      direction === -1 &&
-      ["contact", "projects", "aboutUs", "brands"].includes(section)
-    ) {
-      return `${window.innerWidth - 120}px`;
-    }
+    if (direction === -1) return `${window.innerWidth - 120}px`;
     return "-100%";
   };
 
-  function getSectionFromPath(path: string): Section {
-    if (path.includes("/brands")) return "brands";
-    if (path.includes("/about-us")) return "aboutUs";
-    if (path.includes("/projects")) return "projects";
-    if (path.includes("/contact")) return "contact";
-    return "home";
-  }
-
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-
-  useEffect(() => {
-    setIsInitialLoad(false);
-  }, []);
-
-  const [tempActiveSection, setTempActiveSection] = useState<Section | null>(
-    null
-  );
-
-  useEffect(() => {
-    setTempActiveSection(activeSection);
-    const timer = setTimeout(() => {
-      setTempActiveSection(null);
-    }, 1600);
-
-    return () => clearTimeout(timer);
-  }, [activeSection]);
+  const handleAnimationComplete = () => {
+    clearTimeout(readyTimerRef.current);
+    readyTimerRef.current = setTimeout(() => {
+      setPageReady(true);
+      setInitialRenderDone(true);
+    }, 1000);
+  };
 
   return (
-    <div className="hidden lg:block h-full relative overflow-hidden">
+    <div className="h-full relative overflow-hidden">
       <NavbarSecond
         navOptions={navOptions}
         selectedBrandTitle={selectedBrandTitle}
@@ -191,8 +163,8 @@ function CallAllPages(props: PageProps) {
       <div className="relative w-full min-h-screen overflow-hidden">
         {sectionOrder.map((section, index) => {
           const isActive = section === tempActiveSection;
-
           const isVisible = index <= activeIndex;
+
           return (
             <AnimatePresence key={section}>
               {isVisible && (
@@ -215,12 +187,7 @@ function CallAllPages(props: PageProps) {
                   className="absolute top-0 left-0 w-full min-h-screen"
                   style={{ zIndex: index }}
                   onAnimationStart={() => setIsAnimating(true)}
-                  onAnimationComplete={() => {
-                    setTimeout(() => {
-                      setPageReady(true);
-                      setInitialRenderDone(true);
-                    }, 1000);
-                  }}
+                  onAnimationComplete={handleAnimationComplete}
                 >
                   {section === "home" && (
                     <Home home_information={home} locale={locale} />
