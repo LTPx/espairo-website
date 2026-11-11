@@ -4,13 +4,13 @@ import React, { useRef, useState } from "react";
 import { Link, usePathname } from "@/navigation";
 import { useTranslations } from "next-intl";
 
-interface Link {
+interface MenuLink {
   title: string;
   url: string;
 }
 
 export interface MenuMobileProps {
-  links: Link[];
+  links: MenuLink[];
   languages: { name: string; url: string }[];
   locale: "en" | "es" | "de";
 }
@@ -59,6 +59,7 @@ export function MenuMobile({ links, languages, locale }: MenuMobileProps) {
                 </p>
               </Link>
             </div>
+
             <div className="flex flex-col justify-end">
               <nav>
                 <hr className="border-t border-black border-1" />
@@ -75,8 +76,29 @@ export function MenuMobile({ links, languages, locale }: MenuMobileProps) {
                   </div>
                 ))}
               </nav>
+
+              <div className="pl-[28px] pt-[28px] flex items-center font-regular text-[18px] leading-[25px] tracking-[-0.04em] text-[#3F4751]">
+                <Link
+                  href={pathname}
+                  locale="es"
+                  onClick={() => setMenuOpen(false)}
+                  className={locale === "es" ? "opacity-100" : "opacity-40"}
+                >
+                  ESP
+                </Link>
+                <span className="mx-[4px]">|</span>
+                <Link
+                  href={pathname}
+                  locale="en"
+                  onClick={() => setMenuOpen(false)}
+                  className={locale === "en" ? "opacity-100" : "opacity-40"}
+                >
+                  ENG
+                </Link>
+              </div>
             </div>
           </div>
+
           <div className="pl-[22px] pb-[43px] flex flex-col">
             <p className="text-[16px] leading-[20px]">
               Showroom &

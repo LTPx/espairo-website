@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 interface ImageLightboxProps {
   images: string[];
@@ -37,9 +38,9 @@ export function ImageLightbox({
     };
   }, [isOpen, handleKey]);
 
-  if (!isOpen) return null;
+  if (!isOpen || typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[999999] flex items-center justify-center"
       style={{ backgroundColor: "rgba(63, 71, 81, 0.85)" }}
@@ -108,7 +109,8 @@ export function ImageLightbox({
           style={{ maxWidth: "75vw", maxHeight: "80vh" }}
         />
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

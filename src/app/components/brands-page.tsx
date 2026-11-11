@@ -7,7 +7,6 @@ import BrandCard from "./brand-card";
 import ClientBrands from "./client-brands";
 import React from "react";
 import MenuLateral from "./menu-lateral";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 interface BrandsPageProps {
@@ -76,7 +75,10 @@ function BrandsPage(props: BrandsPageProps) {
     }
   }, [pathname]);
 
-  // Scroll instantáneo — desde el menú de lista
+  useEffect(() => {
+    setSelectedBrandTitle(selectedBrandTitle);
+  }, [selectedBrandTitle, setSelectedBrandTitle]);
+
   const scrollToBrandInstant = (index: number) => {
     const brandElement = document.querySelectorAll(".brand-slug-page")[index];
     if (brandElement) {
@@ -84,7 +86,6 @@ function BrandsPage(props: BrandsPageProps) {
     }
   };
 
-  // Scroll suave — desde botones Anterior/Siguiente del card
   const scrollToBrand = (index: number) => {
     const brandElement = document.querySelectorAll(".brand-slug-page")[index];
     if (brandElement) {

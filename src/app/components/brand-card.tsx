@@ -144,7 +144,6 @@ function BrandCard(props: BrandCardProps) {
         </div>
 
         <div className="relative w-full h-[85dvh] md:h-full overflow-hidden">
-          {/* Mobile: swipe carousel */}
           {isMobile ? (
             <motion.div
               className="relative h-full flex w-full"
@@ -188,7 +187,6 @@ function BrandCard(props: BrandCardProps) {
           )}
         </div>
 
-        {/* Dot indicators */}
         {images.length > 1 && (
           <div className="hidden md:flex absolute z-[10000] bottom-[30px] left-1/2 transform -translate-x-1/2 gap-2">
             {images.map((_, i) => (
@@ -205,7 +203,6 @@ function BrandCard(props: BrandCardProps) {
           </div>
         )}
 
-        {/* Mobile title row */}
         <div className="md:hidden flex justify-between items-center px-[30px]">
           <h1 className="font-regular text-[40px] leading-[45px] md:text-[50px] md:leading-[50px] tracking-[-0.05em]">
             {title}
@@ -222,7 +219,6 @@ function BrandCard(props: BrandCardProps) {
         </div>
       </div>
 
-      {/* Desktop right panel */}
       <div className="hidden md:flex pl-[30px] py-[30px] flex flex-col md:justify-between">
         <div>
           {category && (
@@ -296,7 +292,6 @@ function BrandCard(props: BrandCardProps) {
         </div>
       </div>
 
-      {/* Mobile description drawer */}
       <AnimatePresence>
         {isMobileDescriptionOpen && (
           <motion.div
@@ -372,7 +367,6 @@ function BrandCard(props: BrandCardProps) {
         )}
       </AnimatePresence>
 
-      {/* Desktop lightbox */}
       {!isMobile && (
         <ImageLightbox
           images={imageUrls}
