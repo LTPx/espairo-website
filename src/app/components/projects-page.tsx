@@ -1,12 +1,5 @@
-import {
-  IndividualProjectWp,
-  ProjectsPageWp,
-} from "@/app/_interfaces/wordpress-components";
-import { getWordPressCustomPage } from "@/app/_services/api";
-import Cover from "@/app/components/cover";
-import Gallery from "@/app/components/gallery";
+import { ProjectsPageWp } from "@/app/_interfaces/wordpress-components";
 import ProjectsInformation from "@/app/components/project-information";
-import { Metadata } from "next";
 import { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";

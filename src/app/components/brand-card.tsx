@@ -167,7 +167,6 @@ function BrandCard(props: BrandCardProps) {
                 ))}
             </motion.div>
           ) : (
-            /* Desktop: crossfade + lightbox on click */
             images &&
             images.map((image, i) => (
               <img

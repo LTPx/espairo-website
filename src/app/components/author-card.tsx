@@ -1,5 +1,3 @@
-import { useTranslations } from "next-intl";
-
 interface AuthorCardProps {
   authorName: string;
   description: string;

@@ -19,17 +19,10 @@ export function CoverHome(props: Props) {
     setIsDescriptionVisible(!isDescriptionVisible);
   };
 
-  const menuRight = [
-    { href: `/${locale}/brands`, label: `${t("header.brands")}` },
-    { href: `/${locale}/about-us`, label: `${t("header.about-us")}` },
-    { href: `/${locale}/projects`, label: `${t("header.projects")}` },
-    { href: `/${locale}/contact`, label: `${t("header.contact")}` },
-  ];
-
   return (
     <div className="relative h-[100vh] w-full mr-[120px] flex flex-row bg-body">
       <div className="flex-1 relative flex items-center justify-center">
-        <CoverMedia media={home_information.cover_page} />     
+        <CoverMedia media={home_information.cover_page} />
         <h1 className="lg:hidden absolute left-[30px] top-[20px] text-[#E0E0E0] text-[16px] leading-[16px] font-regular tracking-[-0.04em] z-[100]">
           Espai Rö
         </h1>
@@ -61,7 +54,6 @@ export function CoverHome(props: Props) {
           </div>
         </div>
       </div>
-      {/* <MenuLateral links={menuRight} /> */}
     </div>
   );
 }

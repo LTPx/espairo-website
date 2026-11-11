@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { GalleryProjectWp } from "../_interfaces/wordpress-components";
 
 export interface GalleryProps {
@@ -49,11 +50,14 @@ export function Gallery({ gallery }: GalleryProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-lightbox-open", "true");
     } else {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-lightbox-open");
     }
     return () => {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-lightbox-open");
     };
   }, [isOpen]);
 
@@ -186,81 +190,85 @@ export function Gallery({ gallery }: GalleryProps) {
         </div>
       )}
 
-      {!isMobile && isOpen && (
-        <div
-          className="fixed inset-0 z-[999999] flex items-center justify-center"
-          style={{ backgroundColor: "rgba(63, 71, 81, 0.85)" }}
-          onClick={closeLightbox}
-        >
-          <button
-            type="button"
-            className="absolute top-[24px] right-[54px] w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
-            onClick={(e) => {
-              e.stopPropagation();
-              closeLightbox();
-            }}
-            aria-label="Cerrar"
-          >
-            <img
-              src="/images/cerrar.svg"
-              alt="Cerrar"
-              className="w-full h-full"
-            />
-          </button>
-
-          {gallery.length > 1 && (
-            <button
-              type="button"
-              className="absolute left-[114px] top-1/2 -translate-y-1/2 w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-              aria-label="Imagen anterior"
-            >
-              <img
-                src="/images/flecha-2.svg"
-                alt="Anterior"
-                className="w-full h-full"
-              />
-            </button>
-          )}
-
-          {gallery.length > 1 && (
-            <button
-              type="button"
-              className="absolute right-[54px] top-1/2 -translate-y-1/2 w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              aria-label="Imagen siguiente"
-            >
-              <img
-                src="/images/flecha-1.svg"
-                alt="Siguiente"
-                className="w-full h-full"
-              />
-            </button>
-          )}
-
-          <div className="absolute bottom-[24px] left-1/2 -translate-x-1/2 text-white text-[13px] font-light tracking-widest opacity-70 z-10">
-            {photoIndex + 1} / {gallery.length}
-          </div>
-
+      {!isMobile &&
+        isOpen &&
+        typeof document !== "undefined" &&
+        createPortal(
           <div
-            className="relative flex items-center justify-center w-full h-full px-[80px] py-[60px]"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[2147483647] flex items-center justify-center"
+            style={{ backgroundColor: "rgba(63, 71, 81, 0.85)" }}
+            onClick={closeLightbox}
           >
-            <img
-              src={gallery[photoIndex].image.url}
-              alt={`Gallery image ${photoIndex + 1}`}
-              className="max-w-full max-h-full object-contain"
-              style={{ maxWidth: "75vw", maxHeight: "80vh" }}
-            />
-          </div>
-        </div>
-      )}
+            <button
+              type="button"
+              className="absolute top-[24px] right-[54px] w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                closeLightbox();
+              }}
+              aria-label="Cerrar"
+            >
+              <img
+                src="/images/cerrar.svg"
+                alt="Cerrar"
+                className="w-full h-full"
+              />
+            </button>
+
+            {gallery.length > 1 && (
+              <button
+                type="button"
+                className="absolute left-[114px] top-1/2 -translate-y-1/2 w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevImage();
+                }}
+                aria-label="Imagen anterior"
+              >
+                <img
+                  src="/images/flecha-2.svg"
+                  alt="Anterior"
+                  className="w-full h-full"
+                />
+              </button>
+            )}
+
+            {gallery.length > 1 && (
+              <button
+                type="button"
+                className="absolute right-[54px] top-1/2 -translate-y-1/2 w-[40px] h-[40px] flex items-center justify-center transition-opacity duration-200 hover:opacity-70 z-10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
+                aria-label="Imagen siguiente"
+              >
+                <img
+                  src="/images/flecha-1.svg"
+                  alt="Siguiente"
+                  className="w-full h-full"
+                />
+              </button>
+            )}
+
+            <div className="absolute bottom-[24px] left-1/2 -translate-x-1/2 text-white text-[13px] font-light tracking-widest opacity-70 z-10">
+              {photoIndex + 1} / {gallery.length}
+            </div>
+
+            <div
+              className="relative flex items-center justify-center w-full h-full px-[80px] py-[60px]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={gallery[photoIndex].image.url}
+                alt={`Gallery image ${photoIndex + 1}`}
+                className="max-w-full max-h-full object-contain"
+                style={{ maxWidth: "75vw", maxHeight: "80vh" }}
+              />
+            </div>
+          </div>,
+          document.body,
+        )}
     </section>
   );
 }

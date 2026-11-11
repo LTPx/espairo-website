@@ -1,7 +1,4 @@
 import { ContactPageWp } from "@/app/_interfaces/wordpress-components";
-import { getWordPressCustomPage } from "@/app/_services/api";
-import { Metadata } from "next";
-import Link from "next/link";
 import MenuLateral from "./menu-lateral";
 import { useTranslations } from "next-intl";
 

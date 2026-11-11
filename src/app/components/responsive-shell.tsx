@@ -16,7 +16,6 @@ interface Props {
   locale: Locale;
   desktopData: Omit<DesktopProps, "locale">;
   menuLinks: { title: string; url: string }[];
-  languages: { name: string; url: string }[];
   children: React.ReactNode;
 }
 
@@ -24,7 +23,6 @@ export default function ResponsiveShell({
   locale,
   desktopData,
   menuLinks,
-  languages,
   children,
 }: Props) {
   const isDesktop = useIsDesktop();
@@ -37,7 +35,7 @@ export default function ResponsiveShell({
 
   return (
     <>
-      <MenuMobile locale={locale} languages={languages} links={menuLinks} />
+      <MenuMobile locale={locale} links={menuLinks} />
       <div className="bg-body">{children}</div>
     </>
   );

@@ -3,7 +3,6 @@
 import { forwardRef, useState } from "react";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import { useTranslations } from "next-intl";
-import { ImageLightbox } from "./image-lightbox";
 
 interface ClientBrandsProps {
   categories: { term_id: number; name: string }[];
@@ -35,9 +34,6 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
         )?.image_cover.url || brands_information.cover_page.url
       : brands_information.cover_page.url;
 
-    // const [lightboxOpen, setLightboxOpen] = useState(false);
-    // const [lightboxIndex, setLightboxIndex] = useState(0);
-
     const coverUrls = brands_information.cover_categories
       .map((c) => c.image_cover.url)
       .filter(Boolean);
@@ -52,30 +48,12 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
             src={selectedCover}
             alt="alt-projects"
             className="h-[100dvh] w-full object-cover"
-            // onClick={() => {
-              // const idx = coverUrls.indexOf(selectedCover);
-              // setLightboxIndex(idx >= 0 ? idx : 0);
-              // setLightboxOpen(true);
-            // }}
           />
         </div>
         <div className="h-[100dvh] overflow-auto no-scrollbar">
           <div className="pl-[30px] md:px-[30px] py-[30px]">
             <div className="w-full sticky top-[30px] z-[10] md:z-[100000]">
               <div className="filters pr-[30px] flex md:flex-wrap gap-[7px] md:gap-[10px] mb-[20px] md:mb-[30px] md:pr-[10px] mac:pr-[100px] xl-flex:pr-[50px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
-                {/* <button
-                onClick={() => {
-                  setSelectedCategory(null);
-                  onCategorySelect(null);
-                }}
-                className={`backdrop-blur-sm font-regular uppercase inline-block flex items-center md:items-start justify-center font-medium text-[14px] leading-[20px] md:text-[12px] md:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
-                  selectedCategory === null
-                    ? "bg-[#3F4751] text-white"
-                    : "hover:bg-[#3F4751] hover:text-white"
-                }`}
-              >
-                {t("brandPage.all")}
-              </button> */}
                 {brands_information.cover_categories.map((cover) => {
                   const categoryData = categories.find(
                     (cat) => cat.term_id === cover.category,
@@ -138,20 +116,6 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
             </div>
           </div>
         </div>
-        {/* <ImageLightbox
-          images={coverUrls}
-          currentIndex={lightboxIndex}
-          isOpen={lightboxOpen}
-          onClose={() => setLightboxOpen(false)}
-          onNext={() =>
-            setLightboxIndex((prev) => (prev + 1) % coverUrls.length)
-          }
-          onPrev={() =>
-            setLightboxIndex(
-              (prev) => (prev - 1 + coverUrls.length) % coverUrls.length,
-            )
-          }
-        /> */}
       </div>
     );
   },

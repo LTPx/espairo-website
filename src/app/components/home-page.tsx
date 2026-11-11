@@ -1,6 +1,5 @@
 import React from "react";
 import { HomePageWp } from "../_interfaces/wordpress-components";
-import Link from "next/link";
 import CoverHome from "../components/cover-home";
 
 interface Props {

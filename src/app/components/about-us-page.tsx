@@ -1,11 +1,7 @@
 import { AboutUsPageWp } from "@/app/_interfaces/wordpress-components";
-import { getWordPressCustomPage } from "@/app/_services/api";
 import AboutUsCard from "@/app/components/aboutUs-card";
 import AuthorCard from "@/app/components/author-card";
 import Cover from "@/app/components/cover";
-import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 import AboutUsSecondCard from "./aboutUs-second-card";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -60,9 +56,8 @@ function AboutUsPage(props: Props) {
 
   return (
     <div className="relative h-[100vh] ml-[30px] w-[calc(100%-30px)]  flex bg-body">
-      {/* {pathname === `/${locale}/about-us` && ( */}
       <MenuLateral links={leftMenuLinks} ready={ready} active={active} />
-      {/* )} */}
+
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto no-scrollbar"

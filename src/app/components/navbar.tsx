@@ -1,79 +1,385 @@
 "use client";
 
-import React, { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { Section } from "./call-all-pages";
 
-export const Navbar = () => {
+interface NavbarProps {
+  navOptions: { label: string; route: string; section: string }[];
+  selectedBrandTitle?: string | null;
+  setSelectedBrandTitle: React.Dispatch<React.SetStateAction<string | null>>;
+  setActiveSection: React.Dispatch<React.SetStateAction<Section>>;
+  ready?: boolean;
+  isBackward?: boolean;
+  direction: "left" | "right";
+  fromSection: Section;
+  toSection: Section;
+}
+
+export default function Navbar({
+  navOptions,
+  selectedBrandTitle,
+  setSelectedBrandTitle,
+  setActiveSection,
+  ready = false,
+  isBackward = false,
+  fromSection,
+  toSection,
+  direction,
+}: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const menuItems = ["Brands", "Nosotros", "Proyectos", "Contacto"];
-  const [animatingItem, setAnimatingItem] = useState<string | null>(null);
 
-  const getRoute = (item: string) => {
-    switch (item.toLowerCase()) {
-      case "brands":
-        return "/es/brands";
-      case "nosotros":
-        return "/es/about-us";
-      case "proyectos":
-        return "/es/projects";
-      case "contacto":
-        return "/es/contact";
-      default:
-        return "/";
+  const [showTitle, setShowTitle] = useState(true);
+  const [currentPath, setCurrentPath] = useState(pathname);
+  const [showDelayedBackward, setShowDelayedBackward] = useState(false);
+  const [customSliceOffset, setCustomSliceOffset] = useState<number | null>(
+    null,
+  );
+  const [customSectionPathOffset, setCustomSectionPathOffset] = useState<
+    number | null
+  >(null);
+  const [sectionPathOffset, setSectionPathOffset] = useState(1);
+
+  console.log("ready", ready);
+
+  useEffect(() => {
+    if (direction !== "right") {
+      setSectionPathOffset(1);
+      return;
     }
+
+    let initialOffset = 1;
+    let timeoutDuration = 2400;
+
+    if (fromSection === "projects" && toSection === "contact") {
+      initialOffset = 0;
+    } else if (fromSection === "aboutUs" && toSection === "projects") {
+      initialOffset = 0;
+    } else if (fromSection === "brands" && toSection === "aboutUs") {
+      initialOffset = 0;
+    } else if (fromSection === "brands" && toSection === "contact") {
+      initialOffset = -2;
+      timeoutDuration = 2400;
+    } else if (fromSection === "brands" && toSection === "projects") {
+      initialOffset = -1;
+      timeoutDuration = 2400;
+    } else if (fromSection === "aboutUs" && toSection === "contact") {
+      initialOffset = -1;
+      timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "contact") {
+      initialOffset = -3;
+      timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "projects") {
+      initialOffset = -2;
+      timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "aboutUs") {
+      initialOffset = -1;
+      timeoutDuration = 2400;
+    } else if (fromSection === "home" && toSection === "brands") {
+      initialOffset = 0;
+      timeoutDuration = 2400;
+    }
+
+    setSectionPathOffset(initialOffset);
+
+    const timeout = setTimeout(() => {
+      setSectionPathOffset(1);
+    }, timeoutDuration);
+
+    return () => clearTimeout(timeout);
+  }, [direction, fromSection, toSection]);
+
+  useEffect(() => {
+    if (direction === "left") {
+      if (fromSection === "projects" && toSection === "home") {
+        setCustomSliceOffset(4);
+      } else if (fromSection === "aboutUs" && toSection === "home") {
+        setCustomSliceOffset(3);
+      } else if (fromSection === "aboutUs" && toSection === "brands") {
+        setCustomSliceOffset(2);
+      } else if (fromSection === "brands" && toSection === "home") {
+        setCustomSliceOffset(2);
+      } else if (fromSection === "projects" && toSection === "aboutUs") {
+        setCustomSliceOffset(2);
+      } else if (fromSection === "projects" && toSection === "brands") {
+        setCustomSliceOffset(-1);
+      } else if (fromSection === "contact" && toSection === "aboutUs") {
+        setCustomSliceOffset(4);
+      } else {
+        return;
+      }
+
+      const timeout = setTimeout(() => {
+        setCustomSliceOffset(null);
+      }, 2400);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [direction, fromSection, toSection]);
+
+  useEffect(() => {
+    if (isBackward && fromSection === "contact" && toSection === "home") {
+      setShowDelayedBackward(false);
+      const timer = setTimeout(() => {
+        setShowDelayedBackward(true);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    } else {
+      setShowDelayedBackward(true);
+    }
+  }, [isBackward, fromSection, toSection]);
+
+  const locale = currentPath.split("/")[1];
+
+  useEffect(() => {
+    setCurrentPath(pathname);
+  }, [pathname]);
+
+  const currentIndex = navOptions.findIndex(
+    (option) => currentPath === option.route,
+  );
+
+  const sectionsInPath =
+    currentIndex !== -1
+      ? navOptions.slice(0, currentIndex + sectionPathOffset)
+      : [];
+
+  const sliceStart =
+    direction === "left"
+      ? customSliceOffset !== null
+        ? currentIndex + customSliceOffset
+        : currentPath === `/${locale}` || currentPath === "/"
+          ? currentIndex + 1
+          : currentIndex + 2
+      : currentIndex + 1;
+
+  const remainingOptions = navOptions.slice(sliceStart);
+
+  const leftPosition =
+    currentPath === "/"
+      ? "30px"
+      : currentPath.includes("brands")
+        ? "60px"
+        : currentPath.includes("about-us")
+          ? "90px"
+          : currentPath.includes("projects")
+            ? "120px"
+            : currentPath.includes("contact")
+              ? "150px"
+              : "30px";
+
+  const rightPosition =
+    currentPath === "/"
+      ? "150px"
+      : currentPath.includes("brands")
+        ? "120px"
+        : currentPath.includes("about-us")
+          ? "90px"
+          : currentPath.includes("projects")
+            ? "60px"
+            : currentPath.includes("contact")
+              ? "30px"
+              : "150px";
+
+  const isBrandDetail = pathname.includes("brands") && !!selectedBrandTitle;
+
+  const languageRight = isBrandDetail
+    ? `${parseInt(rightPosition) + 18 + 12}px`
+    : rightPosition;
+
+  const handleLinkClick = (route: string, section: string) => {
+    setSelectedBrandTitle(null);
+    setActiveSection(section as Section);
+    setCurrentPath(route);
+    router.push(route);
   };
 
-  const handleItemClick = (item: string) => {
-    setAnimatingItem(item);
+  useEffect(() => {
+    if (!pathname.includes("brands")) {
+      setSelectedBrandTitle(null);
+    }
+  }, [pathname, setSelectedBrandTitle]);
 
-    setTimeout(() => {
-      const url = getRoute(item);
-      router.push(url); // navegación client-side sin recarga
-    }, 800); // esperar que termine animación
-  };
+  useEffect(() => {
+    if (!pathname.includes("/about-us")) {
+      setShowTitle(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      const container = document.querySelector(".hide-title-trigger-container");
+      if (!container) {
+        setShowTitle(true);
+        return;
+      }
+
+      const triggers = container.querySelectorAll(".hide-title-trigger");
+
+      let shouldHide = false;
+
+      triggers.forEach((trigger) => {
+        const rect = trigger.getBoundingClientRect();
+        const isAboveTrigger = rect.top <= 30 && rect.bottom >= 0;
+        if (isAboveTrigger) shouldHide = true;
+      });
+
+      setShowTitle(!shouldHide);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!pathname.includes("/projects")) {
+      setShowTitle(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      const container = document.querySelector(".hide-title-trigger-projects");
+      if (!container) {
+        setShowTitle(true);
+        return;
+      }
+
+      const triggers = container.querySelectorAll(
+        ".hide-title-trigger-project",
+      );
+
+      let shouldHide = false;
+
+      triggers.forEach((trigger) => {
+        const rect = trigger.getBoundingClientRect();
+        const isAboveTrigger = rect.top <= 30 && rect.bottom >= 0;
+        if (isAboveTrigger) shouldHide = true;
+      });
+
+      setShowTitle(!shouldHide);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
 
   return (
-    <div className="lg:block hidden w-full relative">
-      <div className="fixed z-[1000] top-0 right-0 h-full">
-        <div className="bg-[#E0E0E0] h-full flex justify-center items-end">
-          {menuItems.map((item, index) => {
-            const isAnimating = animatingItem === item;
-            const itemRoute = getRoute(item);
-            const isActive = pathname === itemRoute;
-
-            return (
-              <motion.div
-                key={index}
-                className="w-[30px] border-r border-[#3F4751] text-center"
-                initial={false}
-                animate={
-                  isAnimating
-                    ? { x: "calc(-100vw - 300px)", opacity: 1 }
-                    : { x: 0, opacity: 1 }
-                }
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-              >
-                <button
-                  onClick={() => handleItemClick(item)}
-                  className={`lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-start pt-[48px] h-full text-gray-600 hover:text-black transition duration-300 font-medium rotate-180 ${
-                    isActive ? "text-black font-semibold" : ""
-                  }`}
-                  style={{
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                  }}
-                >
-                  {item}
-                </button>
-              </motion.div>
-            );
-          })}
+    <>
+      {showTitle && (
+        <div>
+          <div
+            onClick={() => handleLinkClick(`/${locale}`, "home")}
+            className="fixed top-[30px] text-[#E0E0E0] text-[30px] leading-[30px] font-regular tracking-[-0.05em] z-[100000]"
+            style={{
+              left: leftPosition,
+              cursor: "pointer",
+              mixBlendMode: "difference",
+            }}
+          >
+            Espai Rö
+          </div>
+          <div
+            className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
+            style={{
+              right: languageRight,
+              cursor: "pointer",
+              transition: "right 0.3s ease",
+              mixBlendMode: "difference",
+            }}
+          >
+            <span
+              onClick={() => {
+                const newPath = pathname.replace(/^\/(en|es|de)/, "/es");
+                router.push(newPath);
+              }}
+              className={`text-[15px] leading-[22px] tracking-[-0.04em] cursor-pointer hover:underline text-[#E0E0E0] ${
+                pathname.startsWith("/es") ? "" : "opacity-50"
+              }`}
+            >
+              ESP
+            </span>
+            <span className="text-[15px] leading-[22px] tracking-[-0.04em] text-[#E0E0E0]">
+              |
+            </span>
+            <span
+              onClick={() => {
+                const newPath = pathname.replace(/^\/(en|es|de)/, "/en");
+                router.push(newPath);
+              }}
+              className={`text-[15px] leading-[22px] tracking-[-0.04em] cursor-pointer hover:underline text-[#E0E0E0] ${
+                pathname.startsWith("/en") ? "" : "opacity-50"
+              }`}
+            >
+              ENG
+            </span>
+          </div>
         </div>
-      </div>
-    </div>
-  );
-};
+      )}
 
-export default Navbar;
+      {ready && !pathname.includes("brands") && (
+        <div className="fixed left-0 z-[100000] h-screen flex">
+          {sectionsInPath.map((option) => (
+            <div
+              key={option.section}
+              className={`transition duration-300 hover:bg-[#3F4751] h-full w-[30px] border-r border-[#3F4751] flex items-center ${
+                currentPath === option.route ? "bg-[#3F4751]" : "bg-[#E0E0E0]"
+              }`}
+              onClick={() => handleLinkClick(option.route, option.section)}
+              style={{ cursor: "pointer" }}
+            >
+              <div
+                className={`pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] rotate-180 transition duration-300 ${
+                  currentPath === option.route ? "text-white" : "text-[#3F4751]"
+                } hover:text-white`}
+                style={{
+                  writingMode: "vertical-rl",
+                  textOrientation: "mixed",
+                }}
+              >
+                {option.label}
+                {currentPath.includes("brands") && selectedBrandTitle && (
+                  <>
+                    <span className="my-[7px] text-white">|</span>
+                    <span className="text-white">{selectedBrandTitle}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {isBackward &&
+        showDelayedBackward &&
+        !(fromSection === "contact" && toSection === "brands") && (
+          <div className="fixed right-0 z-[100000] h-screen flex">
+            <div className="h-full hover:text-white bg-[#E0E0E0] flex">
+              {remainingOptions.map((option) => (
+                <div
+                  key={option.section}
+                  className="h-full w-[30px] flex items-center text-center border-l border-[#3F4751] transition duration-300 hover:bg-[#3F4751]"
+                  onClick={() => handleLinkClick(option.route, option.section)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <div
+                    className="pt-[30px] font-regular w-full h-full flex items-center lg:text-[18px] tracking-[-0.04em] lg:leading-[18px] text-[#3F4751] hover:text-white transition duration-300 font-medium rotate-180"
+                    style={{
+                      writingMode: "vertical-rl",
+                      textOrientation: "mixed",
+                    }}
+                  >
+                    {option.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+    </>
+  );
+}

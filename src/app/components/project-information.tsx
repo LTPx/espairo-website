@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  IndividualProjectWp,
-  ProjectsPageWp,
-} from "../_interfaces/wordpress-components";
+import { ProjectsPageWp } from "../_interfaces/wordpress-components";
 import { useTranslations } from "next-intl";
 import Gallery from "./gallery";
 import Cover from "./cover";
@@ -19,7 +16,7 @@ export function ProjectsInformation({
 }: ProjectsInformationProps) {
   const t = useTranslations();
   const projectTitles = projects_information.projects.map(
-    (project) => project.title
+    (project) => project.title,
   );
 
   return (

@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import BrandCard from "./brand-card";
 import ClientBrands from "./client-brands";
 import React from "react";
-import MenuTest from "./menu-test";
+import MenuMobile from "./menu-mobile";
 
 interface BrandsMobileProps {
   brands_information: BrandsPageWp;
@@ -17,8 +18,17 @@ function BrandsMobile(props: BrandsMobileProps) {
   const { brands_information, allCategories } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [trueMenu, setTrueMenu] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null); // Estado de la categoría seleccionada
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const pathname = usePathname();
+  const t = useTranslations();
+  const locale = useLocale() as "en" | "es" | "de";
+
+  const menuLinks = [
+    { title: t("header.brands"), url: "/brands" },
+    { title: t("header.about-us"), url: "/about-us" },
+    { title: t("header.projects"), url: "/projects" },
+    { title: t("header.contact"), url: "/contact" },
+  ];
 
   const brands: BrandsWp[] = brands_information.brand;
 
@@ -30,8 +40,8 @@ function BrandsMobile(props: BrandsMobileProps) {
           term_id: brand.category_brand.term_id,
           name: brand.category_brand.name,
         },
-      ])
-    ).values()
+      ]),
+    ).values(),
   );
 
   const mergedCategories = allCategories
@@ -47,7 +57,7 @@ function BrandsMobile(props: BrandsMobileProps) {
 
   const filteredBrands = selectedCategory
     ? brands.filter(
-        (brand) => brand.category_brand.term_id === selectedCategory
+        (brand) => brand.category_brand.term_id === selectedCategory,
       )
     : brands;
 
@@ -65,7 +75,6 @@ function BrandsMobile(props: BrandsMobileProps) {
   }, [pathname]);
 
   const scrollToBrand = (index: number) => {
-    console.log("index-r", index);
     const scrollPosition = calculateScrollPosition(index + 1);
     window.scrollTo({
       top: scrollPosition,
@@ -74,16 +83,10 @@ function BrandsMobile(props: BrandsMobileProps) {
   };
 
   const onBrandClick = (selectedBrand: BrandsWp) => {
-    console.log("Selected Category:", selectedCategory);
-    console.log("Selected Brand:", selectedBrand.title);
     setTrueMenu(true);
-    console.log(filteredBrands);
-    const realIndex = filteredBrands.findIndex((b) => {
-      console.log("Brand in iteration:", b.title);
-      console.log("Selected Brand Title:", selectedBrand.title);
-      return b.title === selectedBrand.title;
-    });
-    console.log("Real Index:", realIndex);
+    const realIndex = filteredBrands.findIndex(
+      (b) => b.title === selectedBrand.title,
+    );
 
     if (realIndex !== -1) {
       setCurrentIndex(realIndex);
@@ -91,12 +94,7 @@ function BrandsMobile(props: BrandsMobileProps) {
     }
   };
 
-  // useEffect(() => {
-  //   scrollToBrand(currentIndex);
-  // }, [currentIndex]);
-
   const goToNextBrand = () => {
-    console.log("click");
     if (currentIndex < filteredBrands.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
@@ -105,7 +103,6 @@ function BrandsMobile(props: BrandsMobileProps) {
   };
 
   const goToPreviousBrand = () => {
-    console.log("click");
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
       setCurrentIndex(prevIndex);
@@ -144,8 +141,15 @@ function BrandsMobile(props: BrandsMobileProps) {
           />
         </div>
       ))}
-      <MenuTest
-        customClassName={trueMenu ? "fixed top-[30px] right-[30px]" : ""}
+      <MenuMobile
+        links={menuLinks}
+        locale={locale}
+        hideOnBrands={false}
+        buttonClassName={
+          trueMenu
+            ? "fixed top-[30px] right-[30px]"
+            : "fixed bottom-[33px] right-[30px]"
+        }
       />
     </div>
   );

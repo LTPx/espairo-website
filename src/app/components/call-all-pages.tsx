@@ -13,7 +13,7 @@ import {
   ProjectsPageWp,
 } from "../_interfaces/wordpress-components";
 
-import NavbarSecond from "./navbar-second";
+import Navbar from "./navbar";
 import ProjectsPage from "./projects-page";
 import AboutUsPage from "./about-us-page";
 import BrandsPage from "./brands-page";
@@ -149,7 +149,7 @@ function CallAllPages(props: PageProps) {
 
   return (
     <div className="h-full relative overflow-hidden">
-      <NavbarSecond
+      <Navbar
         navOptions={navOptions}
         selectedBrandTitle={selectedBrandTitle}
         setSelectedBrandTitle={setSelectedBrandTitle}

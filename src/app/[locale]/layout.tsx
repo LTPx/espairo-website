@@ -41,7 +41,6 @@ export default async function LocaleLayout({
             locale={locale}
             desktopData={desktopData}
             menuLinks={menu.menuLinks}
-            languages={menu.languages}
           >
             {children}
           </ResponsiveShell>
