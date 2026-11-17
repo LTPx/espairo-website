@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { BrandsPageWp, BrandsWp } from "../_interfaces/wordpress-components";
 import { useTranslations } from "next-intl";
 
@@ -20,6 +20,55 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
       initialCategory,
     );
     const t = useTranslations();
+
+    const filtersWrapperRef = useRef<HTMLDivElement>(null);
+    const [langZone, setLangZone] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+      const update = () => {
+        const lang = document.querySelector<HTMLElement>(
+          "[data-language-switcher]",
+        );
+        const wrapper = filtersWrapperRef.current;
+
+        if (!lang || !wrapper || window.innerWidth < 768) {
+          setLangZone({ width: 0, height: 0 });
+          return;
+        }
+
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const langRect = lang.getBoundingClientRect();
+
+        const overlapX = wrapperRect.right - langRect.left;
+        const overlapY = langRect.bottom - wrapperRect.top;
+
+        if (overlapX <= 0 || overlapY <= 0) {
+          setLangZone({ width: 0, height: 0 });
+          return;
+        }
+
+        setLangZone({
+          width: Math.ceil(overlapX) + 16,
+          height: Math.ceil(overlapY) + 8,
+        });
+      };
+
+      update();
+
+      const settle = setTimeout(update, 1700);
+
+      window.addEventListener("resize", update);
+
+      const lang = document.querySelector("[data-language-switcher]");
+      const resizeObserver = new ResizeObserver(update);
+      if (lang) resizeObserver.observe(lang);
+
+      return () => {
+        clearTimeout(settle);
+        window.removeEventListener("resize", update);
+        resizeObserver.disconnect();
+      };
+    }, []);
 
     const filteredBrands =
       selectedCategory === null
@@ -52,8 +101,23 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
         </div>
         <div className="h-[100dvh] overflow-auto no-scrollbar">
           <div className="pl-[30px] md:px-[30px] py-[30px]">
-            <div className="w-full sticky top-[30px] z-[10] md:z-[100000]">
-              <div className="filters pr-[30px] flex md:flex-wrap gap-[7px] md:gap-[10px] mb-[20px] md:mb-[30px] md:pr-[10px] mac:pr-[100px] xl-flex:pr-[50px] xl:pr-[50px] overflow-x-scroll no-scrollbar">
+            <div
+              ref={filtersWrapperRef}
+              className="w-full sticky top-[30px] z-[10] md:z-[100000]"
+            >
+              <div className="filters pr-[30px] flex gap-[7px] mb-[20px] overflow-x-scroll no-scrollbar md:block md:pr-0 md:mb-[20px] md:overflow-visible">
+                {langZone.width > 0 && (
+                  <div
+                    aria-hidden
+                    className="hidden md:block"
+                    style={{
+                      float: "right",
+                      width: langZone.width,
+                      height: langZone.height,
+                    }}
+                  />
+                )}
+
                 {brands_information.cover_categories.map((cover) => {
                   const categoryData = categories.find(
                     (cat) => cat.term_id === cover.category,
@@ -76,7 +140,7 @@ const ClientBrands = forwardRef<HTMLDivElement, ClientBrandsProps>(
                         setSelectedCategory(newCategory);
                         onCategorySelect(newCategory);
                       }}
-                      className={`backdrop-blur-sm font-regular items-center md:items-start uppercase inline-block flex justify-center font-medium text-[14px] leading-[20px] md:text-[12px] md:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
+                      className={`backdrop-blur-sm font-regular items-center md:items-start uppercase flex md:inline-flex md:align-top md:mr-[10px] md:mb-[10px] justify-center font-medium text-[14px] leading-[20px] md:text-[12px] md:leading-[28px] cursor-pointer border border-[#3F4751] h-[28px] px-[20px] rounded-full transition-colors duration-300 ease-in-out ${
                         isSelected
                           ? "bg-[#3F4751] text-white"
                           : "hover:bg-[#3F4751] hover:text-white"

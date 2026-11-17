@@ -76,8 +76,10 @@ function BrandsPage(props: BrandsPageProps) {
   }, [pathname]);
 
   useEffect(() => {
-    setSelectedBrandTitle(selectedBrandTitle);
-  }, [selectedBrandTitle, setSelectedBrandTitle]);
+    setSelectedBrandTitle(
+      pathname.includes("/brands") ? selectedBrandTitle : null,
+    );
+  }, [selectedBrandTitle, pathname, setSelectedBrandTitle]);
 
   const scrollToBrandInstant = (index: number) => {
     const brandElement = document.querySelectorAll(".brand-slug-page")[index];

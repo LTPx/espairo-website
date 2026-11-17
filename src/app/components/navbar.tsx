@@ -41,8 +41,6 @@ export default function Navbar({
   >(null);
   const [sectionPathOffset, setSectionPathOffset] = useState(1);
 
-  console.log("ready", ready);
-
   useEffect(() => {
     if (direction !== "right") {
       setSectionPathOffset(1);
@@ -284,6 +282,7 @@ export default function Navbar({
             Espai Rö
           </div>
           <div
+            data-language-switcher
             className="fixed top-[30px] z-[100000] text-[#E0E0E0] text-[16px] font-regular tracking-[-0.05em] flex items-center space-x-2"
             style={{
               right: languageRight,

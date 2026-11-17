@@ -101,7 +101,6 @@ function CallAllPages(props: PageProps) {
     setPageReady(false);
     setInitialRenderDone(false);
     window.scrollTo(0, 0);
-    if (activeSection === "brands") setSelectedBrandTitle(null);
 
     setTempActiveSection(activeSection);
     const timer = setTimeout(() => setTempActiveSection(null), 1600);
